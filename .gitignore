@@ -30,3 +30,18 @@
 *.exe
 *.out
 *.app
+
+# VS folder
+.vs/
+
+# Binaries
+bin/
+
+# .sln file
+Localization.sln
+
+# Assets
+!LocalizationUtils.exe
+
+# Intermediate
+assets/intermediate
