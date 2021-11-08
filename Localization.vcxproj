@@ -69,7 +69,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>cd $(ProjectDir)assets\ &amp;&amp; start LocalizationUtils.exe generate &amp;&amp; start LocalizationUtils.exe debug_build $(OutDir)</Command>
+      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe generate &amp;&amp; call LocalizationUtils.exe debug_build $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -91,7 +91,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>cd $(ProjectDir)assets\ &amp;&amp; start LocalizationUtils.exe generate &amp;&amp; start LocalizationUtils.exe release_build $(OutDir)</Command>
+      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe generate &amp;&amp; call LocalizationUtils.exe release_build $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>

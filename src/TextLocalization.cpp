@@ -29,6 +29,8 @@ namespace localization
 		{
 			throw runtime_error("Can't find originalLanguage in Localization.dll, rebuild and try again");
 		}
+
+		language = *originalLanguage;
 	}
 
 	TextLocalization::~TextLocalization()

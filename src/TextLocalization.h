@@ -18,9 +18,20 @@ namespace localization
 	private:
 		TextLocalization();
 
+		TextLocalization(const TextLocalization&) = delete;
+
+		TextLocalization(TextLocalization&&) noexcept = delete;
+
+		TextLocalization& operator = (const TextLocalization&) = delete;
+
+		TextLocalization& operator = (TextLocalization&&) noexcept = delete;
+
 		~TextLocalization();
 
 	public:
+		/// @brief Exception can be thrown on first call
+		/// @return
+		/// @exception std::runtime_error 
 		static TextLocalization& get();
 
 		/// @brief 
