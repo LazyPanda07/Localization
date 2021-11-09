@@ -45,3 +45,6 @@ Localization.sln
 
 # Intermediate
 assets/intermediate
+
+# Configuration file
+assets/localization_utils_settings.json
