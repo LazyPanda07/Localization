@@ -43,5 +43,5 @@ Localization.sln
 # Assets
 !LocalizationUtils.exe
 
-# Intermediate
-assets/intermediate
+# LocalizationUtils.exe folder generation
+ProjectLocalization/

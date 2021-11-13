@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\LocalizationUtils.exe" />
+    <None Include="LocalizationMacros.props" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TextLocalization.h">

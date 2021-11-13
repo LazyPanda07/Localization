@@ -38,9 +38,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="LocalizationMacros.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="LocalizationMacros.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -69,7 +71,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe generate_settings_file $(SolutionDir) &amp;&amp; call LocalizationUtils.exe generate $(SolutionDir)localization_utils_settings.json &amp;&amp; call LocalizationUtils.exe debug_build $(SolutionDir)localization_utils_settings.json $(OutDir)</Command>
+      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) debug_build $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -91,7 +93,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe generate_settings_file $(SolutionDir) &amp;&amp; call LocalizationUtils.exe generate $(SolutionDir)localization_utils_settings.json &amp;&amp; call LocalizationUtils.exe release_build $(SolutionDir)localization_utils_settings.json $(OutDir)</Command>
+      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) release_build $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -100,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\LocalizationUtils.exe" />
+    <None Include="LocalizationMacros.props" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TextLocalization.h" />
