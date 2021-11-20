@@ -59,7 +59,9 @@ namespace localization
 	{
 		try
 		{
-			return dictionaries->at(language)->at(key);
+			const string& result = dictionaries->at(language)->at(key);
+
+			return result.empty() ? dictionaries->at(*originalLanguage)->at(key) : result;
 		}
 		catch (const out_of_range&)
 		{

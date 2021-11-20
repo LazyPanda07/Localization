@@ -7,6 +7,7 @@
 
 namespace localization
 {
+	/// @brief Singleton for text localization
 	class TextLocalization
 	{
 	private:
@@ -30,18 +31,18 @@ namespace localization
 
 	public:
 		/// @brief Exception can be thrown on first call
-		/// @return
+		/// @return Singleton instance
 		/// @exception std::runtime_error 
 		static TextLocalization& get();
 
-		/// @brief 
-		/// @param language 
+		/// @brief Change localization
+		/// @param language Language key
 		/// @exception std::runtime_error
 		void changeLanguage(const std::string& language);
 
-		/// @brief 
-		/// @param key 
-		/// @return
+		/// @brief Get localized text
+		/// @param key Localization key
+		/// @return Localized value
 		/// @exception std::runtime_error 
 		const std::string& operator [] (const std::string& key) const;
 	};
