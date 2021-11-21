@@ -28,6 +28,13 @@ namespace localization
 		}
 	}
 
+	BaseTextLocalization<wchar_t>& BaseTextLocalization<wchar_t>::get()
+	{
+		static BaseTextLocalization<wchar_t> instance;
+
+		return instance;
+	}
+
 	void BaseTextLocalization<wchar_t>::changeLanguage(const string& language)
 	{
 		this->language = language;
