@@ -30,7 +30,7 @@ namespace localization
 
 		BaseTextLocalization& operator = (BaseTextLocalization&&) noexcept = delete;
 
-		~BaseTextLocalization();
+		~BaseTextLocalization() = default;
 
 	public:
 		/// @brief Exception can be thrown on first call
