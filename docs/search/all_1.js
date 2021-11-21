@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['get_1',['get',['../classlocalization_1_1_text_localization.html#ad3398ceb08493ebd822fdf7ac5fb78d4',1,'localization::TextLocalization']]]
+  ['changelanguage_2',['changeLanguage',['../classlocalization_1_1_base_text_localization.html#a3e7fabe3dc2d28f2b059a760c8c76dca',1,'localization::BaseTextLocalization::changeLanguage()'],['../classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#af214d556409c62944f116d8cdbb2ad36',1,'localization::BaseTextLocalization&lt; wchar_t &gt;::changeLanguage()']]]
 ];

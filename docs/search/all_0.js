@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['changelanguage_0',['changeLanguage',['../classlocalization_1_1_text_localization.html#ac31380362d2bc82816f54408e33a9d30',1,'localization::TextLocalization']]]
+  ['basetextlocalization_0',['BaseTextLocalization',['../classlocalization_1_1_base_text_localization.html',1,'localization']]],
+  ['basetextlocalization_3c_20wchar_5ft_20_3e_1',['BaseTextLocalization&lt; wchar_t &gt;',['../classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html',1,'localization']]]
 ];

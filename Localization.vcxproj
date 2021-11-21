@@ -98,14 +98,17 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\TextLocalization.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="assets\LocalizationUtils.exe" />
     <None Include="LocalizationMacros.props" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BaseTextLocalization.h" />
     <ClInclude Include="src\TextLocalization.h" />
+    <ClInclude Include="src\WTextLocalization.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\TextLocalization.cpp" />
+    <ClCompile Include="src\WTextLocalization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
