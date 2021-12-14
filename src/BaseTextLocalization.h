@@ -96,7 +96,7 @@ namespace localization
 	}
 
 	template<typename T>
-	BaseTextLocalization<T>& BaseTextLocalization<T>::get()
+	inline BaseTextLocalization<T>& BaseTextLocalization<T>::get()
 	{
 		static BaseTextLocalization<T> instance;
 
