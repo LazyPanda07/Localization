@@ -45,3 +45,6 @@ Localization.sln
 
 # LocalizationUtils.exe folder generation
 ProjectLocalization/
+
+# Dependencies
+!JSON.lib
