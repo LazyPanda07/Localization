@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-#include "JSONParser.h"
+#include "LocalizationConstants.h"
 #include "JSONArrayWrapper.h"
 
 using namespace std;
@@ -18,19 +18,19 @@ namespace localization
 
 	MultiLocalizationManager::MultiLocalizationManager()
 	{
+		if (!filesystem::exists(localizationModulesFile))
+		{
+			throw std::runtime_error(format("Can't find {}"sv, localizationModulesFile));
+		}
+
 		TextLocalization::get();
 		WTextLocalization::get();
 
-		json::JSONParser settings;
-
-		if (filesystem::exists("localization_modules.json"))
-		{
-			settings.setJSONData(ifstream("localization_modules.json"));
-		}
+		settings.setJSONData(ifstream(localizationModulesFile.data()));
 
 		if (settings.begin() != settings.end())
 		{
-			for (const string& module : json::utility::JSONArrayWrapper(settings.getArray("modules")).getAsStringArray())
+			for (const string& module : json::utility::JSONArrayWrapper(settings.getArray(settings::modulesSetting)).getAsStringArray())
 			{
 				this->addModule(module);
 			}
@@ -54,11 +54,11 @@ namespace localization
 		return instance;
 	}
 
-	const MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::addModule(const filesystem::path& pathToLocalizationModule)
+	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::addModule(const filesystem::path& pathToLocalizationModule)
 	{
-		if (pathToLocalizationModule == defaultLocalizationModule)
+		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
 		{
-			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, defaultLocalizationModule));
+			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, settings.getString(settings::defaultModuleSetting)));
 		}
 
 		TextLocalization textLocalizationModule(pathToLocalizationModule.string());
@@ -83,11 +83,11 @@ namespace localization
 		return true;
 	}
 
-	const MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::getModule(const filesystem::path& pathToLocalizationModule) const
+	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::getModule(const filesystem::path& pathToLocalizationModule) const
 	{
-		if (pathToLocalizationModule == defaultLocalizationModule)
+		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
 		{
-			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, defaultLocalizationModule));
+			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, settings.getString(settings::defaultModuleSetting)));
 		}
 
 		return localizations.at(pathToLocalizationModule.string());
@@ -95,7 +95,7 @@ namespace localization
 
 	const string& MultiLocalizationManager::getLocalizedString(const filesystem::path& pathToLocalizationModule, const string& key) const
 	{
-		if (pathToLocalizationModule == defaultLocalizationModule)
+		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
 		{
 			return TextLocalization::get()[key];
 		}
@@ -105,7 +105,7 @@ namespace localization
 
 	const wstring& MultiLocalizationManager::getLocalizedWideString(const filesystem::path& pathToLocalizationModule, const string& key) const
 	{
-		if (pathToLocalizationModule == defaultLocalizationModule)
+		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
 		{
 			return WTextLocalization::get()[key];
 		}

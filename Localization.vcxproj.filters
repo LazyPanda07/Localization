@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Include="assets\LocalizationUtils.exe" />
     <None Include="LocalizationMacros.props" />
+    <None Include="localization_modules.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseTextLocalization.h">
@@ -53,6 +54,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\MultiLocalizationManager.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LocalizationConstants.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

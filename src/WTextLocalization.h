@@ -18,12 +18,13 @@ namespace localization
 		std::unordered_map<std::string, std::unordered_map<std::string, std::wstring>> dictionaries;
 		std::string originalLanguage;
 		std::string language;
+		std::string pathToModule;
 
 	private:
 		void convertLocalization(const TextLocalization& localizationModule);
 
 	private:
-		BaseTextLocalization(const std::string& localizationModule = defaultLocalizationModule.data());
+		BaseTextLocalization(const std::string& localizationModule);
 
 		BaseTextLocalization(const TextLocalization& localizationModule);
 
@@ -56,6 +57,9 @@ namespace localization
 		/// @return language
 		const std::string& getCurrentLanguage() const;
 
+		/// @brief Get path to used module
+		const std::string& getPathToModule() const;
+
 		/// @brief Get localized text
 		/// @param key Localization key
 		/// @return Localized value
@@ -64,5 +68,6 @@ namespace localization
 
 		friend class MultiLocalizationManager;
 		friend struct LocalizationHolder;
+		friend std::unique_ptr<WTextLocalization>::deleter_type;
 	};
 }

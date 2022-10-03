@@ -24,11 +24,13 @@ namespace localization
 
 			dictionaries[language] = move(convertedDictionary);
 		}
+
+		pathToModule = localizationModule.getPathToModule();
 	}
 
 	BaseTextLocalization<wchar_t>::BaseTextLocalization(const string& localizationModule)
 	{
-		if (localizationModule == defaultLocalizationModule)
+		if (localizationModule == TextLocalization::get().getPathToModule())
 		{
 			this->convertLocalization(TextLocalization::get());
 		}
@@ -53,15 +55,23 @@ namespace localization
 		dictionaries = move(other.dictionaries);
 		originalLanguage = move(other.originalLanguage);
 		language = move(other.language);
+		pathToModule = move(other.pathToModule);
 
 		return *this;
 	}
 
 	BaseTextLocalization<wchar_t>& BaseTextLocalization<wchar_t>::get()
 	{
-		static BaseTextLocalization<wchar_t> instance;
+		static unique_ptr<BaseTextLocalization<wchar_t>> instance;
 
-		return instance;
+		if (!instance)
+		{
+			json::JSONParser settings(ifstream(localizationModulesFile.data()));
+
+			instance = unique_ptr<WTextLocalization>(new WTextLocalization(settings.getString(settings.getString(settings::defaultModuleSetting))));
+		}
+
+		return *instance;
 	}
 
 	void BaseTextLocalization<wchar_t>::changeLanguage(const string& language)
@@ -82,6 +92,11 @@ namespace localization
 	const string& BaseTextLocalization<wchar_t>::getCurrentLanguage() const
 	{
 		return language;
+	}
+
+	const string& BaseTextLocalization<wchar_t>::getPathToModule() const
+	{
+		return pathToModule;
 	}
 
 	const wstring& BaseTextLocalization<wchar_t>::operator [] (const string& key) const

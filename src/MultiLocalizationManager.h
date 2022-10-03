@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <filesystem>
 
+#include "JSONParser.h"
 #include "TextLocalization.h"
 #include "WTextLocalization.h"
 
@@ -33,6 +34,7 @@ namespace localization
 		};
 
 	private:
+		json::JSONParser settings;
 		std::unordered_map<std::string, LocalizationHolder*> localizations;
 
 	private:
@@ -51,6 +53,7 @@ namespace localization
 	public:
 		/// @brief Singleton instance
 		/// @return MultiLocalizationManager
+		/// @exception std::runtime_error
 		/// @exception json::exceptions::CantFindValueException 
 		/// @exception std::bad_variant_access Other type found
 		static MultiLocalizationManager& getManager();
@@ -59,7 +62,7 @@ namespace localization
 		/// @param pathToLocalizationModule Path to localization module
 		/// @return Pointer to MultiLocalizationManager::LocalizationHolder 
 		/// @exception std::runtime_error
-		const LocalizationHolder* addModule(const std::filesystem::path& pathToLocalizationModule);
+		LocalizationHolder* addModule(const std::filesystem::path& pathToLocalizationModule);
 
 		/// @brief Remove localization module
 		/// @param pathToLocalizationModule Path to localization module
@@ -70,7 +73,7 @@ namespace localization
 		/// @param pathToLocalizationModule Pat to localization module
 		/// @return Pointer to MultiLocalizationManager::LocalizationHolder 
 		/// @exception std::runtime_error
-		const LocalizationHolder* getModule(const std::filesystem::path& pathToLocalizationModule) const;
+		LocalizationHolder* getModule(const std::filesystem::path& pathToLocalizationModule) const;
 
 		/// @brief Get localized text
 		/// @param key Localization key
@@ -84,4 +87,6 @@ namespace localization
 		/// @exception std::runtime_error Wrong key
 		const std::wstring& getLocalizedWideString(const std::filesystem::path& pathToLocalizationModule, const std::string& key) const;
 	};
+
+	using Holder = MultiLocalizationManager::LocalizationHolder;
 }

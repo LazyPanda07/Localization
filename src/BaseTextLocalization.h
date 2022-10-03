@@ -5,14 +5,17 @@
 #include <stdexcept>
 #include <format>
 #include <algorithm>
+#include <iostream>
+#include <fstream>
 
 #include <Windows.h>
+
+#include "JSONParser.h"
+#include "LocalizationConstants.h"
 
 namespace localization
 {
 	using namespace std::string_view_literals;
-
-	inline constexpr std::string_view defaultLocalizationModule = "Localization.dll";
 
 	/// @brief Singleton for text localization
 	template<typename T>
@@ -22,10 +25,11 @@ namespace localization
 		const std::unordered_map<std::string, const std::unordered_map<std::string, std::string>*>* dictionaries;
 		const std::string* originalLanguage;
 		std::string language;
+		std::string pathToModule;
 		HMODULE handle;
 
 	private:
-		BaseTextLocalization(const std::string& localizationModule = defaultLocalizationModule.data());
+		BaseTextLocalization(const std::string& localizationModule);
 
 		BaseTextLocalization(const BaseTextLocalization<T>&) = delete;
 
@@ -38,7 +42,7 @@ namespace localization
 		~BaseTextLocalization();
 
 	public:
-		/// @brief Exception can be thrown on first call
+		/// @brief Exception can be thrown on first call. Warnings outputs in std::cerr
 		/// @return Singleton instance of default localization module(Localization.dll)
 		/// @exception std::runtime_error Can't find localization module or something inside localization module
 		static BaseTextLocalization& get();
@@ -56,6 +60,9 @@ namespace localization
 		/// @return language
 		const std::string& getCurrentLanguage() const;
 
+		/// @brief Get path to used module
+		const std::string& getPathToModule() const;
+
 		/// @brief Get localized text
 		/// @param key Localization key
 		/// @return Localized value
@@ -65,6 +72,7 @@ namespace localization
 		friend class BaseTextLocalization<wchar_t>;
 		friend class MultiLocalizationManager;
 		friend struct LocalizationHolder;
+		friend std::unique_ptr<BaseTextLocalization<T>>::deleter_type;
 	};
 
 	template<typename T>
@@ -77,11 +85,13 @@ namespace localization
 			throw std::runtime_error(std::format("Can't find {}"sv, localizationModule));
 		}
 
+		pathToModule = localizationModule;
+
 		dictionaries = reinterpret_cast<const std::unordered_map<std::string, const std::unordered_map<std::string, std::string>*>*>(GetProcAddress(handle, "dictionaries"));
 
 		if (!dictionaries)
 		{
-			throw std::runtime_error(std::format("Can't find dictionaries in {}, rebuild and try again"sv, localizationModule));
+			std::cerr << std::format("Can't find dictionaries in {}, rebuild and try again"sv, localizationModule);
 		}
 
 		originalLanguage = reinterpret_cast<const std::string*>(GetProcAddress(handle, "originalLanguage"));
@@ -106,6 +116,7 @@ namespace localization
 		dictionaries = other.dictionaries;
 		originalLanguage = other.originalLanguage;
 		language = std::move(other.language);
+		pathToModule = std::move(other.pathToModule);
 		handle = other.handle;
 
 		other.handle = nullptr;
@@ -122,9 +133,16 @@ namespace localization
 	template<typename T>
 	inline BaseTextLocalization<T>& BaseTextLocalization<T>::get()
 	{
-		static BaseTextLocalization<T> instance;
+		static std::unique_ptr<BaseTextLocalization<T>> instance;
 
-		return instance;
+		if (!instance)
+		{
+			json::JSONParser settings(std::ifstream(localizationModulesFile.data()));
+
+			instance = std::unique_ptr<BaseTextLocalization<T>>(new BaseTextLocalization<T>(settings.getString(settings::defaultModuleSetting)));
+		}
+
+		return *instance;
 	}
 
 	template<typename T>
@@ -148,6 +166,12 @@ namespace localization
 	const std::string& BaseTextLocalization<T>::getCurrentLanguage() const
 	{
 		return language;
+	}
+
+	template<typename T>
+	const std::string& BaseTextLocalization<T>::getPathToModule() const
+	{
+		return pathToModule;
 	}
 
 	template<typename T>

@@ -71,7 +71,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) debug_build $(OutDir)</Command>
+      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) debug_build $(OutDir) &amp;&amp; xcopy /y $(ProjectDir)localization_modules.json $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
     <Lib>
@@ -96,7 +96,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) release_build $(OutDir)</Command>
+      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) release_build $(OutDir) &amp;&amp; xcopy /y $(ProjectDir)localization_modules.json $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
     <Lib>
@@ -106,6 +106,7 @@
   <ItemGroup>
     <None Include="assets\LocalizationUtils.exe" />
     <None Include="LocalizationMacros.props" />
+    <None Include="localization_modules.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\JSON\include\Exceptions\BaseJSONException.h" />
@@ -117,6 +118,7 @@
     <ClInclude Include="dependencies\JSON\include\JSONParser.h" />
     <ClInclude Include="dependencies\JSON\include\JSONUtility.h" />
     <ClInclude Include="src\BaseTextLocalization.h" />
+    <ClInclude Include="src\LocalizationConstants.h" />
     <ClInclude Include="src\MultiLocalizationManager.h" />
     <ClInclude Include="src\TextLocalization.h" />
     <ClInclude Include="src\WTextLocalization.h" />
