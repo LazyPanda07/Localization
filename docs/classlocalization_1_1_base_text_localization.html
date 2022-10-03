@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Localization
-   &#160;<span id="projectnumber">1.2</span>
+   &#160;<span id="projectnumber">1.3</span>
    </div>
    <div id="projectbrief">Localization subsystem</div>
   </td>
@@ -124,6 +124,12 @@ Friends</h2></td></tr>
 <tr class="memitem:aa8f037d74ef4dd0a1d0cae41dcebc373"><td class="memItemLeft" align="right" valign="top"><a id="aa8f037d74ef4dd0a1d0cae41dcebc373"></a>
 class&#160;</td><td class="memItemRight" valign="bottom"><b>BaseTextLocalization&lt; wchar_t &gt;</b></td></tr>
 <tr class="separator:aa8f037d74ef4dd0a1d0cae41dcebc373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ce7ef5a01dd3775e7d1baaa46225c7"><td class="memItemLeft" align="right" valign="top"><a id="a35ce7ef5a01dd3775e7d1baaa46225c7"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>MultiLocalizationManager</b></td></tr>
+<tr class="separator:a35ce7ef5a01dd3775e7d1baaa46225c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfada954d3f28b274846c3c116cc0e27"><td class="memItemLeft" align="right" valign="top"><a id="adfada954d3f28b274846c3c116cc0e27"></a>
+struct&#160;</td><td class="memItemRight" valign="bottom"><b>LocalizationHolder</b></td></tr>
+<tr class="separator:adfada954d3f28b274846c3c116cc0e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />
@@ -131,7 +137,7 @@ class localization::BaseTextLocalization&lt; T &gt;</h3>
 
 <p>Singleton for text localization. </p>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00016">16</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00019">19</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3e7fabe3dc2d28f2b059a760c8c76dca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3e7fabe3dc2d28f2b059a760c8c76dca">&#9670;&nbsp;</a></span>changeLanguage()</h2>
@@ -165,7 +171,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00107">107</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00131">131</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>
@@ -186,21 +192,21 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Exception can be thrown on first call. </p>
-<dl class="section return"><dt>Returns</dt><dd>Singleton instance </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Singleton instance of default localization module(Localization.dll) </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>Can't find Localization.dll or something inside Localization.dll </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>Can't find localization module or something inside localization module </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00099">99</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00123">123</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>
@@ -221,7 +227,7 @@ template&lt;typename T &gt; </div>
 <p>Get current language. </p>
 <dl class="section return"><dt>Returns</dt><dd>language </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00124">124</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00148">148</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>
@@ -242,7 +248,7 @@ template&lt;typename T &gt; </div>
 <p>Get original language. </p>
 <dl class="section return"><dt>Returns</dt><dd>originalLanguage </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00118">118</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00142">142</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>
@@ -279,7 +285,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00130">130</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00154">154</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>

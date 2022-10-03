@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['changelanguage_2',['changeLanguage',['../classlocalization_1_1_base_text_localization.html#a3e7fabe3dc2d28f2b059a760c8c76dca',1,'localization::BaseTextLocalization::changeLanguage()'],['../classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#af214d556409c62944f116d8cdbb2ad36',1,'localization::BaseTextLocalization&lt; wchar_t &gt;::changeLanguage()']]]
+  ['basetextlocalization_1',['BaseTextLocalization',['../classlocalization_1_1_base_text_localization.html',1,'localization']]],
+  ['basetextlocalization_3c_20char_20_3e_2',['BaseTextLocalization&lt; char &gt;',['../classlocalization_1_1_base_text_localization.html',1,'localization']]],
+  ['basetextlocalization_3c_20wchar_5ft_20_3e_3',['BaseTextLocalization&lt; wchar_t &gt;',['../classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html',1,'localization']]]
 ];

@@ -4,5 +4,7 @@ var classlocalization_1_1_base_text_localization =
     [ "getCurrentLanguage", "classlocalization_1_1_base_text_localization.html#aa2e72ffd3815578a92df2d01355fe2f1", null ],
     [ "getOriginalLanguage", "classlocalization_1_1_base_text_localization.html#a5ae69273a7954cbfba4eb392ec2f002a", null ],
     [ "operator[]", "classlocalization_1_1_base_text_localization.html#aa12e046a13147390ff2441ec7ee74faa", null ],
-    [ "BaseTextLocalization< wchar_t >", "classlocalization_1_1_base_text_localization.html#aa8f037d74ef4dd0a1d0cae41dcebc373", null ]
+    [ "BaseTextLocalization< wchar_t >", "classlocalization_1_1_base_text_localization.html#aa8f037d74ef4dd0a1d0cae41dcebc373", null ],
+    [ "LocalizationHolder", "classlocalization_1_1_base_text_localization.html#adfada954d3f28b274846c3c116cc0e27", null ],
+    [ "MultiLocalizationManager", "classlocalization_1_1_base_text_localization.html#a35ce7ef5a01dd3775e7d1baaa46225c7", null ]
 ];

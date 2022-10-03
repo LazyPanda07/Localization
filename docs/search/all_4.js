@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['textlocalization_7',['TextLocalization',['../_text_localization_8h.html#a1a26eeb79096e4d7147a88a7a7c36838',1,'localization']]],
-  ['textlocalization_2eh_8',['TextLocalization.h',['../_text_localization_8h.html',1,'']]]
+  ['localizationholder_12',['LocalizationHolder',['../structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html',1,'localization::MultiLocalizationManager']]]
 ];

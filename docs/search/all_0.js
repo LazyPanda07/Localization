@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['basetextlocalization_0',['BaseTextLocalization',['../classlocalization_1_1_base_text_localization.html',1,'localization']]],
-  ['basetextlocalization_3c_20wchar_5ft_20_3e_1',['BaseTextLocalization&lt; wchar_t &gt;',['../classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html',1,'localization']]]
+  ['addmodule_0',['addModule',['../classlocalization_1_1_multi_localization_manager.html#ac39bea73c4fcc27ff4c3d9510249c3b1',1,'localization::MultiLocalizationManager']]]
 ];
