@@ -2,18 +2,18 @@
 
 using namespace std;
 
-wstring to_wstring(const string& source);
+static wstring to_wstring(const string& source);
 
 namespace localization
 {
-	BaseTextLocalization<wchar_t>::BaseTextLocalization()
+	BaseTextLocalization<wchar_t>::BaseTextLocalization(const string& localizationModule)
 	{
-		TextLocalization& instance = TextLocalization::get();
+		TextLocalization localization(localizationModule);
 
-		originalLanguage = instance.getOriginalLanguage();
-		language = instance.language;
+		originalLanguage = localization.getOriginalLanguage();
+		language = localization.language;
 
-		for (const auto& [language, dictionary] : (*instance.dictionaries))
+		for (const auto& [language, dictionary] : (*localization.dictionaries))
 		{
 			unordered_map<string, wstring> convertedDictionary;
 
@@ -37,6 +37,11 @@ namespace localization
 
 	void BaseTextLocalization<wchar_t>::changeLanguage(const string& language)
 	{
+		if (dictionaries.find(language) == dictionaries.end())
+		{
+			throw runtime_error(format(R"(Wrong language value "{}")"sv, language));
+		}
+
 		this->language = language;
 	}
 

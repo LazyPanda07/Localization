@@ -64,7 +64,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)dependencies\JSON\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -74,6 +74,9 @@
       <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) debug_build $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\JSON\libs\$(Configuration)-$(Platform)\</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -84,7 +87,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)dependencies\JSON\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -96,12 +99,23 @@
       <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) release_build $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\JSON\libs\$(Configuration)-$(Platform)\</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="assets\LocalizationUtils.exe" />
     <None Include="LocalizationMacros.props" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dependencies\JSON\include\Exceptions\BaseJSONException.h" />
+    <ClInclude Include="dependencies\JSON\include\Exceptions\CantFindValueException.h" />
+    <ClInclude Include="dependencies\JSON\include\Exceptions\WrongEncodingException.h" />
+    <ClInclude Include="dependencies\JSON\include\Exceptions\WrongInputStreamException.h" />
+    <ClInclude Include="dependencies\JSON\include\JSONArrayWrapper.h" />
+    <ClInclude Include="dependencies\JSON\include\JSONBuilder.h" />
+    <ClInclude Include="dependencies\JSON\include\JSONParser.h" />
+    <ClInclude Include="dependencies\JSON\include\JSONUtility.h" />
     <ClInclude Include="src\BaseTextLocalization.h" />
     <ClInclude Include="src\TextLocalization.h" />
     <ClInclude Include="src\WTextLocalization.h" />

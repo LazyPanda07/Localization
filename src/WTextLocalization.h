@@ -20,7 +20,7 @@ namespace localization
 		std::string language;
 
 	private:
-		BaseTextLocalization();
+		BaseTextLocalization(const std::string& localizationModule = "Localization.dll");
 
 		BaseTextLocalization(const BaseTextLocalization&) = delete;
 

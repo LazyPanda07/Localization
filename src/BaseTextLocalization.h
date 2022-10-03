@@ -22,7 +22,7 @@ namespace localization
 		HMODULE handle;
 
 	private:
-		BaseTextLocalization();
+		BaseTextLocalization(const std::string& localizationModule = "Localization.dll");
 
 		BaseTextLocalization(const BaseTextLocalization&) = delete;
 
@@ -36,8 +36,8 @@ namespace localization
 
 	public:
 		/// @brief Exception can be thrown on first call
-		/// @return Singleton instance
-		/// @exception std::runtime_error Can't find Localization.dll or something inside Localization.dll
+		/// @return Singleton instance of default localization module(Localization.dll)
+		/// @exception std::runtime_error Can't find localization module or something inside localization module
 		static BaseTextLocalization& get();
 
 		/// @brief Change localization
@@ -63,27 +63,27 @@ namespace localization
 	};
 
 	template<typename T>
-	BaseTextLocalization<T>::BaseTextLocalization()
+	BaseTextLocalization<T>::BaseTextLocalization(const std::string& localizationModule)
 	{
-		handle = LoadLibraryA("Localization.dll");
+		handle = LoadLibraryA(localizationModule.data());
 
 		if (!handle)
 		{
-			throw std::runtime_error("Can't find Localization.dll");
+			throw std::runtime_error(std::format("Can't find {}"sv, localizationModule));
 		}
 
 		dictionaries = reinterpret_cast<const std::unordered_map<std::string, const std::unordered_map<std::string, std::string>*>*>(GetProcAddress(handle, "dictionaries"));
 
 		if (!dictionaries)
 		{
-			throw std::runtime_error("Can't find dictionaries in Localization.dll, rebuild and try again");
+			throw std::runtime_error(std::format("Can't find dictionaries in {}, rebuild and try again"sv, localizationModule));
 		}
 
 		originalLanguage = reinterpret_cast<const std::string*>(GetProcAddress(handle, "originalLanguage"));
 
 		if (!originalLanguage)
 		{
-			throw std::runtime_error("Can't find originalLanguage in Localization.dll, rebuild and try again");
+			throw std::runtime_error(std::format("Can't find originalLanguage in {}, rebuild and try again"sv, localizationModule));
 		}
 
 		language = *originalLanguage;
