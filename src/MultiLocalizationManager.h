@@ -49,16 +49,37 @@ namespace localization
 	public:
 		/// @brief Singleton instance
 		/// @return MultiLocalizationManager
+		/// @exception json::exceptions::CantFindValueException 
+		/// @exception std::bad_variant_access Other type found
 		static MultiLocalizationManager& getManager();
 
+		/// @brief Add additional localization module
+		/// @param pathToLocalizationModule Path to localization module
+		/// @return Pointer to MultiLocalizationManager::LocalizationHolder 
+		/// @exception std::runtime_error
 		const LocalizationHolder* addModule(const std::filesystem::path& pathToLocalizationModule);
 
+		/// @brief Remove localization module
+		/// @param pathToLocalizationModule Path to localization module
+		/// @return Module was successfully removed
 		bool removeModule(const std::filesystem::path& pathToLocalizationModule);
 
+		/// @brief Get pointer to MultiLocalizationManager::LocalizationHolder 
+		/// @param pathToLocalizationModule Pat to localization module
+		/// @return Pointer to MultiLocalizationManager::LocalizationHolder 
+		/// @exception std::runtime_error
 		const LocalizationHolder* getModule(const std::filesystem::path& pathToLocalizationModule) const;
 
+		/// @brief Get localized text
+		/// @param key Localization key
+		/// @return Localized value
+		/// @exception std::runtime_error Wrong key 
 		const std::string& getLocalizedString(const std::filesystem::path& pathToLocalizationModule, const std::string& key) const;
 
+		/// @brief Get localized text
+		/// @param key Localization key
+		/// @return Localized value
+		/// @exception std::runtime_error Wrong key
 		const std::wstring& getLocalizedWideString(const std::filesystem::path& pathToLocalizationModule, const std::string& key) const;
 	};
 }
