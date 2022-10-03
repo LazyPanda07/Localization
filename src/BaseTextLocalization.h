@@ -4,12 +4,15 @@
 #include <string>
 #include <stdexcept>
 #include <format>
+#include <algorithm>
 
 #include <Windows.h>
 
 namespace localization
 {
 	using namespace std::string_view_literals;
+
+	inline constexpr std::string_view defaultLocalizationModule = "Localization.dll";
 
 	/// @brief Singleton for text localization
 	template<typename T>
@@ -22,15 +25,15 @@ namespace localization
 		HMODULE handle;
 
 	private:
-		BaseTextLocalization(const std::string& localizationModule = "Localization.dll");
+		BaseTextLocalization(const std::string& localizationModule = defaultLocalizationModule.data());
 
-		BaseTextLocalization(const BaseTextLocalization&) = delete;
+		BaseTextLocalization(const BaseTextLocalization<T>&) = delete;
 
-		BaseTextLocalization(BaseTextLocalization&&) noexcept = delete;
+		BaseTextLocalization(BaseTextLocalization<T>&& other) noexcept;
 
-		BaseTextLocalization& operator = (const BaseTextLocalization&) = delete;
+		BaseTextLocalization<T>& operator = (const BaseTextLocalization<T>&) = delete;
 
-		BaseTextLocalization& operator = (BaseTextLocalization&&) noexcept = delete;
+		BaseTextLocalization<T>& operator = (BaseTextLocalization<T>&& other) noexcept;
 
 		~BaseTextLocalization();
 
@@ -60,6 +63,8 @@ namespace localization
 		const std::basic_string<T>& operator [] (const std::string& key) const;
 
 		friend class BaseTextLocalization<wchar_t>;
+		friend class MultiLocalizationManager;
+		friend struct LocalizationHolder;
 	};
 
 	template<typename T>
@@ -87,6 +92,25 @@ namespace localization
 		}
 
 		language = *originalLanguage;
+	}
+
+	template<typename T>
+	BaseTextLocalization<T>::BaseTextLocalization(BaseTextLocalization<T>&& other) noexcept
+	{
+		(*this) = std::move(other);
+	}
+
+	template<typename T>
+	BaseTextLocalization<T>& BaseTextLocalization<T>::operator = (BaseTextLocalization<T>&& other) noexcept
+	{
+		dictionaries = other.dictionaries;
+		originalLanguage = other.originalLanguage;
+		language = std::move(other.language);
+		handle = other.handle;
+
+		other.handle = nullptr;
+
+		return *this;
 	}
 
 	template<typename T>

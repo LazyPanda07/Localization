@@ -117,10 +117,12 @@
     <ClInclude Include="dependencies\JSON\include\JSONParser.h" />
     <ClInclude Include="dependencies\JSON\include\JSONUtility.h" />
     <ClInclude Include="src\BaseTextLocalization.h" />
+    <ClInclude Include="src\MultiLocalizationManager.h" />
     <ClInclude Include="src\TextLocalization.h" />
     <ClInclude Include="src\WTextLocalization.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\MultiLocalizationManager.cpp" />
     <ClCompile Include="src\TextLocalization.cpp" />
     <ClCompile Include="src\WTextLocalization.cpp" />
   </ItemGroup>

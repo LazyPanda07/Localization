@@ -6,14 +6,12 @@ static wstring to_wstring(const string& source);
 
 namespace localization
 {
-	BaseTextLocalization<wchar_t>::BaseTextLocalization(const string& localizationModule)
+	void BaseTextLocalization<wchar_t>::convertLocalization(const TextLocalization& localizationModule)
 	{
-		TextLocalization localization(localizationModule);
+		originalLanguage = localizationModule.getOriginalLanguage();
+		language = localizationModule.language;
 
-		originalLanguage = localization.getOriginalLanguage();
-		language = localization.language;
-
-		for (const auto& [language, dictionary] : (*localization.dictionaries))
+		for (const auto& [language, dictionary] : (*localizationModule.dictionaries))
 		{
 			unordered_map<string, wstring> convertedDictionary;
 
@@ -26,6 +24,37 @@ namespace localization
 
 			dictionaries[language] = move(convertedDictionary);
 		}
+	}
+
+	BaseTextLocalization<wchar_t>::BaseTextLocalization(const string& localizationModule)
+	{
+		if (localizationModule == defaultLocalizationModule)
+		{
+			this->convertLocalization(TextLocalization::get());
+		}
+		else
+		{
+			this->convertLocalization(TextLocalization(localizationModule));
+		}
+	}
+
+	BaseTextLocalization<wchar_t>::BaseTextLocalization(const TextLocalization& localizationModule)
+	{
+		this->convertLocalization(localizationModule);
+	}
+
+	BaseTextLocalization<wchar_t>::BaseTextLocalization(WTextLocalization&& other) noexcept
+	{
+		(*this) = move(other);
+	}
+
+	WTextLocalization& BaseTextLocalization<wchar_t>::operator = (WTextLocalization&& other) noexcept
+	{
+		dictionaries = move(other.dictionaries);
+		originalLanguage = move(other.originalLanguage);
+		language = move(other.language);
+
+		return *this;
 	}
 
 	BaseTextLocalization<wchar_t>& BaseTextLocalization<wchar_t>::get()

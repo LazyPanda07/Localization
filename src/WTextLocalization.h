@@ -20,15 +20,20 @@ namespace localization
 		std::string language;
 
 	private:
-		BaseTextLocalization(const std::string& localizationModule = "Localization.dll");
+		void convertLocalization(const TextLocalization& localizationModule);
 
-		BaseTextLocalization(const BaseTextLocalization&) = delete;
+	private:
+		BaseTextLocalization(const std::string& localizationModule = defaultLocalizationModule.data());
 
-		BaseTextLocalization(BaseTextLocalization&&) noexcept = delete;
+		BaseTextLocalization(const TextLocalization& localizationModule);
 
-		BaseTextLocalization& operator = (const BaseTextLocalization&) = delete;
+		BaseTextLocalization(const WTextLocalization&) = delete;
 
-		BaseTextLocalization& operator = (BaseTextLocalization&&) noexcept = delete;
+		BaseTextLocalization(WTextLocalization&& other) noexcept;
+
+		WTextLocalization& operator = (const WTextLocalization&) = delete;
+
+		WTextLocalization& operator = (WTextLocalization&& other) noexcept;
 
 		~BaseTextLocalization() = default;
 
@@ -56,5 +61,8 @@ namespace localization
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
 		const std::wstring& operator [] (const std::string& key) const;
+
+		friend class MultiLocalizationManager;
+		friend struct LocalizationHolder;
 	};
 }
