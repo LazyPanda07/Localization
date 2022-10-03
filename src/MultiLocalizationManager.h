@@ -6,6 +6,8 @@
 #include "TextLocalization.h"
 #include "WTextLocalization.h"
 
+#pragma comment(lib, "JSON.lib")
+
 namespace localization
 {
 	/// @brief Manage multi localization modules and multi localization itself
