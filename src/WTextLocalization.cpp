@@ -68,7 +68,7 @@ namespace localization
 		{
 			json::JSONParser settings(ifstream(localizationModulesFile.data()));
 
-			instance = unique_ptr<WTextLocalization>(new WTextLocalization(settings.getString(settings.getString(settings::defaultModuleSetting))));
+			instance = unique_ptr<WTextLocalization>(new WTextLocalization(settings.getString(settings::defaultModuleSetting)));
 		}
 
 		return *instance;
