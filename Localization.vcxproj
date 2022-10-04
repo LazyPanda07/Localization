@@ -71,7 +71,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) debug_build $(OutDir) &amp;&amp; xcopy /y $(ProjectDir)localization_modules.json $(OutDir)</Command>
+      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) debug_build $(OutDir) &amp;&amp; xcopy /y /d $(ProjectDir)localization_modules.json $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
     <Lib>
@@ -96,7 +96,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) release_build $(OutDir) &amp;&amp; xcopy /y $(ProjectDir)localization_modules.json $(OutDir)</Command>
+      <Command>cd $(ProjectDir)assets\ &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) generate &amp;&amp; call LocalizationUtils.exe $(ProjectLocalization) release_build $(OutDir) &amp;&amp; xcopy /y /d $(ProjectDir)localization_modules.json $(OutDir)</Command>
       <Outputs>output.txt</Outputs>
     </CustomBuildStep>
     <Lib>
