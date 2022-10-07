@@ -4,6 +4,8 @@
 
 #define LOCALIZATION_API __declspec(dllexport)
 
+#pragma warning(disable: 4251)
+
 namespace localization
 {
 	inline constexpr std::string_view localizationModulesFile = "localization_modules.json";

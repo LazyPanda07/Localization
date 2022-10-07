@@ -16,7 +16,7 @@ namespace localization
 	class LOCALIZATION_API MultiLocalizationManager
 	{
 	public:
-		struct LocalizationHolder
+		struct LOCALIZATION_API LocalizationHolder
 		{
 		public:
 			TextLocalization localization;
