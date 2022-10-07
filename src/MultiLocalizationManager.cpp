@@ -113,16 +113,16 @@ namespace localization
 		return language.empty() ? text[key] : text.getString(key, language);
 	}
 
-	const wstring& MultiLocalizationManager::getLocalizedWideString(const filesystem::path& pathToLocalizationModule, const string& key, const string& language) const
+	const wstring& MultiLocalizationManager::getLocalizedWideString(const string& localizationModuleName, const string& key, const string& language) const
 	{
-		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
+		if (localizationModuleName == settings.getString(settings::defaultModuleSetting))
 		{
 			return WTextLocalization::get()[key];
 		}
 
 		unique_lock<mutex> lock(mapMutex);
 
-		WTextLocalization& text = localizations.at(pathToLocalizationModule.string())->wlocalization;
+		WTextLocalization& text = localizations.at(localizationModuleName)->wlocalization;
 
 		return language.empty() ? text[key] : text.getString(key, language);
 	}

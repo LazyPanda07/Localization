@@ -12,7 +12,7 @@ namespace localization
 
 	/// @brief TextLocalization specialization with wchar_t
 	template<>
-	class BaseTextLocalization<wchar_t> final
+	class LOCALIZATION_API BaseTextLocalization<wchar_t> final
 	{
 	private:
 		std::unordered_map<std::string, std::unordered_map<std::string, std::wstring>> dictionaries;

@@ -19,7 +19,7 @@ namespace localization
 
 	/// @brief Singleton for text localization
 	template<typename T>
-	class BaseTextLocalization final
+	class LOCALIZATION_API BaseTextLocalization final
 	{
 	private:
 		const std::unordered_map<std::string, const std::unordered_map<std::string, std::string>*>* dictionaries;

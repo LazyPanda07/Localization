@@ -2,6 +2,8 @@
 
 #include <string>
 
+#define LOCALIZATION_API __declspec(dllexport)
+
 namespace localization
 {
 	inline constexpr std::string_view localizationModulesFile = "localization_modules.json";

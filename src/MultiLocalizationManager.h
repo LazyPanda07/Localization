@@ -13,7 +13,7 @@
 namespace localization
 {
 	/// @brief Manage multi localization modules and multi localization itself
-	class MultiLocalizationManager
+	class LOCALIZATION_API MultiLocalizationManager
 	{
 	public:
 		struct LocalizationHolder
@@ -92,7 +92,7 @@ namespace localization
 		/// @param language Localized value from specific language
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key 
-		const std::wstring& getLocalizedWideString(const std::filesystem::path& pathToLocalizationModule, const std::string& key, const std::string& language = "") const;
+		const std::wstring& getLocalizedWideString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
 	};
 
 	using Holder = MultiLocalizationManager::LocalizationHolder;
