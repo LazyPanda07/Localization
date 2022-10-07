@@ -91,7 +91,7 @@ $(document).ready(function(){initNavTree('_multi_localization_manager_8cpp_sourc
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;JSONParser.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;LocalizationConstants.h&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;JSONArrayWrapper.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">using namespace </span>std;</div>
@@ -107,19 +107,19 @@ $(document).ready(function(){initNavTree('_multi_localization_manager_8cpp_sourc
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    MultiLocalizationManager::MultiLocalizationManager()</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        TextLocalization::get();</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        WTextLocalization::get();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        json::JSONParser settings;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">if</span> (!filesystem::exists(localizationModulesFile))</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keywordflow">throw</span> std::runtime_error(format(<span class="stringliteral">&quot;Can&#39;t find {}&quot;</span>sv, localizationModulesFile));</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordflow">if</span> (filesystem::exists(<span class="stringliteral">&quot;localization_modules.json&quot;</span>))</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            settings.setJSONData(ifstream(<span class="stringliteral">&quot;localization_modules.json&quot;</span>));</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        TextLocalization::get();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        WTextLocalization::get();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        settings.setJSONData(ifstream(localizationModulesFile.data()));</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">if</span> (settings.begin() != settings.end())</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; module : json::utility::JSONArrayWrapper(settings.getArray(<span class="stringliteral">&quot;modules&quot;</span>)).getAsStringArray())</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; module : json::utility::JSONArrayWrapper(settings.getArray(settings::modulesSetting)).getAsStringArray())</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            {</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                this-&gt;addModule(module);</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            }</div>
@@ -143,69 +143,85 @@ $(document).ready(function(){initNavTree('_multi_localization_manager_8cpp_sourc
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordflow">return</span> instance;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#ac39bea73c4fcc27ff4c3d9510249c3b1">   57</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a>* MultiLocalizationManager::addModule(<span class="keyword">const</span> filesystem::path&amp; pathToLocalizationModule)</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#a4fdf4c90c1aa5e087b4a710bd43f58f2">   57</a></span>&#160;    <a class="code" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a>* MultiLocalizationManager::addModule(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; localizationModuleName, <span class="keyword">const</span> filesystem::path&amp; pathToLocalizationModule)</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">if</span> (pathToLocalizationModule == defaultLocalizationModule)</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">if</span> (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">throw</span> runtime_error(format(<span class="stringliteral">&quot;pathToLocalizationModule can&#39;t be {}&quot;</span>sv, defaultLocalizationModule));</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">throw</span> runtime_error(format(<span class="stringliteral">&quot;pathToLocalizationModule can&#39;t be {}&quot;</span>sv, settings.getString(settings::defaultModuleSetting)));</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <a class="code" href="classlocalization_1_1_base_text_localization.html">TextLocalization</a> textLocalizationModule(pathToLocalizationModule.string());</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html">WTextLocalization</a> wtextLocalizationModule(textLocalizationModule);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> localizations.emplace(pathToLocalizationModule.string(), <span class="keyword">new</span> <a class="code" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">LocalizationHolder</a>(move(textLocalizationModule), move(wtextLocalizationModule))).first-&gt;second;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#acff8819615ed1dbb6934bf82fe5a9d08">   70</a></span>&#160;    <span class="keywordtype">bool</span> MultiLocalizationManager::removeModule(<span class="keyword">const</span> filesystem::path&amp; pathToLocalizationModule)</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">auto</span> it = localizations.find(pathToLocalizationModule.string());</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordflow">if</span> (it == localizations.end())</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        localizations.erase(it);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keyword">delete</span> it-&gt;second;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        unique_lock&lt;mutex&gt; lock(mapMutex);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="classlocalization_1_1_base_text_localization.html">TextLocalization</a> textLocalizationModule(pathToLocalizationModule.string());</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <a class="code" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html">WTextLocalization</a> wtextLocalizationModule(textLocalizationModule);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordflow">return</span> localizations.emplace(localizationModuleName, <span class="keyword">new</span> <a class="code" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">LocalizationHolder</a>(move(textLocalizationModule), move(wtextLocalizationModule))).first-&gt;second;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#a34c6ad6cc8ad6b8cd0e02d44b32f6f2e">   72</a></span>&#160;    <span class="keywordtype">bool</span> MultiLocalizationManager::removeModule(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; localizationModuleName)</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        unique_lock&lt;mutex&gt; lock(mapMutex);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">auto</span> it = localizations.find(localizationModuleName);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">if</span> (it == localizations.end())</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        {</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        }</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#ae6c1e2a17f5504f8ce66c18c1b2f72f6">   86</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a>* MultiLocalizationManager::getModule(<span class="keyword">const</span> filesystem::path&amp; pathToLocalizationModule)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordflow">if</span> (pathToLocalizationModule == defaultLocalizationModule)</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">throw</span> runtime_error(format(<span class="stringliteral">&quot;pathToLocalizationModule can&#39;t be {}&quot;</span>sv, defaultLocalizationModule));</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">return</span> localizations.at(pathToLocalizationModule.string());</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#a9b573c9793ae7cf83f64fdcab28de145">   96</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; MultiLocalizationManager::getLocalizedString(<span class="keyword">const</span> filesystem::path&amp; pathToLocalizationModule, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordflow">if</span> (pathToLocalizationModule == defaultLocalizationModule)</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">return</span> TextLocalization::get()[key];</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">return</span> localizations.at(pathToLocalizationModule.string())-&gt;localization[key];</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#a1f4578e675d8b99fee8b9ce5220b54a7">  106</a></span>&#160;    <span class="keyword">const</span> wstring&amp; MultiLocalizationManager::getLocalizedWideString(<span class="keyword">const</span> filesystem::path&amp; pathToLocalizationModule, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">if</span> (pathToLocalizationModule == defaultLocalizationModule)</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        {</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="keywordflow">return</span> WTextLocalization::get()[key];</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        localizations.erase(it);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keyword">delete</span> it-&gt;second;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#ab01bb2abaac02724deef563b4a1dcc3e">   90</a></span>&#160;    <a class="code" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a>* MultiLocalizationManager::getModule(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; localizationModuleName)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordflow">if</span> (localizationModuleName == settings.getString(settings::defaultModuleSetting))</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keywordflow">throw</span> runtime_error(format(<span class="stringliteral">&quot;pathToLocalizationModule can&#39;t be {}&quot;</span>sv, settings.getString(settings::defaultModuleSetting)));</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        unique_lock&lt;mutex&gt; lock(mapMutex);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span> localizations.at(localizationModuleName);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#a925de610aa2feece5178c1ddf8010720">  102</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; MultiLocalizationManager::getLocalizedString(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; localizationModuleName, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; language)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordflow">if</span> (localizationModuleName == settings.getString(settings::defaultModuleSetting))</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keywordflow">return</span> TextLocalization::get()[key];</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        unique_lock&lt;mutex&gt; lock(mapMutex);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <a class="code" href="classlocalization_1_1_base_text_localization.html">TextLocalization</a>&amp; text = localizations.at(localizationModuleName)-&gt;localization;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">return</span> localizations.at(pathToLocalizationModule.string())-&gt;wlocalization[key];</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keywordflow">return</span> language.empty() ? text[key] : text.<a class="code" href="classlocalization_1_1_base_text_localization.html#acf32974a9714e32fecee635d5de7fbb9">getString</a>(key, language);</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    }</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classlocalization_1_1_multi_localization_manager.html#a6b35005d11308f75c3db911f3f73a37f">  116</a></span>&#160;    <span class="keyword">const</span> wstring&amp; MultiLocalizationManager::getLocalizedWideString(<span class="keyword">const</span> filesystem::path&amp; pathToLocalizationModule, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; language)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">if</span> (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <span class="keywordflow">return</span> WTextLocalization::get()[key];</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        unique_lock&lt;mutex&gt; lock(mapMutex);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <a class="code" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html">WTextLocalization</a>&amp; text = localizations.at(pathToLocalizationModule.string())-&gt;wlocalization;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordflow">return</span> language.empty() ? text[key] : text.<a class="code" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a37eb9ff61045f95b15bac6cd6517a6a3">getString</a>(key, language);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
 <div class="ttc" id="aclasslocalization_1_1_base_text_localization_3_01wchar__t_01_4_html"><div class="ttname"><a href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html">localization::BaseTextLocalization&lt; wchar_t &gt;</a></div><div class="ttdoc">TextLocalization specialization with wchar_t.</div><div class="ttdef"><b>Definition:</b> <a href="_w_text_localization_8h_source.html#l00015">WTextLocalization.h:16</a></div></div>
+<div class="ttc" id="aclasslocalization_1_1_base_text_localization_3_01wchar__t_01_4_html_a37eb9ff61045f95b15bac6cd6517a6a3"><div class="ttname"><a href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a37eb9ff61045f95b15bac6cd6517a6a3">localization::BaseTextLocalization&lt; wchar_t &gt;::getString</a></div><div class="ttdeci">const std::wstring &amp; getString(const std::string &amp;key, const std::string &amp;language) const</div><div class="ttdoc">Get localized text.</div><div class="ttdef"><b>Definition:</b> <a href="_w_text_localization_8cpp_source.html#l00102">WTextLocalization.cpp:102</a></div></div>
 <div class="ttc" id="aclasslocalization_1_1_base_text_localization_html"><div class="ttname"><a href="classlocalization_1_1_base_text_localization.html">localization::BaseTextLocalization&lt; char &gt;</a></div></div>
-<div class="ttc" id="aclasslocalization_1_1_multi_localization_manager_html"><div class="ttname"><a href="classlocalization_1_1_multi_localization_manager.html">localization::MultiLocalizationManager</a></div><div class="ttdoc">Manage multi localization modules and multi localization itself.</div><div class="ttdef"><b>Definition:</b> <a href="_multi_localization_manager_8h_source.html#l00012">MultiLocalizationManager.h:13</a></div></div>
-<div class="ttc" id="astructlocalization_1_1_multi_localization_manager_1_1_localization_holder_html"><div class="ttname"><a href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">localization::MultiLocalizationManager::LocalizationHolder</a></div><div class="ttdef"><b>Definition:</b> <a href="_multi_localization_manager_8h_source.html#l00015">MultiLocalizationManager.h:16</a></div></div>
+<div class="ttc" id="aclasslocalization_1_1_base_text_localization_html_acf32974a9714e32fecee635d5de7fbb9"><div class="ttname"><a href="classlocalization_1_1_base_text_localization.html#acf32974a9714e32fecee635d5de7fbb9">localization::BaseTextLocalization::getString</a></div><div class="ttdeci">const std::basic_string&lt; T &gt; &amp; getString(const std::string &amp;key, const std::string &amp;language) const</div><div class="ttdoc">Get localized text.</div><div class="ttdef"><b>Definition:</b> <a href="_base_text_localization_8h_source.html#l00186">BaseTextLocalization.h:186</a></div></div>
+<div class="ttc" id="aclasslocalization_1_1_multi_localization_manager_html"><div class="ttname"><a href="classlocalization_1_1_multi_localization_manager.html">localization::MultiLocalizationManager</a></div><div class="ttdoc">Manage multi localization modules and multi localization itself.</div><div class="ttdef"><b>Definition:</b> <a href="_multi_localization_manager_8h_source.html#l00016">MultiLocalizationManager.h:17</a></div></div>
+<div class="ttc" id="astructlocalization_1_1_multi_localization_manager_1_1_localization_holder_html"><div class="ttname"><a href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">localization::MultiLocalizationManager::LocalizationHolder</a></div><div class="ttdef"><b>Definition:</b> <a href="_multi_localization_manager_8h_source.html#l00019">MultiLocalizationManager.h:20</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

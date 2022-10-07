@@ -105,21 +105,21 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac39bea73c4fcc27ff4c3d9510249c3b1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">LocalizationHolder</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#ac39bea73c4fcc27ff4c3d9510249c3b1">addModule</a> (const std::filesystem::path &amp;pathToLocalizationModule)</td></tr>
-<tr class="memdesc:ac39bea73c4fcc27ff4c3d9510249c3b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add additional localization module.  <a href="classlocalization_1_1_multi_localization_manager.html#ac39bea73c4fcc27ff4c3d9510249c3b1">More...</a><br /></td></tr>
-<tr class="separator:ac39bea73c4fcc27ff4c3d9510249c3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acff8819615ed1dbb6934bf82fe5a9d08"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#acff8819615ed1dbb6934bf82fe5a9d08">removeModule</a> (const std::filesystem::path &amp;pathToLocalizationModule)</td></tr>
-<tr class="memdesc:acff8819615ed1dbb6934bf82fe5a9d08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove localization module.  <a href="classlocalization_1_1_multi_localization_manager.html#acff8819615ed1dbb6934bf82fe5a9d08">More...</a><br /></td></tr>
-<tr class="separator:acff8819615ed1dbb6934bf82fe5a9d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6c1e2a17f5504f8ce66c18c1b2f72f6"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">LocalizationHolder</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#ae6c1e2a17f5504f8ce66c18c1b2f72f6">getModule</a> (const std::filesystem::path &amp;pathToLocalizationModule) const</td></tr>
-<tr class="memdesc:ae6c1e2a17f5504f8ce66c18c1b2f72f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pointer to <a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a>.  <a href="classlocalization_1_1_multi_localization_manager.html#ae6c1e2a17f5504f8ce66c18c1b2f72f6">More...</a><br /></td></tr>
-<tr class="separator:ae6c1e2a17f5504f8ce66c18c1b2f72f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b573c9793ae7cf83f64fdcab28de145"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#a9b573c9793ae7cf83f64fdcab28de145">getLocalizedString</a> (const std::filesystem::path &amp;pathToLocalizationModule, const std::string &amp;key) const</td></tr>
-<tr class="memdesc:a9b573c9793ae7cf83f64fdcab28de145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get localized text.  <a href="classlocalization_1_1_multi_localization_manager.html#a9b573c9793ae7cf83f64fdcab28de145">More...</a><br /></td></tr>
-<tr class="separator:a9b573c9793ae7cf83f64fdcab28de145"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f4578e675d8b99fee8b9ce5220b54a7"><td class="memItemLeft" align="right" valign="top">const std::wstring &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#a1f4578e675d8b99fee8b9ce5220b54a7">getLocalizedWideString</a> (const std::filesystem::path &amp;pathToLocalizationModule, const std::string &amp;key) const</td></tr>
-<tr class="memdesc:a1f4578e675d8b99fee8b9ce5220b54a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get localized text.  <a href="classlocalization_1_1_multi_localization_manager.html#a1f4578e675d8b99fee8b9ce5220b54a7">More...</a><br /></td></tr>
-<tr class="separator:a1f4578e675d8b99fee8b9ce5220b54a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fdf4c90c1aa5e087b4a710bd43f58f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">LocalizationHolder</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#a4fdf4c90c1aa5e087b4a710bd43f58f2">addModule</a> (const std::string &amp;localizationModuleName, const std::filesystem::path &amp;pathToLocalizationModule=&quot;&quot;)</td></tr>
+<tr class="memdesc:a4fdf4c90c1aa5e087b4a710bd43f58f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add additional localization module. Thread safe.  <a href="classlocalization_1_1_multi_localization_manager.html#a4fdf4c90c1aa5e087b4a710bd43f58f2">More...</a><br /></td></tr>
+<tr class="separator:a4fdf4c90c1aa5e087b4a710bd43f58f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34c6ad6cc8ad6b8cd0e02d44b32f6f2e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#a34c6ad6cc8ad6b8cd0e02d44b32f6f2e">removeModule</a> (const std::string &amp;localizationModuleName)</td></tr>
+<tr class="memdesc:a34c6ad6cc8ad6b8cd0e02d44b32f6f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove localization module. Thread safe.  <a href="classlocalization_1_1_multi_localization_manager.html#a34c6ad6cc8ad6b8cd0e02d44b32f6f2e">More...</a><br /></td></tr>
+<tr class="separator:a34c6ad6cc8ad6b8cd0e02d44b32f6f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab01bb2abaac02724deef563b4a1dcc3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">LocalizationHolder</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#ab01bb2abaac02724deef563b4a1dcc3e">getModule</a> (const std::string &amp;localizationModuleName) const</td></tr>
+<tr class="memdesc:ab01bb2abaac02724deef563b4a1dcc3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pointer to <a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a>. Thread safe.  <a href="classlocalization_1_1_multi_localization_manager.html#ab01bb2abaac02724deef563b4a1dcc3e">More...</a><br /></td></tr>
+<tr class="separator:ab01bb2abaac02724deef563b4a1dcc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a925de610aa2feece5178c1ddf8010720"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#a925de610aa2feece5178c1ddf8010720">getLocalizedString</a> (const std::string &amp;localizationModuleName, const std::string &amp;key, const std::string &amp;language=&quot;&quot;) const</td></tr>
+<tr class="memdesc:a925de610aa2feece5178c1ddf8010720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get localized text. Thread safe.  <a href="classlocalization_1_1_multi_localization_manager.html#a925de610aa2feece5178c1ddf8010720">More...</a><br /></td></tr>
+<tr class="separator:a925de610aa2feece5178c1ddf8010720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b35005d11308f75c3db911f3f73a37f"><td class="memItemLeft" align="right" valign="top">const std::wstring &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_multi_localization_manager.html#a6b35005d11308f75c3db911f3f73a37f">getLocalizedWideString</a> (const std::filesystem::path &amp;pathToLocalizationModule, const std::string &amp;key, const std::string &amp;language=&quot;&quot;) const</td></tr>
+<tr class="memdesc:a6b35005d11308f75c3db911f3f73a37f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get localized text. Thread safe.  <a href="classlocalization_1_1_multi_localization_manager.html#a6b35005d11308f75c3db911f3f73a37f">More...</a><br /></td></tr>
+<tr class="separator:a6b35005d11308f75c3db911f3f73a37f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -130,27 +130,38 @@ Static Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manage multi localization modules and multi localization itself. </p>
 
-<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8h_source.html#l00012">12</a> of file <a class="el" href="_multi_localization_manager_8h_source.html">MultiLocalizationManager.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8h_source.html#l00016">16</a> of file <a class="el" href="_multi_localization_manager_8h_source.html">MultiLocalizationManager.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac39bea73c4fcc27ff4c3d9510249c3b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac39bea73c4fcc27ff4c3d9510249c3b1">&#9670;&nbsp;</a></span>addModule()</h2>
+<a id="a4fdf4c90c1aa5e087b4a710bd43f58f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fdf4c90c1aa5e087b4a710bd43f58f2">&#9670;&nbsp;</a></span>addModule()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a> * localization::MultiLocalizationManager::addModule </td>
+          <td class="memname"><a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a> * localization::MultiLocalizationManager::addModule </td>
           <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>pathToLocalizationModule</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>localizationModuleName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
+          <td class="paramname"><em>pathToLocalizationModule</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Add additional localization module. </p>
+<p>Add additional localization module. Thread safe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">localizationModuleName</td><td>Name of module </td></tr>
     <tr><td class="paramname">pathToLocalizationModule</td><td>Path to localization module </td></tr>
   </table>
   </dd>
@@ -167,8 +178,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9b573c9793ae7cf83f64fdcab28de145"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b573c9793ae7cf83f64fdcab28de145">&#9670;&nbsp;</a></span>getLocalizedString()</h2>
+<a id="a925de610aa2feece5178c1ddf8010720"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a925de610aa2feece5178c1ddf8010720">&#9670;&nbsp;</a></span>getLocalizedString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,14 +187,20 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">const string &amp; localization::MultiLocalizationManager::getLocalizedString </td>
           <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>pathToLocalizationModule</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>localizationModuleName</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>key</em>&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>language</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -193,10 +210,12 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get localized text. </p>
+<p>Get localized text. Thread safe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">localizationModuleName</td><td>Name of module </td></tr>
     <tr><td class="paramname">key</td><td>Localization key </td></tr>
+    <tr><td class="paramname">language</td><td>Localized value from specific language </td></tr>
   </table>
   </dd>
 </dl>
@@ -209,12 +228,12 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8cpp_source.html#l00096">96</a> of file <a class="el" href="_multi_localization_manager_8cpp_source.html">MultiLocalizationManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8cpp_source.html#l00102">102</a> of file <a class="el" href="_multi_localization_manager_8cpp_source.html">MultiLocalizationManager.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a1f4578e675d8b99fee8b9ce5220b54a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f4578e675d8b99fee8b9ce5220b54a7">&#9670;&nbsp;</a></span>getLocalizedWideString()</h2>
+<a id="a6b35005d11308f75c3db911f3f73a37f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b35005d11308f75c3db911f3f73a37f">&#9670;&nbsp;</a></span>getLocalizedWideString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -229,7 +248,13 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>key</em>&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>language</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -239,22 +264,25 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get localized text. </p>
+<p>Get localized text. Thread safe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">localizationModuleName</td><td>Name of module </td></tr>
     <tr><td class="paramname">key</td><td>Localization key </td></tr>
+    <tr><td class="paramname">language</td><td>Localized value from specific language </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Localized value </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>Wrong key </td></tr>
+    <tr><td class="paramname">std::runtime_error</td><td>Wrong key <br  />
+ </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8cpp_source.html#l00106">106</a> of file <a class="el" href="_multi_localization_manager_8cpp_source.html">MultiLocalizationManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8cpp_source.html#l00116">116</a> of file <a class="el" href="_multi_localization_manager_8cpp_source.html">MultiLocalizationManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -285,6 +313,7 @@ Static Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classlocalization_1_1_multi_localization_manager.html" title="Manage multi localization modules and multi localization itself.">MultiLocalizationManager</a> </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td></td></tr>
     <tr><td class="paramname">json::exceptions::CantFindValueException</td><td></td></tr>
     <tr><td class="paramname">std::bad_variant_access</td><td>Other type found </td></tr>
   </table>
@@ -295,26 +324,26 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae6c1e2a17f5504f8ce66c18c1b2f72f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6c1e2a17f5504f8ce66c18c1b2f72f6">&#9670;&nbsp;</a></span>getModule()</h2>
+<a id="ab01bb2abaac02724deef563b4a1dcc3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab01bb2abaac02724deef563b4a1dcc3e">&#9670;&nbsp;</a></span>getModule()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a> * localization::MultiLocalizationManager::getModule </td>
+          <td class="memname"><a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a> * localization::MultiLocalizationManager::getModule </td>
           <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>pathToLocalizationModule</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>localizationModuleName</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get pointer to <a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a>. </p>
+<p>Get pointer to <a class="el" href="structlocalization_1_1_multi_localization_manager_1_1_localization_holder.html">MultiLocalizationManager::LocalizationHolder</a>. Thread safe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pathToLocalizationModule</td><td>Pat to localization module </td></tr>
+    <tr><td class="paramname">localizationModuleName</td><td>Name of module </td></tr>
   </table>
   </dd>
 </dl>
@@ -326,12 +355,12 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8cpp_source.html#l00086">86</a> of file <a class="el" href="_multi_localization_manager_8cpp_source.html">MultiLocalizationManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8cpp_source.html#l00090">90</a> of file <a class="el" href="_multi_localization_manager_8cpp_source.html">MultiLocalizationManager.cpp</a>.</p>
 
 </div>
 </div>
-<a id="acff8819615ed1dbb6934bf82fe5a9d08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acff8819615ed1dbb6934bf82fe5a9d08">&#9670;&nbsp;</a></span>removeModule()</h2>
+<a id="a34c6ad6cc8ad6b8cd0e02d44b32f6f2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34c6ad6cc8ad6b8cd0e02d44b32f6f2e">&#9670;&nbsp;</a></span>removeModule()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -339,23 +368,23 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">bool localization::MultiLocalizationManager::removeModule </td>
           <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>pathToLocalizationModule</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>localizationModuleName</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Remove localization module. </p>
+<p>Remove localization module. Thread safe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pathToLocalizationModule</td><td>Path to localization module </td></tr>
+    <tr><td class="paramname">localizationModuleName</td><td>Name of module </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Module was successfully removed </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8cpp_source.html#l00070">70</a> of file <a class="el" href="_multi_localization_manager_8cpp_source.html">MultiLocalizationManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_multi_localization_manager_8cpp_source.html#l00072">72</a> of file <a class="el" href="_multi_localization_manager_8cpp_source.html">MultiLocalizationManager.cpp</a>.</p>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['removemodule_15',['removeModule',['../classlocalization_1_1_multi_localization_manager.html#acff8819615ed1dbb6934bf82fe5a9d08',1,'localization::MultiLocalizationManager']]]
+  ['removemodule_17',['removeModule',['../classlocalization_1_1_multi_localization_manager.html#a34c6ad6cc8ad6b8cd0e02d44b32f6f2e',1,'localization::MultiLocalizationManager']]]
 ];

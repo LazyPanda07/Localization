@@ -109,6 +109,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa2e72ffd3815578a92df2d01355fe2f1"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_base_text_localization.html#aa2e72ffd3815578a92df2d01355fe2f1">getCurrentLanguage</a> () const</td></tr>
 <tr class="memdesc:aa2e72ffd3815578a92df2d01355fe2f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current language.  <a href="classlocalization_1_1_base_text_localization.html#aa2e72ffd3815578a92df2d01355fe2f1">More...</a><br /></td></tr>
 <tr class="separator:aa2e72ffd3815578a92df2d01355fe2f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c22f91c1e11058f086301e46a47d27a"><td class="memItemLeft" align="right" valign="top"><a id="a9c22f91c1e11058f086301e46a47d27a"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_base_text_localization.html#a9c22f91c1e11058f086301e46a47d27a">getPathToModule</a> () const</td></tr>
+<tr class="memdesc:a9c22f91c1e11058f086301e46a47d27a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get path to used module. <br /></td></tr>
+<tr class="separator:a9c22f91c1e11058f086301e46a47d27a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf32974a9714e32fecee635d5de7fbb9"><td class="memItemLeft" align="right" valign="top">const std::basic_string&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_base_text_localization.html#acf32974a9714e32fecee635d5de7fbb9">getString</a> (const std::string &amp;key, const std::string &amp;language) const</td></tr>
+<tr class="memdesc:acf32974a9714e32fecee635d5de7fbb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get localized text.  <a href="classlocalization_1_1_base_text_localization.html#acf32974a9714e32fecee635d5de7fbb9">More...</a><br /></td></tr>
+<tr class="separator:acf32974a9714e32fecee635d5de7fbb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa12e046a13147390ff2441ec7ee74faa"><td class="memItemLeft" align="right" valign="top">const std::basic_string&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_base_text_localization.html#aa12e046a13147390ff2441ec7ee74faa">operator[]</a> (const std::string &amp;key) const</td></tr>
 <tr class="memdesc:aa12e046a13147390ff2441ec7ee74faa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get localized text.  <a href="classlocalization_1_1_base_text_localization.html#aa12e046a13147390ff2441ec7ee74faa">More...</a><br /></td></tr>
 <tr class="separator:aa12e046a13147390ff2441ec7ee74faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -116,7 +123,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a9d194268bead614cf3eaaf8cceaaf96a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classlocalization_1_1_base_text_localization.html">BaseTextLocalization</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlocalization_1_1_base_text_localization.html#a9d194268bead614cf3eaaf8cceaaf96a">get</a> ()</td></tr>
-<tr class="memdesc:a9d194268bead614cf3eaaf8cceaaf96a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception can be thrown on first call.  <a href="classlocalization_1_1_base_text_localization.html#a9d194268bead614cf3eaaf8cceaaf96a">More...</a><br /></td></tr>
+<tr class="memdesc:a9d194268bead614cf3eaaf8cceaaf96a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception can be thrown on first call. Warnings outputs in std::cerr.  <a href="classlocalization_1_1_base_text_localization.html#a9d194268bead614cf3eaaf8cceaaf96a">More...</a><br /></td></tr>
 <tr class="separator:a9d194268bead614cf3eaaf8cceaaf96a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
@@ -137,7 +144,7 @@ class localization::BaseTextLocalization&lt; T &gt;</h3>
 
 <p>Singleton for text localization. </p>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00019">19</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00022">22</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3e7fabe3dc2d28f2b059a760c8c76dca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3e7fabe3dc2d28f2b059a760c8c76dca">&#9670;&nbsp;</a></span>changeLanguage()</h2>
@@ -171,7 +178,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00131">131</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00157">157</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>
@@ -197,7 +204,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Exception can be thrown on first call. </p>
+<p>Exception can be thrown on first call. Warnings outputs in std::cerr. </p>
 <dl class="section return"><dt>Returns</dt><dd>Singleton instance of default localization module(Localization.dll) </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
@@ -206,7 +213,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00123">123</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00142">142</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>
@@ -227,7 +234,7 @@ template&lt;typename T &gt; </div>
 <p>Get current language. </p>
 <dl class="section return"><dt>Returns</dt><dd>language </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00148">148</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00174">174</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>
@@ -248,7 +255,56 @@ template&lt;typename T &gt; </div>
 <p>Get original language. </p>
 <dl class="section return"><dt>Returns</dt><dd>originalLanguage </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00142">142</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00168">168</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+
+</div>
+</div>
+<a id="acf32974a9714e32fecee635d5de7fbb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf32974a9714e32fecee635d5de7fbb9">&#9670;&nbsp;</a></span>getString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::basic_string&lt; T &gt; &amp; <a class="el" href="classlocalization_1_1_base_text_localization.html">localization::BaseTextLocalization</a>&lt; T &gt;::getString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>language</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get localized text. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Localization key </td></tr>
+    <tr><td class="paramname">language</td><td>Specific language </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Localized value </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>Wrong key </td></tr>
+    <tr><td class="paramname">std::out_of_range</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00186">186</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>
@@ -285,7 +341,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00154">154</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_base_text_localization_8h_source.html#l00208">208</a> of file <a class="el" href="_base_text_localization_8h_source.html">BaseTextLocalization.h</a>.</p>
 
 </div>
 </div>
