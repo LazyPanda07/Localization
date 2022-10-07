@@ -62,6 +62,14 @@ namespace localization
 
 		/// @brief Get localized text
 		/// @param key Localization key
+		/// @param language Specific language
+		/// @return Localized value
+		/// @exception std::runtime_error Wrong key
+		/// @exception std::out_of_range
+		const std::wstring& getString(const std::string& key, const std::string& language) const;
+
+		/// @brief Get localized text
+		/// @param key Localization key
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
 		const std::wstring& operator [] (const std::string& key) const;

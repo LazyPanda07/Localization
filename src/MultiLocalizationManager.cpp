@@ -54,22 +54,26 @@ namespace localization
 		return instance;
 	}
 
-	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::addModule(const filesystem::path& pathToLocalizationModule)
+	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::addModule(const string& localizationModuleName, const filesystem::path& pathToLocalizationModule)
 	{
 		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
 		{
 			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, settings.getString(settings::defaultModuleSetting)));
 		}
 
+		unique_lock<mutex> lock(mapMutex);
+
 		TextLocalization textLocalizationModule(pathToLocalizationModule.string());
 		WTextLocalization wtextLocalizationModule(textLocalizationModule);
 
-		return localizations.emplace(pathToLocalizationModule.string(), new LocalizationHolder(move(textLocalizationModule), move(wtextLocalizationModule))).first->second;
+		return localizations.emplace(localizationModuleName, new LocalizationHolder(move(textLocalizationModule), move(wtextLocalizationModule))).first->second;
 	}
 
-	bool MultiLocalizationManager::removeModule(const filesystem::path& pathToLocalizationModule)
+	bool MultiLocalizationManager::removeModule(const string& localizationModuleName)
 	{
-		auto it = localizations.find(pathToLocalizationModule.string());
+		unique_lock<mutex> lock(mapMutex);
+
+		auto it = localizations.find(localizationModuleName);
 
 		if (it == localizations.end())
 		{
@@ -83,33 +87,43 @@ namespace localization
 		return true;
 	}
 
-	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::getModule(const filesystem::path& pathToLocalizationModule) const
+	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::getModule(const string& localizationModuleName) const
 	{
-		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
+		if (localizationModuleName == settings.getString(settings::defaultModuleSetting))
 		{
 			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, settings.getString(settings::defaultModuleSetting)));
 		}
 
-		return localizations.at(pathToLocalizationModule.string());
+		unique_lock<mutex> lock(mapMutex);
+
+		return localizations.at(localizationModuleName);
 	}
 
-	const string& MultiLocalizationManager::getLocalizedString(const filesystem::path& pathToLocalizationModule, const string& key) const
+	const string& MultiLocalizationManager::getLocalizedString(const string& localizationModuleName, const string& key, const string& language) const
 	{
-		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
+		if (localizationModuleName == settings.getString(settings::defaultModuleSetting))
 		{
 			return TextLocalization::get()[key];
 		}
 
-		return localizations.at(pathToLocalizationModule.string())->localization[key];
+		unique_lock<mutex> lock(mapMutex);
+
+		TextLocalization& text = localizations.at(localizationModuleName)->localization;
+
+		return language.empty() ? text[key] : text.getString(key, language);
 	}
 
-	const wstring& MultiLocalizationManager::getLocalizedWideString(const filesystem::path& pathToLocalizationModule, const string& key) const
+	const wstring& MultiLocalizationManager::getLocalizedWideString(const filesystem::path& pathToLocalizationModule, const string& key, const string& language) const
 	{
 		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
 		{
 			return WTextLocalization::get()[key];
 		}
 
-		return localizations.at(pathToLocalizationModule.string())->wlocalization[key];
+		unique_lock<mutex> lock(mapMutex);
+
+		WTextLocalization& text = localizations.at(pathToLocalizationModule.string())->wlocalization;
+
+		return language.empty() ? text[key] : text.getString(key, language);
 	}
 }

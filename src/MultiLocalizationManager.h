@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <filesystem>
+#include <mutex>
 
 #include "JSONParser.h"
 #include "TextLocalization.h"
@@ -35,6 +36,7 @@ namespace localization
 
 	private:
 		json::JSONParser settings;
+		mutable std::mutex mapMutex;
 		std::unordered_map<std::string, LocalizationHolder*> localizations;
 
 	private:
@@ -58,34 +60,39 @@ namespace localization
 		/// @exception std::bad_variant_access Other type found
 		static MultiLocalizationManager& getManager();
 
-		/// @brief Add additional localization module
+		/// @brief Add additional localization module. Thread safe
+		/// @param localizationModuleName Name of module
 		/// @param pathToLocalizationModule Path to localization module
 		/// @return Pointer to MultiLocalizationManager::LocalizationHolder 
 		/// @exception std::runtime_error
-		LocalizationHolder* addModule(const std::filesystem::path& pathToLocalizationModule);
+		LocalizationHolder* addModule(const std::string& localizationModuleName, const std::filesystem::path& pathToLocalizationModule = "");
 
-		/// @brief Remove localization module
-		/// @param pathToLocalizationModule Path to localization module
+		/// @brief Remove localization module. Thread safe
+		/// @param localizationModuleName Name of module
 		/// @return Module was successfully removed
-		bool removeModule(const std::filesystem::path& pathToLocalizationModule);
+		bool removeModule(const std::string& localizationModuleName);
 
-		/// @brief Get pointer to MultiLocalizationManager::LocalizationHolder 
-		/// @param pathToLocalizationModule Pat to localization module
+		/// @brief Get pointer to MultiLocalizationManager::LocalizationHolder. Thread safe
+		/// @param localizationModuleName Name of module
 		/// @return Pointer to MultiLocalizationManager::LocalizationHolder 
 		/// @exception std::runtime_error
-		LocalizationHolder* getModule(const std::filesystem::path& pathToLocalizationModule) const;
+		LocalizationHolder* getModule(const std::string& localizationModuleName) const;
 
-		/// @brief Get localized text
+		/// @brief Get localized text. Thread safe
+		/// @param localizationModuleName Name of module
 		/// @param key Localization key
+		/// @param language Localized value from specific language
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key 
-		const std::string& getLocalizedString(const std::filesystem::path& pathToLocalizationModule, const std::string& key) const;
+		const std::string& getLocalizedString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
 
-		/// @brief Get localized text
+		/// @brief Get localized text. Thread safe
+		/// @param localizationModuleName Name of module
 		/// @param key Localization key
+		/// @param language Localized value from specific language
 		/// @return Localized value
-		/// @exception std::runtime_error Wrong key
-		const std::wstring& getLocalizedWideString(const std::filesystem::path& pathToLocalizationModule, const std::string& key) const;
+		/// @exception std::runtime_error Wrong key 
+		const std::wstring& getLocalizedWideString(const std::filesystem::path& pathToLocalizationModule, const std::string& key, const std::string& language = "") const;
 	};
 
 	using Holder = MultiLocalizationManager::LocalizationHolder;

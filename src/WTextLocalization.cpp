@@ -99,7 +99,7 @@ namespace localization
 		return pathToModule;
 	}
 
-	const wstring& BaseTextLocalization<wchar_t>::operator [] (const string& key) const
+	const wstring& BaseTextLocalization<wchar_t>::getString(const string& key, const string& language) const
 	{
 		try
 		{
@@ -118,6 +118,11 @@ namespace localization
 				throw runtime_error(format(R"(Can't find key "{}")"sv, key));
 			}
 		}
+	}
+
+	const wstring& BaseTextLocalization<wchar_t>::operator [] (const string& key) const
+	{
+		return this->getString(key, language);
 	}
 }
 

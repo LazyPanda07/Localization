@@ -65,6 +65,14 @@ namespace localization
 
 		/// @brief Get localized text
 		/// @param key Localization key
+		/// @param language Specific language
+		/// @return Localized value
+		/// @exception std::runtime_error Wrong key
+		/// @exception std::out_of_range
+		const std::basic_string<T>& getString(const std::string& key, const std::string& language) const;
+
+		/// @brief Get localized text
+		/// @param key Localization key
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
 		const std::basic_string<T>& operator [] (const std::string& key) const;
@@ -175,7 +183,7 @@ namespace localization
 	}
 
 	template<typename T>
-	const std::basic_string<T>& BaseTextLocalization<T>::operator[] (const std::string& key) const
+	const std::basic_string<T>& BaseTextLocalization<T>::getString(const std::string& key, const std::string& language) const
 	{
 		try
 		{
@@ -194,5 +202,11 @@ namespace localization
 				throw std::runtime_error(format(R"(Can't find key "{}")"sv, key));
 			}
 		}
+	}
+
+	template<typename T>
+	const std::basic_string<T>& BaseTextLocalization<T>::operator[] (const std::string& key) const
+	{
+		return this->getString(key, language);
 	}
 }
