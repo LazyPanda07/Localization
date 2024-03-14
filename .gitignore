@@ -44,3 +44,4 @@ build/
 
 # Dependencies
 !JSON.lib
+!libJSON.a
