@@ -24,22 +24,40 @@ namespace json
 		};
 
 	private:
-		static std::pair<std::vector<std::pair<std::string, variantType>>::iterator, bool> find(const std::string& key, std::vector<std::pair<std::string, variantType>>& start);
-
-		static std::pair<std::vector<std::pair<std::string, variantType>>::const_iterator, bool> find(const std::string& key, const std::vector<std::pair<std::string, variantType>>& start);
-
-	private:
 		utility::jsonObject builderData;
-		uint32_t codepage;
+#ifdef __LINUX__
+		std::string_view codePage;
+#else
+		uint32_t codePage;
+#endif
 		outputType type;
 
 	public:
+#ifdef __LINUX__
 		/// <summary>
 		/// Construct JSONBuilder
 		/// </summary>
-		/// <param name="codepage">codepage of your system</param>
+		/// <param name="codePage">codePage of your system</param>
 		/// <param name="type">value from json::JSONBuilder::outputType</param>
-		JSONBuilder(uint32_t codepage, outputType type = outputType::standard);
+		JSONBuilder(std::string_view codePage, outputType type = outputType::standard);
+
+		/// @brief Construct from parsed or builded data 
+		/// @param data Data from JSONBuilder or JSONParser
+		/// @param codePage data's codePage
+		JSONBuilder(const utility::jsonObject& data, std::string_view codePage, outputType type = outputType::standard);
+#else
+		/// <summary>
+		/// Construct JSONBuilder
+		/// </summary>
+		/// <param name="codePage">codePage of your system</param>
+		/// <param name="type">value from json::JSONBuilder::outputType</param>
+		JSONBuilder(uint32_t codePage, outputType type = outputType::standard);
+
+		/// @brief Construct from parsed or builded data 
+		/// @param data Data from JSONBuilder or JSONParser
+		/// @param codePage data's codePage
+		JSONBuilder(const utility::jsonObject& data, uint32_t codePage, outputType type = outputType::standard);
+#endif
 
 		/// @brief Copy constructor
 		/// @param other Other JSONBuilder
@@ -48,11 +66,6 @@ namespace json
 		/// @brief Move constructor
 		/// @param other Other JSONBuilder
 		JSONBuilder(JSONBuilder&& other) noexcept;
-
-		/// @brief Construct from parsed or builded data 
-		/// @param data Data from JSONBuilder or JSONParser
-		/// @param codepage data's codepage
-		JSONBuilder(const utility::jsonObject& data, uint32_t codepage, outputType type = outputType::standard);
 
 		/// @brief Copy operator
 		/// @param other Other JSONBuilder
@@ -107,13 +120,13 @@ namespace json
 
 		/// @brief Add JSON key - string
 		/// @param key JSON key
-		/// @param value Current codepage encoded value
+		/// @param value Current codePage encoded value
 		/// @return Reference to current JSONBuilder instance
 		JSONBuilder& appendString(const std::string& key, const std::string& value);
 
 		/// @brief Add JSON key - string
 		/// @param key JSON key
-		/// @param value Current codepage encoded value
+		/// @param value Current codePage encoded value
 		/// @return Reference to current JSONBuilder instance
 		JSONBuilder& appendString(const std::string& key, std::string&& value);
 
@@ -134,6 +147,14 @@ namespace json
 		/// @param value Unsigned integer
 		/// @return Reference to current JSONBuilder instance
 		JSONBuilder& appendUnsignedInt(const std::string& key, uint64_t value);
+
+		/**
+		 * @brief Add JSON key - double
+		 * @param key JSON key
+		 * @param value Double
+		 * @return Reference to current JSONBuilder instance
+		*/
+		JSONBuilder& appendDouble(const std::string& key, double value);
 
 		/// @brief Add JSON key - JSON array
 		/// @param key JSON key
@@ -159,10 +180,14 @@ namespace json
 		/// @return Reference to current JSONBuilder instance
 		JSONBuilder& appendObject(const std::string& key, const utility::jsonObject& value);
 
-		/// @brief Checks if there is a object with key equivalent to key in the container and type equivalent to type in the container
-		/// @param key Object name
-		/// @param type Object type
-		bool contains(const std::string& key, utility::variantTypeEnum type) const;
+		/**
+		 * @brief Checks if there is a object with key equivalent to key in the container and type equivalent to type in the container
+		 * @param key Object name
+		 * @param type Object type
+		 * @param recursive Recursive search
+		 * @return 
+		*/
+		bool contains(const std::string& key, utility::variantTypeEnum type, bool recursive = false) const;
 
 		/// <summary>
 		/// <para>Access to JSON value operator</para>

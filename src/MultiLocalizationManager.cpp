@@ -47,6 +47,13 @@ namespace localization
 		localizations.clear();
 	}
 
+	string MultiLocalizationManager::getVersion()
+	{
+		string version = "1.0.0";
+
+		return version;
+	}
+
 	MultiLocalizationManager& MultiLocalizationManager::getManager()
 	{
 		static MultiLocalizationManager instance;

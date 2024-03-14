@@ -36,15 +36,11 @@
 
 # Binaries
 bin/
-
-# .sln file
-Localization.sln
+build/
 
 # Assets
 !LocalizationUtils.exe
-
-# LocalizationUtils.exe folder generation
-ProjectLocalization/
+!LocalizationUtils
 
 # Dependencies
 !JSON.lib

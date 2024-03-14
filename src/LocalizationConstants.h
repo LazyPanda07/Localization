@@ -2,7 +2,11 @@
 
 #include <string>
 
+#ifdef __LINUX__
+#define LOCALIZATION_API __attribute__((visibility("default")))
+#else
 #define LOCALIZATION_API __declspec(dllexport)
+#endif
 
 #pragma warning(disable: 4251)
 

@@ -5,13 +5,20 @@
 #include <stdexcept>
 #include <format>
 #include <algorithm>
-#include <iostream>
 #include <fstream>
 
+#ifdef __LINUX__
+#include <dlfcn.h>
+#else
 #include <Windows.h>
+#endif
 
 #include "JSONParser.h"
 #include "LocalizationConstants.h"
+
+#ifdef __LINUX__
+using HMODULE = void*;
+#endif
 
 namespace localization
 {
@@ -86,7 +93,19 @@ namespace localization
 	template<typename T>
 	BaseTextLocalization<T>::BaseTextLocalization(const std::string& localizationModule)
 	{
+#ifdef __LINUX__
+		handle = dlopen(localizationModule.data(), RTLD_LAZY);
+#else
 		handle = LoadLibraryA(localizationModule.data());
+#endif
+		auto load = [this](const char* name)
+			{
+#ifdef __LINUX__
+				return dlsym(handle, name);
+#else
+				return GetProcAddress(handle, name);
+#endif
+			};
 
 		if (!handle)
 		{
@@ -95,14 +114,14 @@ namespace localization
 
 		pathToModule = localizationModule;
 
-		dictionaries = reinterpret_cast<const std::unordered_map<std::string, const std::unordered_map<std::string, std::string>*>*>(GetProcAddress(handle, "dictionaries"));
+		dictionaries = reinterpret_cast<const std::unordered_map<std::string, const std::unordered_map<std::string, std::string>*>*>(load("dictionaries"));
 
 		if (!dictionaries)
 		{
-			std::cerr << std::format("Can't find dictionaries in {}, rebuild and try again"sv, localizationModule);
+			throw std::runtime_error(std::format("Can't find dictionaries in {}, rebuild and try again"sv, localizationModule));
 		}
 
-		originalLanguage = reinterpret_cast<const std::string*>(GetProcAddress(handle, "originalLanguage"));
+		originalLanguage = reinterpret_cast<const std::string*>(load("originalLanguage"));
 
 		if (!originalLanguage)
 		{
@@ -135,7 +154,11 @@ namespace localization
 	template<typename T>
 	BaseTextLocalization<T>::~BaseTextLocalization()
 	{
+#ifdef __LINUX__
+		dlclose(handle);
+#else
 		FreeLibrary(handle);
+#endif
 	}
 
 	template<typename T>

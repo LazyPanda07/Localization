@@ -53,6 +53,13 @@ namespace localization
 		~MultiLocalizationManager();
 
 	public:
+		/**
+		 * @brief Get version of Localization library
+		 * @return 
+		 */
+		static std::string getVersion();
+
+	public:
 		/// @brief Singleton instance
 		/// @return MultiLocalizationManager
 		/// @exception std::runtime_error

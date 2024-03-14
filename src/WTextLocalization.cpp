@@ -130,8 +130,11 @@ wstring to_wstring(const string& stringToConvert)
 {
 	wstring result;
 
+#ifdef __LINUX__
+
+#else
 	int size = MultiByteToWideChar
-	(
+	(		
 		CP_UTF8,
 		NULL,
 		stringToConvert.data(),
@@ -159,6 +162,7 @@ wstring to_wstring(const string& stringToConvert)
 	{
 		throw runtime_error("Can't convert to wstring");
 	}
+#endif
 
 	return result;
 }
