@@ -136,7 +136,7 @@ namespace localization
 	{
 		if (localizationModuleName == defaultModuleName)
 		{
-			return TextLocalization::get()[key];
+			return TextLocalization::get().getString(key, language);
 		}
 
 		unique_lock<mutex> lock(mapMutex);
@@ -151,7 +151,7 @@ namespace localization
 	{
 		if (localizationModuleName == defaultModuleName)
 		{
-			return WTextLocalization::get()[key];
+			return WTextLocalization::get().getString(key, language);
 		}
 
 		unique_lock<mutex> lock(mapMutex);
