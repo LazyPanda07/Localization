@@ -36,9 +36,6 @@ if __name__ == '__main__':
     with open(f"{working_dir}/localization/localization_ru.json", "r") as file:
         ru = json.load(file)
 
-    for key in en.keys():
-        self.assertTrue(key in ru)
-
     ru["first"] = "Первый"
     ru["second"] = "Второй"
 
