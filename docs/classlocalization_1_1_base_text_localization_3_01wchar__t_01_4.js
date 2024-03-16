@@ -5,7 +5,5 @@ var classlocalization_1_1_base_text_localization_3_01wchar__t_01_4 =
     [ "getOriginalLanguage", "classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#aacebc0217ae06e9c3ac9705a484c3b90", null ],
     [ "getPathToModule", "classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a5c84d3d318b12a6b77784e272f884293", null ],
     [ "getString", "classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a37eb9ff61045f95b15bac6cd6517a6a3", null ],
-    [ "operator[]", "classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a9c0b002d2a90c7ccd496889afcc4e59b", null ],
-    [ "LocalizationHolder", "classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#adfada954d3f28b274846c3c116cc0e27", null ],
-    [ "MultiLocalizationManager", "classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a35ce7ef5a01dd3775e7d1baaa46225c7", null ]
+    [ "operator[]", "classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a9c0b002d2a90c7ccd496889afcc4e59b", null ]
 ];
