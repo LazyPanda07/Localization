@@ -11,6 +11,8 @@ if __name__ == '__main__':
     else:
         executable_path += "LocalizationUtils"
 
+    subprocess.run([executable_path, ".", "generate"], cwd=working_dir)
+
     with open(f"{working_dir}/localization_utils_settings.json", "r") as file:
         settings = json.load(file)
 
