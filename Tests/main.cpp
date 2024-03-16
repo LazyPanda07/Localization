@@ -19,11 +19,11 @@ TEST(Localization, MultiLocalizationManager)
 {
 	localization::MultiLocalizationManager& manager = localization::MultiLocalizationManager::getManager();
 
-	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "first", "en"), "First");
-	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "second", "en"), "Second");
+	ASSERT_EQ(manager.getLocalizedString(localization::settings::defaultModuleSetting, "first", "en"), "First");
+	ASSERT_EQ(manager.getLocalizedString(localization::settings::defaultModuleSetting, "second", "en"), "Second");
 
-	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "first", "ru"), json::utility::toUTF8JSON("Первый", CP_WINDOWS_1251));
-	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "second", "ru"), json::utility::toUTF8JSON("Второй", CP_WINDOWS_1251));
+	ASSERT_EQ(manager.getLocalizedString(localization::settings::defaultModuleSetting, "first", "ru"), json::utility::toUTF8JSON("Первый", CP_WINDOWS_1251));
+	ASSERT_EQ(manager.getLocalizedString(localization::settings::defaultModuleSetting, "second", "ru"), json::utility::toUTF8JSON("Второй", CP_WINDOWS_1251));
 }
 
 int main(int argc, char** argv)
