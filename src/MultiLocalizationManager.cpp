@@ -9,12 +9,20 @@ using namespace std;
 
 namespace localization
 {
+#ifdef __LINUX__
+	MultiLocalizationManager::LocalizationHolder::LocalizationHolder(TextLocalization&& localization) noexcept :
+		localization(move(localization))
+	{
+
+	}
+#else
 	MultiLocalizationManager::LocalizationHolder::LocalizationHolder(TextLocalization&& localization, WTextLocalization&& wlocalization) noexcept :
 		localization(move(localization)),
 		wlocalization(move(wlocalization))
 	{
 
 	}
+#endif
 
 	MultiLocalizationManager::MultiLocalizationManager()
 	{
@@ -24,7 +32,10 @@ namespace localization
 		}
 
 		TextLocalization::get();
+
+#ifndef __LINUX__
 		WTextLocalization::get();
+#endif
 
 		settings.setJSONData(ifstream(localizationModulesFile.data()));
 
@@ -71,9 +82,22 @@ namespace localization
 		unique_lock<mutex> lock(mapMutex);
 
 		TextLocalization textLocalizationModule(pathToLocalizationModule.string());
-		WTextLocalization wtextLocalizationModule(textLocalizationModule);
 
-		return localizations.emplace(localizationModuleName, new LocalizationHolder(move(textLocalizationModule), move(wtextLocalizationModule))).first->second;
+#ifndef __LINUX__
+		WTextLocalization wtextLocalizationModule(textLocalizationModule);
+#endif
+
+		return localizations.emplace
+		(
+			localizationModuleName,
+			new LocalizationHolder
+			(
+				move(textLocalizationModule)
+#ifndef __LINUX__
+				, move(wtextLocalizationModule)
+#endif
+			)
+		).first->second;
 	}
 
 	bool MultiLocalizationManager::removeModule(const string& localizationModuleName)
@@ -120,6 +144,7 @@ namespace localization
 		return language.empty() ? text[key] : text.getString(key, language);
 	}
 
+#ifndef __LINUX__
 	const wstring& MultiLocalizationManager::getLocalizedWideString(const string& localizationModuleName, const string& key, const string& language) const
 	{
 		if (localizationModuleName == settings.getString(settings::defaultModuleSetting))
@@ -133,4 +158,5 @@ namespace localization
 
 		return language.empty() ? text[key] : text.getString(key, language);
 	}
+#endif
 }

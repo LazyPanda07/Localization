@@ -20,10 +20,16 @@ namespace localization
 		{
 		public:
 			TextLocalization localization;
+#ifndef __LINUX__
 			WTextLocalization wlocalization;
+#endif
 
 		public:
+#ifdef __LINUX__
+			LocalizationHolder(TextLocalization&& localization) noexcept;
+#else
 			LocalizationHolder(TextLocalization&& localization, WTextLocalization&& wlocalization) noexcept;
+#endif
 
 			LocalizationHolder(const LocalizationHolder&) = delete;
 
@@ -93,6 +99,7 @@ namespace localization
 		/// @exception std::runtime_error Wrong key 
 		const std::string& getLocalizedString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
 
+#ifndef __LINUX__
 		/// @brief Get localized text. Thread safe
 		/// @param localizationModuleName Name of module
 		/// @param key Localization key
@@ -100,6 +107,7 @@ namespace localization
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key 
 		const std::wstring& getLocalizedWideString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
+#endif
 	};
 
 	using Holder = MultiLocalizationManager::LocalizationHolder;
