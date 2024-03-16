@@ -219,7 +219,7 @@ jobs:
 
     - name: Create Linux zip
       if: ${{ env.CURRENT_BRANCH == 'master' }}
-      run: zip -r linux.zip Release_Linux ReleaseDLL_Linux
+      run: zip -r linux.zip Release_Linux
 
     - name: Publish Windows
       if: ${{ env.CURRENT_BRANCH == 'master' }}
