@@ -3,6 +3,8 @@
 /// @file WTextLocalization.h
 /// @brief BaseTextLocalization specialization with std::wstring
 
+#ifndef __LINUX__
+
 #include "TextLocalization.h"
 
 namespace localization
@@ -79,3 +81,5 @@ namespace localization
 		friend std::unique_ptr<WTextLocalization>::deleter_type;
 	};
 }
+
+#endif

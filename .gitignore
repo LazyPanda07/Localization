@@ -36,7 +36,11 @@
 
 # Binaries
 bin/
+out/
 build/
+
+# Google Test
+gtest/
 
 # Assets
 !LocalizationUtils.exe

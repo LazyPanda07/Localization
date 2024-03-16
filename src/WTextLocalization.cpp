@@ -1,3 +1,5 @@
+#ifndef __LINUX__
+
 #include "WTextLocalization.h"
 
 using namespace std;
@@ -130,9 +132,6 @@ wstring to_wstring(const string& stringToConvert)
 {
 	wstring result;
 
-#ifdef __LINUX__
-
-#else
 	int size = MultiByteToWideChar
 	(		
 		CP_UTF8,
@@ -162,7 +161,8 @@ wstring to_wstring(const string& stringToConvert)
 	{
 		throw runtime_error("Can't convert to wstring");
 	}
-#endif
 
 	return result;
 }
+
+#endif
