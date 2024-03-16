@@ -42,6 +42,7 @@ namespace localization
 
 	private:
 		json::JSONParser settings;
+		std::string defaultModuleName;
 		mutable std::mutex mapMutex;
 		std::unordered_map<std::string, LocalizationHolder*> localizations;
 

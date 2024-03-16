@@ -39,6 +39,8 @@ namespace localization
 
 		settings.setJSONData(ifstream(localizationModulesFile.data()));
 
+		defaultModuleName = settings.getString(settings::defaultModuleSetting);
+
 		if (settings.begin() != settings.end())
 		{
 			for (const string& module : json::utility::JSONArrayWrapper(settings.getArray(settings::modulesSetting)).getAsStringArray())
@@ -74,9 +76,9 @@ namespace localization
 
 	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::addModule(const string& localizationModuleName, const filesystem::path& pathToLocalizationModule)
 	{
-		if (pathToLocalizationModule == settings.getString(settings::defaultModuleSetting))
+		if (pathToLocalizationModule == defaultModuleName)
 		{
-			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, settings.getString(settings::defaultModuleSetting)));
+			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, defaultModuleName));
 		}
 
 		unique_lock<mutex> lock(mapMutex);
@@ -120,9 +122,9 @@ namespace localization
 
 	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::getModule(const string& localizationModuleName) const
 	{
-		if (localizationModuleName == settings.getString(settings::defaultModuleSetting))
+		if (localizationModuleName == defaultModuleName)
 		{
-			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, settings.getString(settings::defaultModuleSetting)));
+			throw runtime_error(format("pathToLocalizationModule can't be {}", defaultModuleName));
 		}
 
 		unique_lock<mutex> lock(mapMutex);
@@ -132,7 +134,7 @@ namespace localization
 
 	const string& MultiLocalizationManager::getLocalizedString(const string& localizationModuleName, const string& key, const string& language) const
 	{
-		if (localizationModuleName == settings.getString(settings::defaultModuleSetting))
+		if (localizationModuleName == defaultModuleName)
 		{
 			return TextLocalization::get()[key];
 		}
@@ -147,7 +149,7 @@ namespace localization
 #ifndef __LINUX__
 	const wstring& MultiLocalizationManager::getLocalizedWideString(const string& localizationModuleName, const string& key, const string& language) const
 	{
-		if (localizationModuleName == settings.getString(settings::defaultModuleSetting))
+		if (localizationModuleName == defaultModuleName)
 		{
 			return WTextLocalization::get()[key];
 		}
