@@ -94,8 +94,8 @@ jobs:
     - name: Tests
       working-directory: Tests
       run: |
-          cd build/bin
           python tests.py
+          cd build/bin
           .\Tests.exe
 
 
@@ -124,7 +124,7 @@ jobs:
       working-directory: Tests
       run: |
           export CC=/usr/bin/gcc-13
-          export CXX/usr/bin/g++-13
+          export CXX=/usr/bin/g++-13
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
