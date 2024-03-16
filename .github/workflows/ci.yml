@@ -98,7 +98,7 @@ jobs:
     - name: Tests
       working-directory: Tests
       run: |
-          python tests.py
+          python tests.py ${{ matrix.configuration }}
           cd build/bin
           .\Tests.exe
 
@@ -141,7 +141,7 @@ jobs:
     - name: Tests
       working-directory: Tests
       run: |
-          python3 tests.py
+          python3 tests.py ${{ matrix.configuration }}
           cd build/bin
           LD_LIBRARY_PATH=$(pwd):${LD_LIBRARY_PATH} ./Tests
 
@@ -180,6 +180,10 @@ jobs:
 
     - name: Copy localization_modules.json
       run: cp localization_modules.json Tests/build/bin
+
+    - name: Run python test
+      working-directory: Tests
+      run: python3 tests.py ${{ matrix.configuration }}
 
     - name: Memory leak test
       uses: LazyPanda07/check-memory-leaks@v1

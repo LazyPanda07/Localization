@@ -11,8 +11,8 @@ TEST(Localization, TextLocalization)
 
 	localization.changeLanguage("ru");
 
-	ASSERT_EQ(localization["first"], "Первый");
-	ASSERT_EQ(localization["second"], "Второй");
+	ASSERT_EQ(localization["first"], json::utility::toUTF8JSON("Первый", CP_WINDOWS_1251));
+	ASSERT_EQ(localization["second"], json::utility::toUTF8JSON("Второй", CP_WINDOWS_1251));
 }
 
 TEST(Localization, MultiLocalizationManager)
@@ -22,8 +22,8 @@ TEST(Localization, MultiLocalizationManager)
 	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "first"), "First");
 	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "second", "en"), "Second");
 
-	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "first", "ru"), "Первый");
-	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "second", "ru"), "Второй");
+	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "first", "ru"), json::utility::toUTF8JSON("Первый", CP_WINDOWS_1251));
+	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "second", "ru"), json::utility::toUTF8JSON("Второй", CP_WINDOWS_1251));
 }
 
 int main(int argc, char** argv)
