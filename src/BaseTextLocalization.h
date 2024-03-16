@@ -94,9 +94,9 @@ namespace localization
 	BaseTextLocalization<T>::BaseTextLocalization(const std::string& localizationModule)
 	{
 #ifdef __LINUX__
-		handle = dlopen(localizationModule.data(), RTLD_LAZY);
+		handle = dlopen((std::string("lib") + localizationModule + ".so").data(), RTLD_LAZY);
 #else
-		handle = LoadLibraryA(localizationModule.data());
+		handle = LoadLibraryA((localizationModule + ".dll").data());
 #endif
 		auto load = [this](const char* name)
 			{
