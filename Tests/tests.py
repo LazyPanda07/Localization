@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
     subprocess.run([executable_path, ".", "generate"], cwd=working_dir)
 
-    if sys.argv[1] == "Release"
+    if sys.argv[1] == "Release":
         subprocess.run([executable_path, ".", "release_build", "../Tests/build/bin"], cwd=working_dir)
     else:
         subprocess.run([executable_path, ".", "debug_build", "../Tests/build/bin"], cwd=working_dir)
