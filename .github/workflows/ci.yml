@@ -83,6 +83,10 @@ jobs:
     - name: Enable NMake
       uses: ilammy/msvc-dev-cmd@v1.13.0
 
+    - name: Copy localization_modules.json
+      shell: bash
+      run: cp localization_modules.json assets
+
     - name: Build tests
       working-directory: Tests
       run: |
@@ -120,11 +124,15 @@ jobs:
       with: 
         install-path: Tests/gtest
 
+    - name: Copy localization_modules.json
+      run: cp localization_modules.json assets
+
     - name: Build tests
       working-directory: Tests
       run: |
           export CC=/usr/bin/gcc-13
           export CXX=/usr/bin/g++-13
+          chmod +x ../assets/LocalizationUtils
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -159,11 +167,15 @@ jobs:
       with: 
         install-path: Tests/gtest
 
+    - name: Copy localization_modules.json
+      run: cp localization_modules.json assets
+
     - name: Build tests
       working-directory: Tests
       run: |
           export CC=/usr/bin/gcc-13
           export CXX=/usr/bin/g++-13
+          chmod +x ../assets/LocalizationUtils
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
