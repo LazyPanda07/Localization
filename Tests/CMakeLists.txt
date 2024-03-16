@@ -36,12 +36,14 @@ target_include_directories(
 target_link_directories(
 	${PROJECT_NAME} PRIVATE
 	${JSON_LIBRARY_PATH}
-	gtest/lib
+	../Localization/lib/
+	gtest/lib/
 )
 
 target_link_libraries(
 	${PROJECT_NAME} PRIVATE
 	JSON
+	Localization
 	gtest
 	gtest_main
 )
