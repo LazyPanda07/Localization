@@ -83,10 +83,6 @@ jobs:
     - name: Enable NMake
       uses: ilammy/msvc-dev-cmd@v1.13.0
 
-    - name: Copy localization_modules.json
-      shell: bash
-      run: cp localization_modules.json assets
-
     - name: Build tests
       working-directory: Tests
       run: |
@@ -94,6 +90,10 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
           nmake install
+
+    - name: Copy localization_modules.json
+      shell: bash
+      run: cp localization_modules.json Tests/build/bin
     
     - name: Tests
       working-directory: Tests
@@ -123,10 +123,7 @@ jobs:
       uses: LazyPanda07/get-gtest@v1
       with: 
         install-path: Tests/gtest
-
-    - name: Copy localization_modules.json
-      run: cp localization_modules.json assets
-
+        
     - name: Build tests
       working-directory: Tests
       run: |
@@ -137,6 +134,9 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
           make install -j $(nproc)
+
+    - name: Copy localization_modules.json
+      run: cp localization_modules.json Tests/build/bin
     
     - name: Tests
       working-directory: Tests
@@ -167,9 +167,6 @@ jobs:
       with: 
         install-path: Tests/gtest
 
-    - name: Copy localization_modules.json
-      run: cp localization_modules.json assets
-
     - name: Build tests
       working-directory: Tests
       run: |
@@ -180,6 +177,9 @@ jobs:
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
           make install -j $(nproc)
+
+    - name: Copy localization_modules.json
+      run: cp localization_modules.json Tests/build/bin
 
     - name: Memory leak test
       uses: LazyPanda07/check-memory-leaks@v1
