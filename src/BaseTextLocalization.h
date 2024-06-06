@@ -228,7 +228,7 @@ namespace localization
 	}
 
 	template<typename T>
-	const std::basic_string<T>& BaseTextLocalization<T>::operator[] (const std::string& key) const
+	const std::basic_string<T>& BaseTextLocalization<T>::operator [] (const std::string& key) const
 	{
 		return this->getString(key, language);
 	}

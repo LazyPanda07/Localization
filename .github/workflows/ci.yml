@@ -181,8 +181,8 @@ jobs:
         path: Tests/build/bin
         name: Tests
         pre-execute: export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$(pwd)
-
   
+
   publish:
     runs-on: ubuntu-latest
     needs: [windows-tests, linux-tests, memory-leak-tests]
