@@ -176,7 +176,7 @@ jobs:
       run: python3 tests.py ${{ matrix.configuration }}
 
     - name: Memory leak test
-      uses: LazyPanda07/check-memory-leaks@v1
+      uses: LazyPanda07/check-memory-leaks@v1.4
       with:
         path: Tests/build/bin
         name: Tests
