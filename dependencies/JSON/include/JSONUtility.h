@@ -52,7 +52,7 @@ namespace json
 		template<typename jsonStruct>
 		using baseVariantType = std::variant
 			<
-			nullptr_t,
+			std::nullptr_t,
 			std::string,
 			bool,
 			int64_t,
@@ -65,15 +65,6 @@ namespace json
 		/// @brief JSON object
 		class JSON_API jsonObject
 		{
-		private:
-			template<typename T>
-			jsonObject& setValue(std::string_view key, T&& value);
-
-			template<typename T>
-			bool tryGetValue(std::string_view key, T& value) const;
-
-			auto findValue(std::string_view key, bool throwException = true) const;
-
 		public:
 			using variantType = baseVariantType<jsonObject>;
 
@@ -120,6 +111,15 @@ namespace json
 
 				~ConstJSONIterator() = default;
 			};
+
+		private:
+			template<typename T>
+			jsonObject& setValue(std::string_view key, T&& value);
+
+			template<typename T>
+			bool tryGetValue(std::string_view key, T& value) const;
+
+			ConstJSONIterator::ConstJSONIteratorType findValue(std::string_view key, bool throwException = true) const;
 
 		public:
 			std::vector<std::pair<std::string, variantType>> data;
@@ -199,7 +199,7 @@ namespace json
 			/// @return nullptr value
 			/// @exception json::exceptions::CantFindValueException 
 			/// @exception std::bad_variant_access Other type found
-			nullptr_t getNull(std::string_view key) const;
+			std::nullptr_t getNull(std::string_view key) const;
 
 			/// @brief Get string value. Find and get value only for this JSON object
 			/// @param key JSON key

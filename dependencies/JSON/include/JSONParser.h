@@ -179,7 +179,7 @@ namespace json
 		/// @return nullptr value
 		/// @exception json::exceptions::CantFindValueException 
 		/// @exception std::bad_variant_access Other type found
-		nullptr_t getNull(std::string_view key, bool recursive = false) const;
+		std::nullptr_t getNull(std::string_view key, bool recursive = false) const;
 
 		/// @brief Get string value
 		/// @param key JSON key
@@ -308,6 +308,22 @@ namespace json
 		/// @brief Move parsed data
 		/// @param object Result of moving
 		void getParsedData(utility::jsonObject& object) noexcept;
+
+		/**
+		 * @brief Override existing value
+		 * @param key JSON Key
+		 * @param value JSON value
+		 * @param recursive Recursive search
+		 */
+		void overrideValue(std::string_view key, const variantType& value, bool recursive = false);
+
+		/**
+		 * @brief Override existing value
+		 * @param key JSON Key
+		 * @param value JSON value
+		 * @param recursive Recursive search
+		 */
+		void overrideValue(std::string_view key, variantType&& value, bool recursive = false);
 
 		/// <summary>
 		/// Get JSON from input stream

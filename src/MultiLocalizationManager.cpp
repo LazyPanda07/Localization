@@ -1,6 +1,7 @@
 #include "MultiLocalizationManager.h"
 
 #include <fstream>
+#include <mutex>
 
 #include "LocalizationConstants.h"
 #include "JSONArrayWrapper.h"
