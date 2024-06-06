@@ -62,7 +62,7 @@ namespace localization
 
 	string MultiLocalizationManager::getVersion()
 	{
-		string version = "1.0.2";
+		string version = "1.0.3";
 
 		return version;
 	}
@@ -81,7 +81,7 @@ namespace localization
 			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, defaultModuleName));
 		}
 
-		unique_lock<mutex> lock(mapMutex);
+		unique_lock<shared_mutex> lock(mapMutex);
 
 		TextLocalization textLocalizationModule(pathToLocalizationModule.string());
 
@@ -104,7 +104,7 @@ namespace localization
 
 	bool MultiLocalizationManager::removeModule(const string& localizationModuleName)
 	{
-		unique_lock<mutex> lock(mapMutex);
+		unique_lock<shared_mutex> lock(mapMutex);
 
 		auto it = localizations.find(localizationModuleName);
 
@@ -127,7 +127,7 @@ namespace localization
 			throw runtime_error(format("pathToLocalizationModule can't be {}", defaultModuleName));
 		}
 
-		unique_lock<mutex> lock(mapMutex);
+		shared_lock<shared_mutex> lock(mapMutex);
 
 		return localizations.at(localizationModuleName);
 	}
@@ -139,7 +139,7 @@ namespace localization
 			return TextLocalization::get().getString(key, language);
 		}
 
-		unique_lock<mutex> lock(mapMutex);
+		shared_lock<shared_mutex> lock(mapMutex);
 
 		TextLocalization& text = localizations.at(localizationModuleName)->localization;
 
@@ -154,7 +154,7 @@ namespace localization
 			return WTextLocalization::get().getString(key, language);
 		}
 
-		unique_lock<mutex> lock(mapMutex);
+		shared_lock<shared_mutex> lock(mapMutex);
 
 		WTextLocalization& text = localizations.at(localizationModuleName)->wlocalization;
 

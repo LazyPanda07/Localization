@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 #include <filesystem>
-#include <mutex>
+#include <shared_mutex>
 
 #include "JSONParser.h"
 #include "TextLocalization.h"
@@ -43,7 +43,7 @@ namespace localization
 	private:
 		json::JSONParser settings;
 		std::string defaultModuleName;
-		mutable std::mutex mapMutex;
+		mutable std::shared_mutex mapMutex;
 		std::unordered_map<std::string, LocalizationHolder*> localizations;
 
 	private:
