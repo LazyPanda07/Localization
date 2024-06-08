@@ -6,6 +6,7 @@
 #include <format>
 #include <algorithm>
 #include <fstream>
+#include <filesystem>
 
 #ifdef __LINUX__
 #include <dlfcn.h>
@@ -22,21 +23,25 @@ using HMODULE = void*;
 
 namespace localization
 {
-	using namespace std::string_view_literals;
-
 	/// @brief Singleton for text localization
 	template<typename T>
 	class LOCALIZATION_API BaseTextLocalization final
 	{
 	private:
-		const std::unordered_map<std::string, const std::unordered_map<std::string, std::string>*>* dictionaries;
-		const std::string* originalLanguage;
+		using dictionariesFunction = const char* (*)(const char* key, const char* language);
+		using findLanguageFunction = bool (*)(const char* language);
+		using originalLanguageFunction = const char* (*)();
+
+	private:
+		dictionariesFunction dictionaries;
+		findLanguageFunction findLanguage;
+		originalLanguageFunction originalLanguage;
 		std::string language;
-		std::string pathToModule;
+		std::filesystem::path pathToModule;
 		HMODULE handle;
 
 	private:
-		BaseTextLocalization(const std::string& localizationModule);
+		BaseTextLocalization(std::string_view localizationModule);
 
 		BaseTextLocalization(const BaseTextLocalization<T>&) = delete;
 
@@ -61,28 +66,29 @@ namespace localization
 
 		/// @brief Get original language
 		/// @return originalLanguage
-		const std::string& getOriginalLanguage() const;
+		std::string_view getOriginalLanguage() const;
 
 		/// @brief Get current language
 		/// @return language
 		const std::string& getCurrentLanguage() const;
 
 		/// @brief Get path to used module
-		const std::string& getPathToModule() const;
+		const std::filesystem::path& getPathToModule() const;
 
 		/// @brief Get localized text
 		/// @param key Localization key
 		/// @param language Specific language
+		/// @param allowOriginal If can't find text for specific language try to find in original language
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
 		/// @exception std::out_of_range
-		const std::basic_string<T>& getString(const std::string& key, const std::string& language) const;
+		std::basic_string_view<T> getString(const std::string& key, const std::string& language, bool allowOriginal = true) const;
 
 		/// @brief Get localized text
 		/// @param key Localization key
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
-		const std::basic_string<T>& operator [] (const std::string& key) const;
+		std::basic_string_view<T> operator [] (const std::string& key) const;
 
 		friend class BaseTextLocalization<wchar_t>;
 		friend class MultiLocalizationManager;
@@ -91,12 +97,23 @@ namespace localization
 	};
 
 	template<typename T>
-	BaseTextLocalization<T>::BaseTextLocalization(const std::string& localizationModule)
+	BaseTextLocalization<T>::BaseTextLocalization(std::string_view localizationModule)
 	{
 #ifdef __LINUX__
-		handle = dlopen((std::string("lib") + localizationModule + ".so").data(), RTLD_LAZY);
+		pathToModule = std::format("lib{}.so", localizationModule);
 #else
-		handle = LoadLibraryA((localizationModule + ".dll").data());
+		pathToModule = std::format("{}.dll", localizationModule);
+#endif
+
+		if (!std::filesystem::exists(pathToModule))
+		{
+			throw std::runtime_error(std::format("Can't find {}", pathToModule.string()));
+		}
+
+#ifdef __LINUX__
+		handle = dlopen(pathToModule.string().data(), RTLD_LAZY);
+#else
+		handle = LoadLibraryA(pathToModule.string().data());
 #endif
 		auto load = [this](const char* name)
 			{
@@ -109,26 +126,24 @@ namespace localization
 
 		if (!handle)
 		{
-			throw std::runtime_error(std::format("Can't find {}"sv, localizationModule));
+			throw std::runtime_error(std::format("Can't load {}", pathToModule.string()));
 		}
 
-		pathToModule = localizationModule;
-
-		dictionaries = reinterpret_cast<const std::unordered_map<std::string, const std::unordered_map<std::string, std::string>*>*>(load("dictionaries"));
+		dictionaries = reinterpret_cast<dictionariesFunction>(load("getLocalizedString"));
 
 		if (!dictionaries)
 		{
-			throw std::runtime_error(std::format("Can't find dictionaries in {}, rebuild and try again"sv, localizationModule));
+			throw std::runtime_error(std::format("Can't find dictionaries in {}, rebuild and try again", pathToModule.string()));
 		}
 
-		originalLanguage = reinterpret_cast<const std::string*>(load("originalLanguage"));
+		originalLanguage = reinterpret_cast<originalLanguageFunction>(load("getOriginalLanguage"));
 
 		if (!originalLanguage)
 		{
-			throw std::runtime_error(std::format("Can't find originalLanguage in {}, rebuild and try again"sv, localizationModule));
+			throw std::runtime_error(std::format("Can't find originalLanguage in {}, rebuild and try again", pathToModule.string()));
 		}
 
-		language = *originalLanguage;
+		language = originalLanguage();
 	}
 
 	template<typename T>
@@ -159,6 +174,8 @@ namespace localization
 #else
 		FreeLibrary(handle);
 #endif
+
+		handle = nullptr;
 	}
 
 	template<typename T>
@@ -179,18 +196,18 @@ namespace localization
 	template<typename T>
 	void BaseTextLocalization<T>::changeLanguage(const std::string& language)
 	{
-		if (dictionaries->find(language) == dictionaries->end())
+		if (!findLanguage(language.data()))
 		{
-			throw std::runtime_error(std::format(R"(Wrong language value "{}")"sv, language));
+			throw std::runtime_error(std::format(R"(Wrong language value "{}")", language));
 		}
 
 		this->language = language;
 	}
 
 	template<typename T>
-	const std::string& BaseTextLocalization<T>::getOriginalLanguage() const
+	std::string_view BaseTextLocalization<T>::getOriginalLanguage() const
 	{
-		return *originalLanguage;
+		return originalLanguage();
 	}
 
 	template<typename T>
@@ -200,35 +217,38 @@ namespace localization
 	}
 
 	template<typename T>
-	const std::string& BaseTextLocalization<T>::getPathToModule() const
+	const std::filesystem::path& BaseTextLocalization<T>::getPathToModule() const
 	{
 		return pathToModule;
 	}
 
 	template<typename T>
-	const std::basic_string<T>& BaseTextLocalization<T>::getString(const std::string& key, const std::string& language) const
+	std::basic_string_view<T> BaseTextLocalization<T>::getString(const std::string& key, const std::string& language, bool allowOriginal) const
 	{
-		try
-		{
-			const std::string& result = dictionaries->at(language)->at(key);
+		const char* result = dictionaries(key.data(), language.data());
 
-			return result.empty() ? dictionaries->at(*originalLanguage)->at(key) : result;
-		}
-		catch (const std::out_of_range&)
+		if (!result)
 		{
-			try
+			if (!allowOriginal)
 			{
-				return dictionaries->at(*originalLanguage)->at(key);
+				throw std::runtime_error(std::format(R"(Can't find key "{}" for {})", key, language));
 			}
-			catch (const std::out_of_range&)
+
+			std::string_view originalLanguageView = this->getOriginalLanguage();
+
+			result = dictionaries(key.data(), originalLanguageView.data());
+
+			if (!result)
 			{
-				throw std::runtime_error(format(R"(Can't find key "{}")"sv, key));
+				throw std::runtime_error(std::format(R"(Can't find key "{}" for {}, also can't find in original language {})", key, language, originalLanguageView));
 			}
 		}
+
+		return std::string_view(result);
 	}
 
 	template<typename T>
-	const std::basic_string<T>& BaseTextLocalization<T>::operator [] (const std::string& key) const
+	std::basic_string_view<T> BaseTextLocalization<T>::operator [] (const std::string& key) const
 	{
 		return this->getString(key, language);
 	}

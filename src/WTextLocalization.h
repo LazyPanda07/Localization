@@ -20,7 +20,8 @@ namespace localization
 		std::unordered_map<std::string, std::unordered_map<std::string, std::wstring>> dictionaries;
 		std::string originalLanguage;
 		std::string language;
-		std::string pathToModule;
+		std::filesystem::path pathToModule;
+		HMODULE handle;
 
 	private:
 		void convertLocalization(const TextLocalization& localizationModule);
@@ -53,28 +54,29 @@ namespace localization
 
 		/// @brief Get original language
 		/// @return originalLanguage
-		const std::string& getOriginalLanguage() const;
+		std::string_view getOriginalLanguage() const;
 
 		/// @brief Get current language
 		/// @return language
 		const std::string& getCurrentLanguage() const;
 
 		/// @brief Get path to used module
-		const std::string& getPathToModule() const;
+		const std::filesystem::path& getPathToModule() const;
 
 		/// @brief Get localized text
 		/// @param key Localization key
 		/// @param language Specific language
+		/// @param allowOriginal If can't find text for specific language try to find in original language
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
 		/// @exception std::out_of_range
-		const std::wstring& getString(const std::string& key, const std::string& language) const;
+		std::wstring_view getString(const std::string& key, const std::string& language, bool allowOriginal = true) const;
 
 		/// @brief Get localized text
 		/// @param key Localization key
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
-		const std::wstring& operator [] (const std::string& key) const;
+		std::wstring_view operator [] (const std::string& key) const;
 
 		friend class MultiLocalizationManager;
 		friend struct LocalizationHolder;

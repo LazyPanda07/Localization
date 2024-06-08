@@ -10,24 +10,53 @@ namespace localization
 {
 	void BaseTextLocalization<wchar_t>::convertLocalization(const TextLocalization& localizationModule)
 	{
+		using getDictionariesLanguages = const char** (*)(uint64_t* size);
+		using getDictionary = const char* (*)(const char* language, uint64_t* size, const char*** key, const char*** values);
+		using freeDictionary = void(*)(const char** keys, const char** values);
+
+		auto load = [this](HMODULE handle, const char* name)
+			{
+#ifdef __LINUX__
+				return dlsym(handle, name);
+#else
+				return GetProcAddress(handle, name);
+#endif
+			};
+
 		originalLanguage = localizationModule.getOriginalLanguage();
 		language = localizationModule.language;
+		pathToModule = localizationModule.getPathToModule();
 
-		for (const auto& [language, dictionary] : (*localizationModule.dictionaries))
+		getDictionariesLanguages dictionariesLanguagesFunction = reinterpret_cast<getDictionariesLanguages>(load(localizationModule.handle, "getDictionariesLanguages"));
+		getDictionary dictionaryFunction = reinterpret_cast<getDictionary>(load(localizationModule.handle, "getDictionary"));
+		freeDictionary freeDictionaryFunction = reinterpret_cast<freeDictionary>(load(localizationModule.handle, "freeDictionary"));
+
+		uint64_t languagesSize = 0;
+		const char** languages = dictionariesLanguagesFunction(&languagesSize);
+
+		for (uint64_t i = 0; i < languagesSize; i++)
 		{
+			const char* language = languages[i];
 			unordered_map<string, wstring> convertedDictionary;
+			uint64_t dictionarySize = 0;
+			const char** keys;
+			const char** values;
 
-			convertedDictionary.reserve(dictionary->size());
+			dictionaryFunction(language, &dictionarySize, &keys, &values);
 
-			for (const auto& [key, value] : *dictionary)
+			convertedDictionary.reserve(dictionarySize);
+
+			for (uint64_t j = 0; j < dictionarySize; j++)
 			{
-				convertedDictionary[key] = to_wstring(value);
+				convertedDictionary[keys[j]] = to_wstring(values[j]);	
 			}
 
 			dictionaries[language] = move(convertedDictionary);
+
+			freeDictionaryFunction(keys, values);
 		}
 
-		pathToModule = localizationModule.getPathToModule();
+		reinterpret_cast<void(*)(const char**)>(load(localizationModule.handle, "freeDictionariesLanguages"))(languages);
 	}
 
 	BaseTextLocalization<wchar_t>::BaseTextLocalization(const string& localizationModule)
@@ -80,13 +109,13 @@ namespace localization
 	{
 		if (dictionaries.find(language) == dictionaries.end())
 		{
-			throw runtime_error(format(R"(Wrong language value "{}")"sv, language));
+			throw runtime_error(format(R"(Wrong language value "{}")", language));
 		}
 
 		this->language = language;
 	}
 
-	const string& BaseTextLocalization<wchar_t>::getOriginalLanguage() const
+	string_view BaseTextLocalization<wchar_t>::getOriginalLanguage() const
 	{
 		return originalLanguage;
 	}
@@ -96,12 +125,12 @@ namespace localization
 		return language;
 	}
 
-	const string& BaseTextLocalization<wchar_t>::getPathToModule() const
+	const filesystem::path& BaseTextLocalization<wchar_t>::getPathToModule() const
 	{
 		return pathToModule;
 	}
 
-	const wstring& BaseTextLocalization<wchar_t>::getString(const string& key, const string& language) const
+	wstring_view BaseTextLocalization<wchar_t>::getString(const string& key, const string& language, bool allowOriginal) const
 	{
 		try
 		{
@@ -122,7 +151,7 @@ namespace localization
 		}
 	}
 
-	const wstring& BaseTextLocalization<wchar_t>::operator [] (const string& key) const
+	wstring_view BaseTextLocalization<wchar_t>::operator [] (const string& key) const
 	{
 		return this->getString(key, language);
 	}

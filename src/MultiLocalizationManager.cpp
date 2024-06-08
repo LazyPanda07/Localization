@@ -29,7 +29,7 @@ namespace localization
 	{
 		if (!filesystem::exists(localizationModulesFile))
 		{
-			throw std::runtime_error(format("Can't find {}"sv, localizationModulesFile));
+			throw std::runtime_error(format("Can't find {}", localizationModulesFile));
 		}
 
 		TextLocalization::get();
@@ -63,7 +63,7 @@ namespace localization
 
 	string MultiLocalizationManager::getVersion()
 	{
-		string version = "1.0.3";
+		string version = "1.1.0";
 
 		return version;
 	}
@@ -79,7 +79,7 @@ namespace localization
 	{
 		if (pathToLocalizationModule == defaultModuleName)
 		{
-			throw runtime_error(format("pathToLocalizationModule can't be {}"sv, defaultModuleName));
+			throw runtime_error(format("pathToLocalizationModule can't be {}", defaultModuleName));
 		}
 
 		unique_lock<shared_mutex> lock(mapMutex);
@@ -133,7 +133,7 @@ namespace localization
 		return localizations.at(localizationModuleName);
 	}
 
-	const string& MultiLocalizationManager::getLocalizedString(const string& localizationModuleName, const string& key, const string& language) const
+	string_view MultiLocalizationManager::getLocalizedString(const string& localizationModuleName, const string& key, const string& language) const
 	{
 		if (localizationModuleName == defaultModuleName)
 		{
@@ -148,7 +148,7 @@ namespace localization
 	}
 
 #ifndef __LINUX__
-	const wstring& MultiLocalizationManager::getLocalizedWideString(const string& localizationModuleName, const string& key, const string& language) const
+	wstring_view MultiLocalizationManager::getLocalizedWideString(const string& localizationModuleName, const string& key, const string& language) const
 	{
 		if (localizationModuleName == defaultModuleName)
 		{

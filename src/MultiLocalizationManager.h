@@ -98,7 +98,7 @@ namespace localization
 		/// @param language Localized value from specific language
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key 
-		const std::string& getLocalizedString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
+		std::string_view getLocalizedString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
 
 #ifndef __LINUX__
 		/// @brief Get localized text. Thread safe
@@ -107,7 +107,7 @@ namespace localization
 		/// @param language Localized value from specific language
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key 
-		const std::wstring& getLocalizedWideString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
+		std::wstring_view getLocalizedWideString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
 #endif
 	};
 
