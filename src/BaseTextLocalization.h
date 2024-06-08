@@ -133,14 +133,21 @@ namespace localization
 
 		if (!dictionaries)
 		{
-			throw std::runtime_error(std::format("Can't find dictionaries in {}, rebuild and try again", pathToModule.string()));
+			throw std::runtime_error(std::format("Can't find getLocalizedString function in {}, rebuild and try again", pathToModule.string()));
 		}
 
 		originalLanguage = reinterpret_cast<originalLanguageFunction>(load("getOriginalLanguage"));
 
 		if (!originalLanguage)
 		{
-			throw std::runtime_error(std::format("Can't find originalLanguage in {}, rebuild and try again", pathToModule.string()));
+			throw std::runtime_error(std::format("Can't find getOriginalLanguage function in {}, rebuild and try again", pathToModule.string()));
+		}
+
+		findLanguage = reinterpret_cast<findLanguageFunction>(load("findLanguage"));
+
+		if (!findLanguage)
+		{
+			throw std::runtime_error(std::format("Can't find findLanguage function in {}, rebuild and try again", pathToModule.string()));
 		}
 
 		language = originalLanguage();
