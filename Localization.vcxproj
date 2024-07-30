@@ -88,12 +88,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)dependencies\JSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)build\JSON\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\JSON\lib\Windows\Debug-x64\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)build\JSON\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>JSON.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>
@@ -104,6 +105,12 @@
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)dependencies\JSON\libs\$(Configuration)-$(Platform)\</AdditionalLibraryDirectories>
     </Lib>
+    <PreBuildEvent>
+      <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
+cd $(ProjectDir)
+if not exist build mkdir build
+cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(SolutionDir)build\JSON\ ..\3rdparty -G "NMake Makefiles" &amp;&amp; nmake install</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -114,14 +121,15 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)dependencies\JSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)build\JSON\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\JSON\lib\Windows\Release-x64\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)build\JSON\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>JSON.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>
@@ -132,6 +140,12 @@
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)dependencies\JSON\libs\$(Configuration)-$(Platform)\</AdditionalLibraryDirectories>
     </Lib>
+    <PreBuildEvent>
+      <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
+cd $(ProjectDir)
+if not exist build mkdir build
+cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(SolutionDir)build\JSON\ ..\3rdparty -G "NMake Makefiles" &amp;&amp; nmake install</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ProductionRelease|x64'">
     <ClCompile>
@@ -142,7 +156,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)dependencies\JSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)build\JSON\include\</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -150,7 +164,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\JSON\lib\Windows\Release-x64\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)build\JSON\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>JSON.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <CustomBuildStep>
       <Command>
@@ -161,6 +176,12 @@
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)dependencies\JSON\libs\$(Configuration)-$(Platform)\</AdditionalLibraryDirectories>
     </Lib>
+    <PreBuildEvent>
+      <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
+cd $(ProjectDir)
+if not exist build mkdir build
+cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(SolutionDir)build\JSON\ ..\3rdparty -G "NMake Makefiles" &amp;&amp; nmake install</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="assets\LocalizationUtils.exe" />

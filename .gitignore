@@ -47,5 +47,4 @@ gtest/
 !LocalizationUtils
 
 # Dependencies
-!JSON.lib
-!libJSON.a
+3rdparty/JSON
