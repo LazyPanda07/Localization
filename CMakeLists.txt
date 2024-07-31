@@ -36,7 +36,7 @@ target_link_directories(
 
 target_link_libraries(
 	${PROJECT_NAME} PRIVATE
-	${PROJECT_SOURCE_DIR}/3rdparty/JSON/lib/libJSON.a
+	JSON
 )
 
 install(
