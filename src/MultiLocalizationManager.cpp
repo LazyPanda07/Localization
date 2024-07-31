@@ -63,7 +63,7 @@ namespace localization
 
 	string MultiLocalizationManager::getVersion()
 	{
-		string version = "1.1.5";
+		string version = "1.1.6";
 
 		return version;
 	}
