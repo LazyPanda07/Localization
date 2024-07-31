@@ -15,23 +15,18 @@ endif (UNIX)
 
 project(Localization)
 
+add_subdirectory(3rdparty)
+
 add_library(
 	${PROJECT_NAME} SHARED
 	src/MultiLocalizationManager.cpp
 	src/WTextLocalization.cpp
 )
 
-add_subdirectory(3rdparty)
-
 target_include_directories(
-	${PROJECT_NAME} PUBLIC
+	${PROJECT_NAME} PRIVATE
 	src/
-	${JSON_INCLUDE}
-)
-
-target_link_directories(
-	${PROJECT_NAME} PUBLIC
-	${LINK_LIBRARY_PATH}
+	${LOCALIZATION_JSON_INCLUDE}
 )
 
 target_link_libraries(

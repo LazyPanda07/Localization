@@ -3,23 +3,19 @@ cmake_minimum_required(VERSION 3.27.0)
 project(3rdparty)
 
 set(JSON_TAG v2.6.1)
-set(JSON_PATH ${PROJECT_SOURCE_DIR}/JSON)
-set(JSON_INCLUDE ${PROJECT_SOURCE_DIR}/JSON/src/ PARENT_SCOPE)
+set(FETCHCONTENT_BASE_DIR ${CMAKE_BINARY_DIR}/Localization/_deps/)
 
-if (EXISTS ${JSON_PATH})
-	execute_process(
-		WORKING_DIRECTORY ${JSON_PATH}
-		COMMAND git pull
-	)
+get_directory_property(HAS_PARENT PARENT_DIRECTORY)
 
-	execute_process(
-		WORKING_DIRECTORY ${JSON_PATH}
-		COMMAND git checkout ${JSON_TAG}
-	)
-else()
-	execute_process(
-		COMMAND git clone https://github.com/LazyPanda07/JSON -b ${JSON_TAG} ${JSON_PATH}
-	)
+include(FetchContent)
+
+FetchContent_Declare(
+  JSON
+  URL https://github.com/LazyPanda07/JSON/archive/refs/tags/${JSON_TAG}.zip
+)
+
+FetchContent_MakeAvailable(JSON)
+
+if(HAS_PARENT)
+  set(LOCALIZATION_JSON_INCLUDE ${json_SOURCE_DIR}/src/ PARENT_SCOPE)
 endif()
-
-add_subdirectory(JSON)
