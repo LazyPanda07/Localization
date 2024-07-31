@@ -26,7 +26,12 @@ add_library(
 target_include_directories(
 	${PROJECT_NAME} PRIVATE
 	src/
-	${LOCALIZATION_JSON_INCLUDE}
+	3rdparty/JSON/include/
+)
+
+target_link_directories(
+	${PROJECT_NAME} PRIVATE
+	3rdparty/JSON/lib/
 )
 
 target_link_libraries(
@@ -42,5 +47,6 @@ install(
 )
 
 install(DIRECTORY src/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY 3rdparty/JSON/ DESTINATION ${CMAKE_INSTALL_PREFIX})
 install(FILES localization_modules.json DESTINATION ${CMAKE_INSTALL_PREFIX})
 install(FILES ${LOCALIZATION_UTILS_PATH} DESTINATION ${CMAKE_INSTALL_PREFIX}/assets)

@@ -47,4 +47,4 @@ gtest/
 !LocalizationUtils
 
 # Dependencies
-JSON/
+3rdparty/JSON/
