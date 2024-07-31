@@ -25,7 +25,7 @@ if (NOT EXISTS ${LOCALIZATION_JSON_PATH})
 
 			execute_process(
 				WORKING_DIRECTORY ${LOCALIZATION_JSON_PATH}/build
-				COMMAND make install -j $(nproc)
+				COMMAND make install
 			)
 		else()
 			execute_process(
@@ -57,7 +57,7 @@ if (NOT EXISTS ${LOCALIZATION_JSON_PATH})
 
 			execute_process(
 				WORKING_DIRECTORY ${LOCALIZATION_JSON_PATH}/build
-				COMMAND make install -j $(nproc)
+				COMMAND make install
 			)
 		else()
 			execute_process(
