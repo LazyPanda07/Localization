@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.27.0)
 
 project(3rdparty)
 
-set(JSON_TAG v2.6.2)
+set(JSON_TAG v2.6.3)
 set(LOCALIZATION_JSON_PATH ${CMAKE_BINARY_DIR}/Localization/JSON)
 
 if (NOT EXISTS ${LOCALIZATION_JSON_PATH})
