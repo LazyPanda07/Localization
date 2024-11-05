@@ -194,7 +194,7 @@ namespace localization
 		{
 			json::JSONParser settings(std::ifstream(localizationModulesFile.data()));
 
-			instance = std::unique_ptr<BaseTextLocalization<T>>(settings.getString(settings::defaultModuleSetting));
+			instance = std::unique_ptr<BaseTextLocalization<T>>(new BaseTextLocalization<T>(settings.getString(settings::defaultModuleSetting)));
 		}
 
 		return *instance;
