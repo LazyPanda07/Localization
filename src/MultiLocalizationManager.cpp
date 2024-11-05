@@ -63,7 +63,7 @@ namespace localization
 
 	string MultiLocalizationManager::getVersion()
 	{
-		string version = "1.1.4";
+		string version = "1.1.5";
 
 		return version;
 	}
@@ -90,7 +90,7 @@ namespace localization
 		WTextLocalization wtextLocalizationModule(textLocalizationModule);
 #endif
 
-		return localizations.emplace
+		return localizations.try_emplace
 		(
 			localizationModuleName,
 			new LocalizationHolder
