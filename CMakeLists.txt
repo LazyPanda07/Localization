@@ -13,7 +13,7 @@ else ()
 	set(LOCALIZATION_UTILS_PATH ${LOCALIZATION_UTILS_PATH}/LocalizationUtils.exe)
 endif (UNIX)
 
-project(Localization)
+project(Localization VERSION 1.1.4)
 
 add_subdirectory(3rdparty)
 

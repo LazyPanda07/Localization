@@ -59,7 +59,8 @@ namespace localization
 		reinterpret_cast<void(*)(const char**)>(load(localizationModule.handle, "freeDictionariesLanguages"))(languages);
 	}
 
-	BaseTextLocalization<wchar_t>::BaseTextLocalization(const string& localizationModule)
+	BaseTextLocalization<wchar_t>::BaseTextLocalization(const string& localizationModule) :
+		handle(nullptr)
 	{
 		if (localizationModule == TextLocalization::get().getPathToModule())
 		{
@@ -71,7 +72,8 @@ namespace localization
 		}
 	}
 
-	BaseTextLocalization<wchar_t>::BaseTextLocalization(const TextLocalization& localizationModule)
+	BaseTextLocalization<wchar_t>::BaseTextLocalization(const TextLocalization& localizationModule) :
+		handle(nullptr)
 	{
 		this->convertLocalization(localizationModule);
 	}
