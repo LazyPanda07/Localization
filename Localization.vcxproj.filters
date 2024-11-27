@@ -35,12 +35,18 @@
     <ClInclude Include="src\LocalizationConstants.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\StringViewUtils.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\WTextLocalization.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="src\MultiLocalizationManager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StringViewUtils.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

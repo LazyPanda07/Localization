@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Localization<span id="projectnumber">&#160;v1.1.5</span>
+   <div id="projectname">Localization<span id="projectnumber">&#160;v1.2.0</span>
    </div>
    <div id="projectbrief">Localization subsystem</div>
   </td>
@@ -106,7 +106,7 @@ $(function(){initNavTree('_w_text_localization_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">using namespace </span>std;</div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">static</span> wstring to_wstring(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; source);</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">static</span> wstring to_wstring(string_view source);</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>localization</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
@@ -139,7 +139,7 @@ $(function(){initNavTree('_w_text_localization_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">for</span> (uint64_t i = 0; i &lt; languagesSize; i++)</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        {</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <span class="keyword">const</span> <span class="keywordtype">char</span>* language = languages[i];</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            unordered_map&lt;string, wstring&gt; convertedDictionary;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            unordered_map&lt;string, wstring, utility::StringViewHash, utility::StringViewEqual&gt; convertedDictionary;</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            uint64_t dictionarySize = 0;</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            <span class="keyword">const</span> <span class="keywordtype">char</span>** keys;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <span class="keyword">const</span> <span class="keywordtype">char</span>** values;</div>
@@ -161,7 +161,7 @@ $(function(){initNavTree('_w_text_localization_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">void</span>(*)(<span class="keyword">const </span><span class="keywordtype">char</span>**)<span class="keyword">&gt;</span>(load(localizationModule.handle, <span class="stringliteral">&quot;freeDictionariesLanguages&quot;</span>))(languages);</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    }</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    BaseTextLocalization&lt;wchar_t&gt;::BaseTextLocalization(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; localizationModule) :</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    BaseTextLocalization&lt;wchar_t&gt;::BaseTextLocalization(string_view localizationModule) :</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        handle(nullptr)</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    {</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">if</span> (localizationModule == TextLocalization::get().getPathToModule())</div>
@@ -212,7 +212,7 @@ $(function(){initNavTree('_w_text_localization_8cpp_source.html',''); initResiza
 </div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
 <div class="foldopen" id="foldopen00110" data-start="{" data-end="}">
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#af214d556409c62944f116d8cdbb2ad36">  110</a></span>    <span class="keywordtype">void</span> <a class="code hl_class" href="classlocalization_1_1_base_text_localization.html">BaseTextLocalization&lt;wchar_t&gt;::changeLanguage</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; language)</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a1a9544d975ff313cdc2439ab6ca8853e">  110</a></span>    <span class="keywordtype">void</span> <a class="code hl_class" href="classlocalization_1_1_base_text_localization.html">BaseTextLocalization&lt;wchar_t&gt;::changeLanguage</a>(string_view language)</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    {</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">if</span> (dictionaries.find(language) == dictionaries.end())</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        {</div>
@@ -231,7 +231,7 @@ $(function(){initNavTree('_w_text_localization_8cpp_source.html',''); initResiza
 </div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
 <div class="foldopen" id="foldopen00125" data-start="{" data-end="}">
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a4f71028908c3e4a48e6b6ba55644dfde">  125</a></span>    <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <a class="code hl_class" href="classlocalization_1_1_base_text_localization.html">BaseTextLocalization&lt;wchar_t&gt;::getCurrentLanguage</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#aa5e6ae2522b4514479d2fda7a47533e4">  125</a></span>    string_view <a class="code hl_class" href="classlocalization_1_1_base_text_localization.html">BaseTextLocalization&lt;wchar_t&gt;::getCurrentLanguage</a>()<span class="keyword"> const</span></div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="keyword">    </span>{</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keywordflow">return</span> language;</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    }</div>
@@ -245,78 +245,92 @@ $(function(){initNavTree('_w_text_localization_8cpp_source.html',''); initResiza
 </div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
 <div class="foldopen" id="foldopen00135" data-start="{" data-end="}">
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#afe343324efb62a63e2b75810d4329331">  135</a></span>    wstring_view <a class="code hl_class" href="classlocalization_1_1_base_text_localization.html">BaseTextLocalization&lt;wchar_t&gt;::getString</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; language, <span class="keywordtype">bool</span> allowOriginal)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#a59dad3b4ab9c2c4383914a26a5cffdae">  135</a></span>    wstring_view <a class="code hl_class" href="classlocalization_1_1_base_text_localization.html">BaseTextLocalization&lt;wchar_t&gt;::getString</a>(string_view key, string_view language, <span class="keywordtype">bool</span> allowOriginal)<span class="keyword"> const</span></div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <span class="keywordflow">try</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> languageIterator = dictionaries.find(language); languageIterator != dictionaries.end())</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        {</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            <span class="keyword">const</span> wstring&amp; result = dictionaries.at(language).at(key);</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            <span class="keywordflow">return</span> result.empty() ? dictionaries.at(originalLanguage).at(key) : result;</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        }</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> out_of_range&amp;)</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        {</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <span class="keywordflow">try</span></div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            {</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>                <span class="keywordflow">return</span> dictionaries.at(originalLanguage).at(key);</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            }</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            <span class="keywordflow">catch</span> (<span class="keyword">const</span> out_of_range&amp;)</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            {</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                <span class="keywordflow">throw</span> runtime_error(format(R<span class="stringliteral">&quot;(Can&#39;t find key &quot;{}&quot;)&quot;sv, key));</span></div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="stringliteral">            }</span></div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="stringliteral">        }</span></div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="stringliteral">    }</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> keyIterator = languageIterator-&gt;second.find(key); keyIterator != languageIterator-&gt;second.end())</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            {</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                <span class="keywordflow">if</span> (keyIterator-&gt;second.size())</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                {</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                    <span class="keywordflow">return</span> keyIterator-&gt;second;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                <span class="keywordflow">if</span> (allowOriginal)</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>                {</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                    <span class="keywordflow">return</span> this-&gt;getString(key, originalLanguage, <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                }<span class="keywordflow">throw</span> runtime_error(format(<span class="stringliteral">&quot;Can&#39;t find localized string with key: {}&quot;</span>, key));</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                <span class="keywordflow">throw</span> runtime_error(format(<span class="stringliteral">&quot;Can&#39;t find localized string with key: {}&quot;</span>, key));</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            }</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (allowOriginal)</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            {</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                <span class="keywordflow">return</span> this-&gt;getString(key, originalLanguage, <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            }</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                <span class="keywordflow">throw</span> runtime_error(format(<span class="stringliteral">&quot;Can&#39;t find localized string with key: {}&quot;</span>, key));</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            }</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        }</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        {</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            <span class="keywordflow">throw</span> runtime_error(format(<span class="stringliteral">&quot;Can&#39;t find language: {}&quot;</span>, language));</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        }</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    }</div>
 </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="stringliteral"></span> </div>
-<div class="foldopen" id="foldopen00156" data-start="{" data-end="}">
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#adbcb824b4dbdb4c3896029d3d93f7ff6">  156</a></span><span class="stringliteral">    wstring_view <a class="code hl_class" href="classlocalization_1_1_base_text_localization.html">BaseTextLocalization&lt;wchar_t&gt;::operator [] </a>(</span><span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keywordflow">return</span> this-&gt;getString(key, language);</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    }</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="foldopen" id="foldopen00170" data-start="{" data-end="}">
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html#aa9cd0c2188d79562f376f0f4306197e5">  170</a></span>    wstring_view <a class="code hl_class" href="classlocalization_1_1_base_text_localization.html">BaseTextLocalization&lt;wchar_t&gt;::operator [] </a>(string_view key)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        <span class="keywordflow">return</span> this-&gt;getString(key, language);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    }</div>
 </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>}</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>wstring to_wstring(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; stringToConvert)</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>{</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    wstring result;</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordtype">int</span> size = MultiByteToWideChar</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    (       </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        CP_UTF8,</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        NULL,</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        stringToConvert.data(),</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        -1,</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        <span class="keyword">nullptr</span>,</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        NULL</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    );</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>}</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordflow">if</span> (!size)</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    {</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;Can&#39;t convert to wstring&quot;</span>);</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    }</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    result.resize(<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(size) - 1);</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keywordflow">if</span> (!MultiByteToWideChar</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    (</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        CP_UTF8,</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        NULL,</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        stringToConvert.data(),</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        -1,</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        result.data(),</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        size</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    ))</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    {</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;Can&#39;t convert to wstring&quot;</span>);</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    }</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>}</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>wstring to_wstring(string_view stringToConvert)</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>{</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    wstring result;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keywordtype">int</span> size = MultiByteToWideChar</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    (       </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        CP_UTF8,</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        NULL,</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        stringToConvert.data(),</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        -1,</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keyword">nullptr</span>,</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        NULL</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    );</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="keywordflow">if</span> (!size)</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    {</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;Can&#39;t convert to wstring&quot;</span>);</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    }</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    result.resize(<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(size) - 1);</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    <span class="keywordflow">if</span> (!MultiByteToWideChar</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    (</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        CP_UTF8,</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        NULL,</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        stringToConvert.data(),</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        -1,</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        result.data(),</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        size</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    ))</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    {</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keywordflow">throw</span> runtime_error(<span class="stringliteral">&quot;Can&#39;t convert to wstring&quot;</span>);</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    }</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>}</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_text_localization_8h_html_aee96dbd525e8920875707216c3dcd8bf"><div class="ttname"><a href="_text_localization_8h.html#aee96dbd525e8920875707216c3dcd8bf">localization::TextLocalization</a></div><div class="ttdeci">localization::BaseTextLocalization&lt; char &gt; TextLocalization</div><div class="ttdoc">TextLocalization with string.</div><div class="ttdef"><b>Definition</b> <a href="_text_localization_8h_source.html#l00011">TextLocalization.h:11</a></div></div>
 <div class="ttc" id="a_w_text_localization_8h_html"><div class="ttname"><a href="_w_text_localization_8h.html">WTextLocalization.h</a></div><div class="ttdoc">BaseTextLocalization specialization with std::wstring.</div></div>
-<div class="ttc" id="a_w_text_localization_8h_html_ac692062ff8bf7c955321e82cdc1b2245"><div class="ttname"><a href="_w_text_localization_8h.html#ac692062ff8bf7c955321e82cdc1b2245">localization::WTextLocalization</a></div><div class="ttdeci">localization::BaseTextLocalization&lt; wchar_t &gt; WTextLocalization</div><div class="ttdoc">TextLocalization with std::wstring.</div><div class="ttdef"><b>Definition</b> <a href="_w_text_localization_8h_source.html#l00013">WTextLocalization.h:13</a></div></div>
-<div class="ttc" id="aclasslocalization_1_1_base_text_localization_3_01wchar__t_01_4_html"><div class="ttname"><a href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html">localization::BaseTextLocalization&lt; wchar_t &gt;</a></div><div class="ttdoc">TextLocalization specialization with wchar_t.</div><div class="ttdef"><b>Definition</b> <a href="_w_text_localization_8h_source.html#l00017">WTextLocalization.h:18</a></div></div>
+<div class="ttc" id="a_w_text_localization_8h_html_ac692062ff8bf7c955321e82cdc1b2245"><div class="ttname"><a href="_w_text_localization_8h.html#ac692062ff8bf7c955321e82cdc1b2245">localization::WTextLocalization</a></div><div class="ttdeci">localization::BaseTextLocalization&lt; wchar_t &gt; WTextLocalization</div><div class="ttdoc">TextLocalization with std::wstring.</div><div class="ttdef"><b>Definition</b> <a href="_w_text_localization_8h_source.html#l00014">WTextLocalization.h:14</a></div></div>
+<div class="ttc" id="aclasslocalization_1_1_base_text_localization_3_01wchar__t_01_4_html"><div class="ttname"><a href="classlocalization_1_1_base_text_localization_3_01wchar__t_01_4.html">localization::BaseTextLocalization&lt; wchar_t &gt;</a></div><div class="ttdoc">TextLocalization specialization with wchar_t.</div><div class="ttdef"><b>Definition</b> <a href="_w_text_localization_8h_source.html#l00018">WTextLocalization.h:19</a></div></div>
 <div class="ttc" id="aclasslocalization_1_1_base_text_localization_html"><div class="ttname"><a href="classlocalization_1_1_base_text_localization.html">localization::BaseTextLocalization</a></div><div class="ttdoc">Singleton for text localization.</div><div class="ttdef"><b>Definition</b> <a href="_base_text_localization_8h_source.html#l00028">BaseTextLocalization.h:29</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

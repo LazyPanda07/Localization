@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.27.0)
 
 project(3rdparty)
 
-set(JSON_TAG v2.6.7)
+set(JSON_TAG v2.6.8)
 set(LOCALIZATION_JSON_PATH ${CMAKE_BINARY_DIR}/Localization/JSON)
 set(ANDROID_API_VERSION 35)
 

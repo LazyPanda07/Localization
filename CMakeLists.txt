@@ -13,7 +13,7 @@ else ()
 	set(LOCALIZATION_UTILS_PATH ${LOCALIZATION_UTILS_PATH}/LocalizationUtils.exe)
 endif (UNIX)
 
-project(Localization VERSION 1.1.5)
+project(Localization VERSION 1.2.0)
 
 add_subdirectory(3rdparty)
 
@@ -21,6 +21,7 @@ add_library(
 	${PROJECT_NAME} SHARED
 	src/MultiLocalizationManager.cpp
 	src/WTextLocalization.cpp
+	src/StringViewUtils.cpp
 )
 
 target_include_directories(

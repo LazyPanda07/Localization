@@ -7,6 +7,7 @@
 #include "JSONParser.h"
 #include "TextLocalization.h"
 #include "WTextLocalization.h"
+#include "StringViewUtils.h"
 
 namespace localization
 {
@@ -42,7 +43,7 @@ namespace localization
 		json::JSONParser settings;
 		std::string defaultModuleName;
 		mutable std::shared_mutex mapMutex;
-		std::unordered_map<std::string, LocalizationHolder*> localizations;
+		std::unordered_map<std::string, LocalizationHolder*, utility::StringViewHash, utility::StringViewEqual> localizations;
 
 	private:
 		MultiLocalizationManager();
@@ -82,13 +83,13 @@ namespace localization
 		/// @brief Remove localization module. Thread safe
 		/// @param localizationModuleName Name of module
 		/// @return Module was successfully removed
-		bool removeModule(const std::string& localizationModuleName);
+		bool removeModule(std::string_view localizationModuleName);
 
 		/// @brief Get pointer to MultiLocalizationManager::LocalizationHolder. Thread safe
 		/// @param localizationModuleName Name of module
 		/// @return Pointer to MultiLocalizationManager::LocalizationHolder 
 		/// @exception std::runtime_error
-		LocalizationHolder* getModule(const std::string& localizationModuleName) const;
+		LocalizationHolder* getModule(std::string_view localizationModuleName) const;
 
 		/// @brief Get localized text. Thread safe
 		/// @param localizationModuleName Name of module
@@ -96,7 +97,7 @@ namespace localization
 		/// @param language Localized value from specific language
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key 
-		std::string_view getLocalizedString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
+		std::string_view getLocalizedString(std::string_view localizationModuleName, std::string_view key, std::string_view language = "") const;
 
 #ifndef __LINUX__
 		/// @brief Get localized text. Thread safe
@@ -105,7 +106,7 @@ namespace localization
 		/// @param language Localized value from specific language
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key 
-		std::wstring_view getLocalizedWideString(const std::string& localizationModuleName, const std::string& key, const std::string& language = "") const;
+		std::wstring_view getLocalizedWideString(std::string_view localizationModuleName, std::string_view key, std::string_view language = "") const;
 #endif
 	};
 

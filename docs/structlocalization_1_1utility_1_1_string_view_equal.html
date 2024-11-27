@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Localization: src/TextLocalization.h File Reference</title>
+<title>Localization: localization::utility::StringViewEqual Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -71,7 +71,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('_text_localization_8h.html',''); initResizable(true); });
+$(function(){initNavTree('structlocalization_1_1utility_1_1_string_view_equal.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -98,52 +98,77 @@ $(function(){initNavTree('_text_localization_8h.html',''); initResizable(true); 
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a>  </div>
-  <div class="headertitle"><div class="title">TextLocalization.h File Reference</div></div>
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="structlocalization_1_1utility_1_1_string_view_equal-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">localization::utility::StringViewEqual Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>BaseTextLocalization with std::string.  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;BaseTextLocalization.h&quot;</code><br />
-</div>
-<p><a href="_text_localization_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:aee96dbd525e8920875707216c3dcd8bf" id="r_aee96dbd525e8920875707216c3dcd8bf"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee96dbd525e8920875707216c3dcd8bf">localization::TextLocalization</a> = <a class="el" href="classlocalization_1_1_base_text_localization.html">localization::BaseTextLocalization</a>&lt;char&gt;</td></tr>
-<tr class="memdesc:aee96dbd525e8920875707216c3dcd8bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">TextLocalization with string.  <br /></td></tr>
-<tr class="separator:aee96dbd525e8920875707216c3dcd8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:aa9a80be06c9dd30dbf93e98c91c19dad" id="r_aa9a80be06c9dd30dbf93e98c91c19dad"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9a80be06c9dd30dbf93e98c91c19dad">is_transparent</a> = void</td></tr>
+<tr class="separator:aa9a80be06c9dd30dbf93e98c91c19dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a8fdf2051ce3494ee266ee540e2837de6" id="r_a8fdf2051ce3494ee266ee540e2837de6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fdf2051ce3494ee266ee540e2837de6">operator()</a> (std::string_view left, std::string_view right) const</td></tr>
+<tr class="separator:a8fdf2051ce3494ee266ee540e2837de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>BaseTextLocalization with std::string. </p>
-
-<p class="definition">Definition in file <a class="el" href="_text_localization_8h_source.html">TextLocalization.h</a>.</p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="aee96dbd525e8920875707216c3dcd8bf" name="aee96dbd525e8920875707216c3dcd8bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee96dbd525e8920875707216c3dcd8bf">&#9670;&#160;</a></span>TextLocalization</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="_string_view_utils_8h_source.html#l00016">16</a> of file <a class="el" href="_string_view_utils_8h_source.html">StringViewUtils.h</a>.</p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="aa9a80be06c9dd30dbf93e98c91c19dad" name="aa9a80be06c9dd30dbf93e98c91c19dad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9a80be06c9dd30dbf93e98c91c19dad">&#9670;&#160;</a></span>is_transparent</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#aee96dbd525e8920875707216c3dcd8bf">localization::TextLocalization</a> = <a class="el" href="classlocalization_1_1_base_text_localization.html">localization::BaseTextLocalization</a>&lt;char&gt;</td>
+          <td class="memname">using localization::utility::StringViewEqual::is_transparent = void</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>TextLocalization with string. </p>
-
-<p class="definition">Definition at line <a class="el" href="_text_localization_8h_source.html#l00011">11</a> of file <a class="el" href="_text_localization_8h_source.html">TextLocalization.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_string_view_utils_8h_source.html#l00018">18</a> of file <a class="el" href="_string_view_utils_8h_source.html">StringViewUtils.h</a>.</p>
 
 </div>
 </div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8fdf2051ce3494ee266ee540e2837de6" name="a8fdf2051ce3494ee266ee540e2837de6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fdf2051ce3494ee266ee540e2837de6">&#9670;&#160;</a></span>operator()()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool localization::utility::StringViewEqual::operator() </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>right</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_string_view_utils_8cpp_source.html#l00014">14</a> of file <a class="el" href="_string_view_utils_8cpp_source.html">StringViewUtils.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following files:<ul>
+<li>src/<a class="el" href="_string_view_utils_8h_source.html">StringViewUtils.h</a></li>
+<li>src/<a class="el" href="_string_view_utils_8cpp_source.html">StringViewUtils.cpp</a></li>
+</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_text_localization_8h.html">TextLocalization.h</a></li>
+    <li class="navelem"><b>localization</b></li><li class="navelem"><b>utility</b></li><li class="navelem"><a class="el" href="structlocalization_1_1utility_1_1_string_view_equal.html">StringViewEqual</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

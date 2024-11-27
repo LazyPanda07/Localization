@@ -29,7 +29,7 @@ namespace localization
 	{
 		if (!filesystem::exists(localizationModulesFile))
 		{
-			throw std::runtime_error(format("Can't find {}", localizationModulesFile));
+			throw runtime_error(format("Can't find {}", localizationModulesFile));
 		}
 
 		TextLocalization::get();
@@ -44,7 +44,9 @@ namespace localization
 
 		if (settings.begin() != settings.end())
 		{
-			for (const string& module : json::utility::JSONArrayWrapper(settings.getArray(settings::modulesSetting)).getAsStringArray())
+			vector<string> modules = json::utility::JSONArrayWrapper(settings.getArray(settings::modulesSetting)).getAsStringArray();
+
+			for (const string& module : modules)
 			{
 				this->addModule(module);
 			}
@@ -103,7 +105,7 @@ namespace localization
 		).first->second;
 	}
 
-	bool MultiLocalizationManager::removeModule(const string& localizationModuleName)
+	bool MultiLocalizationManager::removeModule(string_view localizationModuleName)
 	{
 		unique_lock<shared_mutex> lock(mapMutex);
 
@@ -121,7 +123,7 @@ namespace localization
 		return true;
 	}
 
-	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::getModule(const string& localizationModuleName) const
+	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::getModule(string_view localizationModuleName) const
 	{
 		if (localizationModuleName == defaultModuleName)
 		{
@@ -130,10 +132,17 @@ namespace localization
 
 		shared_lock<shared_mutex> lock(mapMutex);
 
-		return localizations.at(localizationModuleName);
+		if (auto it = localizations.find(localizationModuleName); it != localizations.end())
+		{
+			return it->second;
+		}
+
+		throw runtime_error(format("Can't find Localizatio holder with module name: {}", localizationModuleName));
+
+		return nullptr;
 	}
 
-	string_view MultiLocalizationManager::getLocalizedString(const string& localizationModuleName, const string& key, const string& language) const
+	string_view MultiLocalizationManager::getLocalizedString(string_view localizationModuleName, string_view key, string_view language) const
 	{
 		if (localizationModuleName == defaultModuleName)
 		{
@@ -141,14 +150,20 @@ namespace localization
 		}
 
 		shared_lock<shared_mutex> lock(mapMutex);
+		auto it = localizations.find(localizationModuleName);
 
-		TextLocalization& text = localizations.at(localizationModuleName)->localization;
+		if (it == localizations.end())
+		{
+			throw runtime_error(format("Can't find Localizatio holder with module name: {}", localizationModuleName));
+		}
+
+		TextLocalization& text = it->second->localization;
 
 		return language.empty() ? text[key] : text.getString(key, language);
 	}
 
 #ifndef __LINUX__
-	wstring_view MultiLocalizationManager::getLocalizedWideString(const string& localizationModuleName, const string& key, const string& language) const
+	wstring_view MultiLocalizationManager::getLocalizedWideString(string_view localizationModuleName, string_view key, string_view language) const
 	{
 		if (localizationModuleName == defaultModuleName)
 		{
@@ -156,8 +171,14 @@ namespace localization
 		}
 
 		shared_lock<shared_mutex> lock(mapMutex);
+		auto it = localizations.find(localizationModuleName);
 
-		WTextLocalization& text = localizations.at(localizationModuleName)->wlocalization;
+		if (it == localizations.end())
+		{
+			throw runtime_error(format("Can't find Localizatio holder with module name: {}", localizationModuleName));
+		}
+
+		WTextLocalization& text = it->second->wlocalization;
 
 		return language.empty() ? text[key] : text.getString(key, language);
 	}

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-static wstring to_wstring(const string& source);
+static wstring to_wstring(string_view source);
 
 namespace localization
 {
@@ -37,7 +37,7 @@ namespace localization
 		for (uint64_t i = 0; i < languagesSize; i++)
 		{
 			const char* language = languages[i];
-			unordered_map<string, wstring> convertedDictionary;
+			unordered_map<string, wstring, utility::StringViewHash, utility::StringViewEqual> convertedDictionary;
 			uint64_t dictionarySize = 0;
 			const char** keys;
 			const char** values;
@@ -59,7 +59,7 @@ namespace localization
 		reinterpret_cast<void(*)(const char**)>(load(localizationModule.handle, "freeDictionariesLanguages"))(languages);
 	}
 
-	BaseTextLocalization<wchar_t>::BaseTextLocalization(const string& localizationModule) :
+	BaseTextLocalization<wchar_t>::BaseTextLocalization(string_view localizationModule) :
 		handle(nullptr)
 	{
 		if (localizationModule == TextLocalization::get().getPathToModule())
@@ -107,7 +107,7 @@ namespace localization
 		return *instance;
 	}
 
-	void BaseTextLocalization<wchar_t>::changeLanguage(const string& language)
+	void BaseTextLocalization<wchar_t>::changeLanguage(string_view language)
 	{
 		if (dictionaries.find(language) == dictionaries.end())
 		{
@@ -122,7 +122,7 @@ namespace localization
 		return originalLanguage;
 	}
 
-	const string& BaseTextLocalization<wchar_t>::getCurrentLanguage() const
+	string_view BaseTextLocalization<wchar_t>::getCurrentLanguage() const
 	{
 		return language;
 	}
@@ -132,34 +132,48 @@ namespace localization
 		return pathToModule;
 	}
 
-	wstring_view BaseTextLocalization<wchar_t>::getString(const string& key, const string& language, bool allowOriginal) const
+	wstring_view BaseTextLocalization<wchar_t>::getString(string_view key, string_view language, bool allowOriginal) const
 	{
-		try
+		if (auto languageIterator = dictionaries.find(language); languageIterator != dictionaries.end())
 		{
-			const wstring& result = dictionaries.at(language).at(key);
+			if (auto keyIterator = languageIterator->second.find(key); keyIterator != languageIterator->second.end())
+			{
+				if (keyIterator->second.size())
+				{
+					return keyIterator->second;
+				}
 
-			return result.empty() ? dictionaries.at(originalLanguage).at(key) : result;
+				if (allowOriginal)
+				{
+					return this->getString(key, originalLanguage, false);
+				}throw runtime_error(format("Can't find localized string with key: {}", key));
+
+				throw runtime_error(format("Can't find localized string with key: {}", key));
+			}
+			else if (allowOriginal)
+			{
+				return this->getString(key, originalLanguage, false);
+			}
+			else
+			{
+				throw runtime_error(format("Can't find localized string with key: {}", key));
+			}
 		}
-		catch (const out_of_range&)
+		else
 		{
-			try
-			{
-				return dictionaries.at(originalLanguage).at(key);
-			}
-			catch (const out_of_range&)
-			{
-				throw runtime_error(format(R"(Can't find key "{}")"sv, key));
-			}
+			throw runtime_error(format("Can't find language: {}", language));
 		}
+
+		return {};
 	}
 
-	wstring_view BaseTextLocalization<wchar_t>::operator [] (const string& key) const
+	wstring_view BaseTextLocalization<wchar_t>::operator [] (string_view key) const
 	{
 		return this->getString(key, language);
 	}
 }
 
-wstring to_wstring(const string& stringToConvert)
+wstring to_wstring(string_view stringToConvert)
 {
 	wstring result;
 

@@ -192,11 +192,13 @@ cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -G "NMake Makefile
     <ClInclude Include="src\BaseTextLocalization.h" />
     <ClInclude Include="src\LocalizationConstants.h" />
     <ClInclude Include="src\MultiLocalizationManager.h" />
+    <ClInclude Include="src\StringViewUtils.h" />
     <ClInclude Include="src\TextLocalization.h" />
     <ClInclude Include="src\WTextLocalization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\MultiLocalizationManager.cpp" />
+    <ClCompile Include="src\StringViewUtils.cpp" />
     <ClCompile Include="src\WTextLocalization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

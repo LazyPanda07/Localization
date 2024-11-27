@@ -62,7 +62,7 @@ namespace localization
 		/// @brief Change localization
 		/// @param language Language key
 		/// @exception std::runtime_error Wrong language
-		void changeLanguage(const std::string& language);
+		void changeLanguage(std::string_view language);
 
 		/// @brief Get original language
 		/// @return originalLanguage
@@ -70,7 +70,7 @@ namespace localization
 
 		/// @brief Get current language
 		/// @return language
-		const std::string& getCurrentLanguage() const;
+		std::string_view getCurrentLanguage() const;
 
 		/// @brief Get path to used module
 		const std::filesystem::path& getPathToModule() const;
@@ -82,13 +82,13 @@ namespace localization
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
 		/// @exception std::out_of_range
-		std::basic_string_view<T> getString(const std::string& key, const std::string& language, bool allowOriginal = true) const;
+		std::basic_string_view<T> getString(std::string_view key, std::string_view language, bool allowOriginal = true) const;
 
 		/// @brief Get localized text
 		/// @param key Localization key
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
-		std::basic_string_view<T> operator [] (const std::string& key) const;
+		std::basic_string_view<T> operator [] (std::string_view key) const;
 
 		friend class BaseTextLocalization<wchar_t>;
 		friend class MultiLocalizationManager;
@@ -201,7 +201,7 @@ namespace localization
 	}
 
 	template<typename T>
-	void BaseTextLocalization<T>::changeLanguage(const std::string& language)
+	void BaseTextLocalization<T>::changeLanguage(std::string_view language)
 	{
 		if (!findLanguage(language.data()))
 		{
@@ -218,7 +218,7 @@ namespace localization
 	}
 
 	template<typename T>
-	const std::string& BaseTextLocalization<T>::getCurrentLanguage() const
+	std::string_view BaseTextLocalization<T>::getCurrentLanguage() const
 	{
 		return language;
 	}
@@ -230,7 +230,7 @@ namespace localization
 	}
 
 	template<typename T>
-	std::basic_string_view<T> BaseTextLocalization<T>::getString(const std::string& key, const std::string& language, bool allowOriginal) const
+	std::basic_string_view<T> BaseTextLocalization<T>::getString(std::string_view key, std::string_view language, bool allowOriginal) const
 	{
 		const char* result = dictionaries(key.data(), language.data());
 
@@ -255,7 +255,7 @@ namespace localization
 	}
 
 	template<typename T>
-	std::basic_string_view<T> BaseTextLocalization<T>::operator [] (const std::string& key) const
+	std::basic_string_view<T> BaseTextLocalization<T>::operator [] (std::string_view key) const
 	{
 		return this->getString(key, language);
 	}

@@ -6,6 +6,7 @@
 #ifndef __LINUX__
 
 #include "TextLocalization.h"
+#include "StringViewUtils.h"
 
 namespace localization
 {
@@ -17,7 +18,7 @@ namespace localization
 	class LOCALIZATION_API BaseTextLocalization<wchar_t> final
 	{
 	private:
-		std::unordered_map<std::string, std::unordered_map<std::string, std::wstring>> dictionaries;
+		std::unordered_map<std::string, std::unordered_map<std::string, std::wstring, utility::StringViewHash, utility::StringViewEqual>, utility::StringViewHash, utility::StringViewEqual> dictionaries;
 		std::string originalLanguage;
 		std::string language;
 		std::filesystem::path pathToModule;
@@ -27,7 +28,7 @@ namespace localization
 		void convertLocalization(const TextLocalization& localizationModule);
 
 	private:
-		BaseTextLocalization(const std::string& localizationModule);
+		BaseTextLocalization(std::string_view localizationModule);
 
 		BaseTextLocalization(const TextLocalization& localizationModule);
 
@@ -50,7 +51,7 @@ namespace localization
 		/// @brief Change localization
 		/// @param language Language key
 		/// @exception std::runtime_error Wrong language
-		void changeLanguage(const std::string& language);
+		void changeLanguage(std::string_view language);
 
 		/// @brief Get original language
 		/// @return originalLanguage
@@ -58,7 +59,7 @@ namespace localization
 
 		/// @brief Get current language
 		/// @return language
-		const std::string& getCurrentLanguage() const;
+		std::string_view getCurrentLanguage() const;
 
 		/// @brief Get path to used module
 		const std::filesystem::path& getPathToModule() const;
@@ -70,13 +71,13 @@ namespace localization
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
 		/// @exception std::out_of_range
-		std::wstring_view getString(const std::string& key, const std::string& language, bool allowOriginal = true) const;
+		std::wstring_view getString(std::string_view key, std::string_view language, bool allowOriginal = true) const;
 
 		/// @brief Get localized text
 		/// @param key Localization key
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
-		std::wstring_view operator [] (const std::string& key) const;
+		std::wstring_view operator [] (std::string_view key) const;
 
 		friend class MultiLocalizationManager;
 		friend struct LocalizationHolder;
