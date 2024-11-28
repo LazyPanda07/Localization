@@ -2,18 +2,20 @@
 
 #include <string_view>
 
+#include "LocalizationConstants.h"
+
 namespace localization
 {
 	namespace utility
 	{
-		struct StringViewHash
+		struct LOCALIZATION_API StringViewHash
 		{
 			using is_transparent = void;
 
 			size_t operator ()(std::string_view value) const;
 		};
 
-		struct StringViewEqual
+		struct LOCALIZATION_API StringViewEqual
 		{
 			using is_transparent = void;
 
