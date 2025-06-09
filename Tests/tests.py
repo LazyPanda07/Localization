@@ -8,9 +8,9 @@ if __name__ == '__main__':
     working_dir = "../assets"
 
     if platform.system() == "Windows":
-        executable_path += "LocalizationUtils.exe"
+        executable_path += "Windows/LocalizationUtils.exe"
     else:
-        executable_path += "LocalizationUtils"
+        executable_path += "Linux/LocalizationUtils"
 
     subprocess.run([executable_path, ".", "generate"], cwd=working_dir)
 
