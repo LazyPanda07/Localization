@@ -124,7 +124,7 @@ jobs:
     - name: Build tests
       working-directory: Tests
       run: |
-          chmod +x ../assets/LocalizationUtils
+          chmod +x ../assets/Linux/LocalizationUtils
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -162,7 +162,7 @@ jobs:
     - name: Build tests
       working-directory: Tests
       run: |
-          chmod +x ../assets/LocalizationUtils
+          chmod +x ../assets/Linux/LocalizationUtils
           mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=Release ..
