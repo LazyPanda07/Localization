@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.27.0)
 
 project(3rdparty)
 
-set(JSON_TAG v2.6.8)
+set(JSON_TAG v2.7.0)
 set(LOCALIZATION_JSON_PATH ${CMAKE_BINARY_DIR}/Localization/JSON)
 set(ANDROID_API_VERSION 35)
 
@@ -43,7 +43,7 @@ if (NOT EXISTS ${LOCALIZATION_JSON_PATH})
 				WORKING_DIRECTORY ${LOCALIZATION_JSON_PATH}/build
 				COMMAND nmake install
 			)
-		endif(UNIX)
+		endif()
 	else()
 		if (UNIX)
 			execute_process(
@@ -75,6 +75,6 @@ if (NOT EXISTS ${LOCALIZATION_JSON_PATH})
 				WORKING_DIRECTORY ${LOCALIZATION_JSON_PATH}/build
 				COMMAND nmake install
 			)
-		endif(UNIX)
+		endif()
 	endif()
 endif()

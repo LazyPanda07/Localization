@@ -8,12 +8,12 @@ set(LOCALIZATION_UTILS_PATH assets)
 if (UNIX)
 	add_definitions(-D__LINUX__)
 
-	set(LOCALIZATION_UTILS_PATH ${LOCALIZATION_UTILS_PATH}/LocalizationUtils)
-else ()
-	set(LOCALIZATION_UTILS_PATH ${LOCALIZATION_UTILS_PATH}/LocalizationUtils.exe)
-endif (UNIX)
+	set(LOCALIZATION_UTILS_PATH ${LOCALIZATION_UTILS_PATH}/Linux/LocalizationUtils)
+else()
+	set(LOCALIZATION_UTILS_PATH ${LOCALIZATION_UTILS_PATH}/Windows/LocalizationUtils.exe)
+endif()
 
-project(Localization VERSION 1.2.1)
+project(Localization VERSION 1.3.0)
 
 add_subdirectory(3rdparty)
 
