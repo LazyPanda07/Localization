@@ -5,6 +5,8 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir CACHE STRING "")
 set(CMAKE_BUILD_TYPE Release CACHE STRING "")
 set(LOCALIZATION_UTILS_PATH assets)
 
+project(Localization VERSION 1.3.0)
+
 if (UNIX)
 	add_definitions(-D__LINUX__)
 
@@ -16,8 +18,6 @@ if (UNIX)
 else()
 	set(LOCALIZATION_UTILS_PATH ${LOCALIZATION_UTILS_PATH}/Windows/LocalizationUtils.exe)
 endif()
-
-project(Localization VERSION 1.3.0)
 
 add_subdirectory(3rdparty)
 
