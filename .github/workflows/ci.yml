@@ -77,7 +77,7 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DCMAKE_TOOLCHAIN_FILE=../toolchain-aarch64.cmake ..
           make install -j $(nproc)
 
     - name: Upload artifacts
