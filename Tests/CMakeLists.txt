@@ -5,6 +5,13 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/bin)
 
 project(Tests)
 
+find_package(GTest)
+
+if(NOT ${GTest_FOUND})
+	set(GTEST_BOTH_LIBRARIES gtest gtest_main)
+	set(GTEST_INCLUDE_DIRS gtest/include/)
+endif()
+
 set(LOCALIZATION_LIBRARY_DIR ${CMAKE_SOURCE_DIR}/../Localization)
 
 if (UNIX)
@@ -13,7 +20,7 @@ if (UNIX)
 	set(DLL ${LOCALIZATION_LIBRARY_DIR}/lib/libLocalization.so)
 else ()
 	set(DLL ${LOCALIZATION_LIBRARY_DIR}/dll/Localization.dll)
-endif (UNIX)
+endif()
 
 add_executable(
 	${PROJECT_NAME}
@@ -23,7 +30,7 @@ add_executable(
 target_include_directories(
 	${PROJECT_NAME} PRIVATE
 	${LOCALIZATION_LIBRARY_DIR}/include/
-	gtest/include/
+	${GTEST_INCLUDE_DIRS}
 )
 
 target_link_directories(
@@ -34,10 +41,9 @@ target_link_directories(
 
 target_link_libraries(
 	${PROJECT_NAME} PRIVATE
+	${GTEST_BOTH_LIBRARIES}
 	JSON
 	Localization
-	gtest
-	gtest_main
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX})

@@ -24,6 +24,10 @@ add_library(
 	src/StringViewUtils.cpp
 )
 
+if (DEFINED ENV{MARCH} AND NOT "$ENV{MARCH}" STREQUAL "")
+	target_compile_options(${PROJECT_NAME} PRIVATE -march=$ENV{MARCH})
+endif()
+
 target_include_directories(
 	${PROJECT_NAME} PRIVATE
 	src/
