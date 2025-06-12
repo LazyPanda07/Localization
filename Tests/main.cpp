@@ -1,6 +1,19 @@
+#include <fstream>
+#include <sstream>
+
 #include "gtest/gtest.h"
 
 #include "MultiLocalizationManager.h"
+
+std::string getFirst()
+{
+	return (std::ostringstream() << std::ifstream("first.txt", std::ios::binary).rdbuf()).str();
+}
+
+std::string getSecond()
+{
+	return (std::ostringstream() << std::ifstream("second.txt", std::ios::binary).rdbuf()).str();
+}
 
 TEST(Localization, TextLocalization)
 {
@@ -11,10 +24,8 @@ TEST(Localization, TextLocalization)
 
 	localization.changeLanguage("ru");
 
-	// ASSERT_EQ(localization["first"], json::utility::toUTF8JSON("Первый", CP_WINDOWS_1251));
-	// ASSERT_EQ(localization["second"], json::utility::toUTF8JSON("Второй", CP_WINDOWS_1251));
-	ASSERT_EQ(localization["first"], "Первый");
-	ASSERT_EQ(localization["second"], "Второй");
+	ASSERT_EQ(localization["first"], getFirst());
+	ASSERT_EQ(localization["second"], getSecond());
 }
 
 TEST(Localization, MultiLocalizationManager)
@@ -24,11 +35,8 @@ TEST(Localization, MultiLocalizationManager)
 	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "first", "en"), "First");
 	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "second", "en"), "Second");
 
-	// ASSERT_EQ(manager.getLocalizedString("LocalizationData", "first", "ru"), json::utility::toUTF8JSON("Первый", CP_WINDOWS_1251));
-	// ASSERT_EQ(manager.getLocalizedString("LocalizationData", "second", "ru"), json::utility::toUTF8JSON("Второй", CP_WINDOWS_1251));
-
-	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "first", "ru"), "Первый");
-	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "second", "ru"), "Второй");
+	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "first", "ru"), getFirst());
+	ASSERT_EQ(manager.getLocalizedString("LocalizationData", "second", "ru"), getSecond());
 }
 
 int main(int argc, char** argv)
