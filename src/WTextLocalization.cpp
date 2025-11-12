@@ -2,9 +2,7 @@
 
 #include "WTextLocalization.h"
 
-using namespace std;
-
-static wstring to_wstring(string_view source);
+static std::wstring to_wstring(std::string_view source);
 
 namespace localization
 {
@@ -37,7 +35,7 @@ namespace localization
 		for (uint64_t i = 0; i < languagesSize; i++)
 		{
 			const char* language = languages[i];
-			unordered_map<string, wstring, utility::StringViewHash, utility::StringViewEqual> convertedDictionary;
+			std::unordered_map<std::string, std::wstring, utility::StringViewHash, utility::StringViewEqual> convertedDictionary;
 			uint64_t dictionarySize = 0;
 			const char** keys;
 			const char** values;
@@ -59,7 +57,7 @@ namespace localization
 		reinterpret_cast<void(*)(const char**)>(load(localizationModule.handle, "freeDictionariesLanguages"))(languages);
 	}
 
-	BaseTextLocalization<wchar_t>::BaseTextLocalization(string_view localizationModule) :
+	BaseTextLocalization<wchar_t>::BaseTextLocalization(std::string_view localizationModule) :
 		handle(nullptr)
 	{
 		if (localizationModule == TextLocalization::get().getPathToModule())
@@ -80,59 +78,59 @@ namespace localization
 
 	BaseTextLocalization<wchar_t>::BaseTextLocalization(WTextLocalization&& other) noexcept
 	{
-		(*this) = move(other);
+		(*this) = std::move(other);
 	}
 
 	WTextLocalization& BaseTextLocalization<wchar_t>::operator = (WTextLocalization&& other) noexcept
 	{
-		dictionaries = move(other.dictionaries);
-		originalLanguage = move(other.originalLanguage);
-		language = move(other.language);
-		pathToModule = move(other.pathToModule);
+		dictionaries = std::move(other.dictionaries);
+		originalLanguage = std::move(other.originalLanguage);
+		language = std::move(other.language);
+		pathToModule = std::move(other.pathToModule);
 
 		return *this;
 	}
 
 	BaseTextLocalization<wchar_t>& BaseTextLocalization<wchar_t>::get()
 	{
-		static unique_ptr<BaseTextLocalization<wchar_t>> instance;
+		static std::unique_ptr<BaseTextLocalization<wchar_t>> instance;
 
 		if (!instance)
 		{
-			json::JSONParser settings(ifstream(localizationModulesFile.data()));
+			json::JsonParser settings(std::ifstream(localizationModulesFile.data()));
 
-			instance = unique_ptr<WTextLocalization>(new WTextLocalization(settings.getString(settings::defaultModuleSetting)));
+			instance = std::unique_ptr<WTextLocalization>(new WTextLocalization(settings.get<std::string>(settings::defaultModuleSetting)));
 		}
 
 		return *instance;
 	}
 
-	void BaseTextLocalization<wchar_t>::changeLanguage(string_view language)
+	void BaseTextLocalization<wchar_t>::changeLanguage(std::string_view language)
 	{
 		if (dictionaries.find(language) == dictionaries.end())
 		{
-			throw runtime_error(format(R"(Wrong language value "{}")", language));
+			throw std::runtime_error(format(R"(Wrong language value "{}")", language));
 		}
 
 		this->language = language;
 	}
 
-	string_view BaseTextLocalization<wchar_t>::getOriginalLanguage() const
+	std::string_view BaseTextLocalization<wchar_t>::getOriginalLanguage() const
 	{
 		return originalLanguage;
 	}
 
-	string_view BaseTextLocalization<wchar_t>::getCurrentLanguage() const
+	std::string_view BaseTextLocalization<wchar_t>::getCurrentLanguage() const
 	{
 		return language;
 	}
 
-	const filesystem::path& BaseTextLocalization<wchar_t>::getPathToModule() const
+	const std::filesystem::path& BaseTextLocalization<wchar_t>::getPathToModule() const
 	{
 		return pathToModule;
 	}
 
-	wstring_view BaseTextLocalization<wchar_t>::getString(string_view key, string_view language, bool allowOriginal) const
+	std::wstring_view BaseTextLocalization<wchar_t>::getString(std::string_view key, std::string_view language, bool allowOriginal) const
 	{
 		if (auto languageIterator = dictionaries.find(language); languageIterator != dictionaries.end())
 		{
@@ -146,9 +144,9 @@ namespace localization
 				if (allowOriginal)
 				{
 					return this->getString(key, originalLanguage, false);
-				}throw runtime_error(format("Can't find localized string with key: {}", key));
-
-				throw runtime_error(format("Can't find localized string with key: {}", key));
+				}
+				
+				throw std::runtime_error(std::format("Can't find localized string with key: {}", key));
 			}
 			else if (allowOriginal)
 			{
@@ -156,26 +154,26 @@ namespace localization
 			}
 			else
 			{
-				throw runtime_error(format("Can't find localized string with key: {}", key));
+				throw std::runtime_error(std::format("Can't find localized string with key: {}", key));
 			}
 		}
 		else
 		{
-			throw runtime_error(format("Can't find language: {}", language));
+			throw std::runtime_error(std::format("Can't find language: {}", language));
 		}
 
 		return {};
 	}
 
-	wstring_view BaseTextLocalization<wchar_t>::operator [] (string_view key) const
+	std::wstring_view BaseTextLocalization<wchar_t>::operator [](std::string_view key) const
 	{
 		return this->getString(key, language);
 	}
 }
 
-wstring to_wstring(string_view stringToConvert)
+std::wstring to_wstring(std::string_view stringToConvert)
 {
-	wstring result;
+	std::wstring result;
 
 	int size = MultiByteToWideChar
 	(		
@@ -189,7 +187,7 @@ wstring to_wstring(string_view stringToConvert)
 
 	if (!size)
 	{
-		throw runtime_error("Can't convert to wstring");
+		throw std::runtime_error("Can't convert to wstring");
 	}
 
 	result.resize(static_cast<size_t>(size) - 1);
@@ -204,7 +202,7 @@ wstring to_wstring(string_view stringToConvert)
 		size
 	))
 	{
-		throw runtime_error("Can't convert to wstring");
+		throw std::runtime_error("Can't convert to wstring");
 	}
 
 	return result;

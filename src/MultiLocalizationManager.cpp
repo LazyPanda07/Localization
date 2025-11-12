@@ -3,23 +3,22 @@
 #include <fstream>
 #include <mutex>
 
-#include "LocalizationConstants.h"
-#include "JSONArrayWrapper.h"
+#include <JsonArrayWrapper.h>
 
-using namespace std;
+#include "LocalizationConstants.h"
 
 namespace localization
 {
 #ifdef __LINUX__
 	MultiLocalizationManager::LocalizationHolder::LocalizationHolder(TextLocalization&& localization) noexcept :
-		localization(move(localization))
+		localization(std::move(localization))
 	{
 
 	}
 #else
 	MultiLocalizationManager::LocalizationHolder::LocalizationHolder(TextLocalization&& localization, WTextLocalization&& wlocalization) noexcept :
-		localization(move(localization)),
-		wlocalization(move(wlocalization))
+		localization(std::move(localization)),
+		wlocalization(std::move(wlocalization))
 	{
 
 	}
@@ -27,9 +26,9 @@ namespace localization
 
 	MultiLocalizationManager::MultiLocalizationManager()
 	{
-		if (!filesystem::exists(localizationModulesFile))
+		if (!std::filesystem::exists(localizationModulesFile))
 		{
-			throw runtime_error(format("Can't find {}", localizationModulesFile));
+			throw std::runtime_error(std::format("Can't find {}", localizationModulesFile));
 		}
 
 		TextLocalization::get();
@@ -38,15 +37,15 @@ namespace localization
 		WTextLocalization::get();
 #endif
 
-		settings.setJSONData(ifstream(localizationModulesFile.data()));
+		settings.setJSONData(std::ifstream(localizationModulesFile.data()));
 
-		defaultModuleName = settings.getString(settings::defaultModuleSetting);
+		defaultModuleName = settings.get<std::string>(settings::defaultModuleSetting);
 
 		if (settings.begin() != settings.end())
 		{
-			vector<string> modules = json::utility::JSONArrayWrapper(settings.getArray(settings::modulesSetting)).getAsStringArray();
+			std::vector<std::string> modules = json::utility::JsonArrayWrapper(settings.get<std::vector<json::JsonObject>>(settings::modulesSetting)).as<std::string>();
 
-			for (const string& module : modules)
+			for (const std::string& module : modules)
 			{
 				this->addModule(module);
 			}
@@ -63,9 +62,9 @@ namespace localization
 		localizations.clear();
 	}
 
-	string MultiLocalizationManager::getVersion()
+	std::string MultiLocalizationManager::getVersion()
 	{
-		string version = "1.3.0";
+		std::string version = "1.4.0";
 
 		return version;
 	}
@@ -77,14 +76,14 @@ namespace localization
 		return instance;
 	}
 
-	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::addModule(const string& localizationModuleName, const filesystem::path& pathToLocalizationModule)
+	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::addModule(const std::string& localizationModuleName, const std::filesystem::path& pathToLocalizationModule)
 	{
 		if (pathToLocalizationModule == defaultModuleName)
 		{
-			throw runtime_error(format("pathToLocalizationModule can't be {}", defaultModuleName));
+			throw std::runtime_error(format("pathToLocalizationModule can't be {}", defaultModuleName));
 		}
 
-		unique_lock<shared_mutex> lock(mapMutex);
+		std::lock_guard<std::shared_mutex> lock(mapMutex);
 
 		TextLocalization textLocalizationModule(pathToLocalizationModule.string());
 
@@ -97,17 +96,17 @@ namespace localization
 			localizationModuleName,
 			new LocalizationHolder
 			(
-				move(textLocalizationModule)
+				std::move(textLocalizationModule)
 #ifndef __LINUX__
-				, move(wtextLocalizationModule)
+				, std::move(wtextLocalizationModule)
 #endif
 			)
 		).first->second;
 	}
 
-	bool MultiLocalizationManager::removeModule(string_view localizationModuleName)
+	bool MultiLocalizationManager::removeModule(std::string_view localizationModuleName)
 	{
-		unique_lock<shared_mutex> lock(mapMutex);
+		std::lock_guard<std::shared_mutex> lock(mapMutex);
 
 		auto it = localizations.find(localizationModuleName);
 
@@ -123,38 +122,38 @@ namespace localization
 		return true;
 	}
 
-	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::getModule(string_view localizationModuleName) const
+	MultiLocalizationManager::LocalizationHolder* MultiLocalizationManager::getModule(std::string_view localizationModuleName) const
 	{
 		if (localizationModuleName == defaultModuleName)
 		{
-			throw runtime_error(format("pathToLocalizationModule can't be {}", defaultModuleName));
+			throw std::runtime_error(std::format("pathToLocalizationModule can't be {}", defaultModuleName));
 		}
 
-		shared_lock<shared_mutex> lock(mapMutex);
+		std::shared_lock<std::shared_mutex> lock(mapMutex);
 
 		if (auto it = localizations.find(localizationModuleName); it != localizations.end())
 		{
 			return it->second;
 		}
 
-		throw runtime_error(format("Can't find Localizatio holder with module name: {}", localizationModuleName));
+		throw std::runtime_error(format("Can't find Localization holder with module name: {}", localizationModuleName));
 
 		return nullptr;
 	}
 
-	string_view MultiLocalizationManager::getLocalizedString(string_view localizationModuleName, string_view key, string_view language) const
+	std::string_view MultiLocalizationManager::getLocalizedString(std::string_view localizationModuleName, std::string_view key, std::string_view language) const
 	{
 		if (localizationModuleName == defaultModuleName)
 		{
 			return TextLocalization::get().getString(key, language);
 		}
 
-		shared_lock<shared_mutex> lock(mapMutex);
+		std::shared_lock<std::shared_mutex> lock(mapMutex);
 		auto it = localizations.find(localizationModuleName);
 
 		if (it == localizations.end())
 		{
-			throw runtime_error(format("Can't find Localizatio holder with module name: {}", localizationModuleName));
+			throw std::runtime_error(std::format("Can't find Localization holder with module name: {}", localizationModuleName));
 		}
 
 		TextLocalization& text = it->second->localization;
@@ -163,19 +162,19 @@ namespace localization
 	}
 
 #ifndef __LINUX__
-	wstring_view MultiLocalizationManager::getLocalizedWideString(string_view localizationModuleName, string_view key, string_view language) const
+	std::wstring_view MultiLocalizationManager::getLocalizedWideString(std::string_view localizationModuleName, std::string_view key, std::string_view language) const
 	{
 		if (localizationModuleName == defaultModuleName)
 		{
 			return WTextLocalization::get().getString(key, language);
 		}
 
-		shared_lock<shared_mutex> lock(mapMutex);
+		std::shared_lock<std::shared_mutex> lock(mapMutex);
 		auto it = localizations.find(localizationModuleName);
 
 		if (it == localizations.end())
 		{
-			throw runtime_error(format("Can't find Localizatio holder with module name: {}", localizationModuleName));
+			throw std::runtime_error(std::format("Can't find Localization holder with module name: {}", localizationModuleName));
 		}
 
 		WTextLocalization& text = it->second->wlocalization;

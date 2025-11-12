@@ -14,7 +14,8 @@
 #include <Windows.h>
 #endif
 
-#include "JSONParser.h"
+#include <JsonParser.h>
+
 #include "LocalizationConstants.h"
 
 #ifdef __LINUX__
@@ -28,14 +29,14 @@ namespace localization
 	class LOCALIZATION_API BaseTextLocalization final
 	{
 	private:
-		using dictionariesFunction = const char* (*)(const char* key, const char* language);
-		using findLanguageFunction = bool (*)(const char* language);
-		using originalLanguageFunction = const char* (*)();
+		using DictionariesFunction = const char* (*)(const char* key, const char* language);
+		using FindLanguageFunction = bool (*)(const char* language);
+		using OriginalLanguageFunction = const char* (*)();
 
 	private:
-		dictionariesFunction dictionaries;
-		findLanguageFunction findLanguage;
-		originalLanguageFunction originalLanguage;
+		DictionariesFunction dictionaries;
+		FindLanguageFunction findLanguage;
+		OriginalLanguageFunction originalLanguage;
 		std::string language;
 		std::filesystem::path pathToModule;
 		HMODULE handle;
@@ -129,21 +130,21 @@ namespace localization
 			throw std::runtime_error(std::format("Can't load {}", pathToModule.string()));
 		}
 
-		dictionaries = reinterpret_cast<dictionariesFunction>(load("getLocalizedString"));
+		dictionaries = reinterpret_cast<DictionariesFunction>(load("getLocalizedString"));
 
 		if (!dictionaries)
 		{
 			throw std::runtime_error(std::format("Can't find getLocalizedString function in {}, rebuild and try again", pathToModule.string()));
 		}
 
-		originalLanguage = reinterpret_cast<originalLanguageFunction>(load("getOriginalLanguage"));
+		originalLanguage = reinterpret_cast<OriginalLanguageFunction>(load("getOriginalLanguage"));
 
 		if (!originalLanguage)
 		{
 			throw std::runtime_error(std::format("Can't find getOriginalLanguage function in {}, rebuild and try again", pathToModule.string()));
 		}
 
-		findLanguage = reinterpret_cast<findLanguageFunction>(load("findLanguage"));
+		findLanguage = reinterpret_cast<FindLanguageFunction>(load("findLanguage"));
 
 		if (!findLanguage)
 		{
@@ -192,9 +193,9 @@ namespace localization
 
 		if (!instance)
 		{
-			json::JSONParser settings(std::ifstream(localizationModulesFile.data()));
+			json::JsonParser settings(std::ifstream(localizationModulesFile.data()));
 
-			instance = std::unique_ptr<BaseTextLocalization<T>>(new BaseTextLocalization<T>(settings.getString(settings::defaultModuleSetting)));
+			instance = std::unique_ptr<BaseTextLocalization<T>>(new BaseTextLocalization<T>(settings.get<std::string>(settings::defaultModuleSetting)));
 		}
 
 		return *instance;

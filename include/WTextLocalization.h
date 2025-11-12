@@ -77,7 +77,7 @@ namespace localization
 		/// @param key Localization key
 		/// @return Localized value
 		/// @exception std::runtime_error Wrong key
-		std::wstring_view operator [] (std::string_view key) const;
+		std::wstring_view operator [](std::string_view key) const;
 
 		friend class MultiLocalizationManager;
 		friend struct LocalizationHolder;

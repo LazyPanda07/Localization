@@ -1,19 +1,14 @@
 #include "StringViewUtils.h"
 
-using namespace std;
-
-namespace localization
+namespace localization::utility
 {
-	namespace utility
+	size_t StringViewHash::operator ()(std::string_view value) const
 	{
-		size_t StringViewHash::operator ()(string_view value) const
-		{
-			return hash<string_view>()(value);
-		}
+		return std::hash<std::string_view>()(value);
+	}
 
-		bool StringViewEqual::operator ()(string_view left, string_view right) const
-		{
-			return left == right;
-		}
+	bool StringViewEqual::operator ()(std::string_view left, std::string_view right) const
+	{
+		return left == right;
 	}
 }

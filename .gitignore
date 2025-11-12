@@ -38,9 +38,7 @@
 bin/
 out/
 build/
-
-# Google Test
-gtest/
+Localization/
 
 # Assets
 !LocalizationUtils.exe

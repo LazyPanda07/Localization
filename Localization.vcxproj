@@ -88,7 +88,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)3rdparty\JSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\;$(ProjectDir)3rdparty\JSON\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,9 +107,9 @@
     </Lib>
     <PreBuildEvent>
       <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
-cd $(ProjectDir)
-if not exist build mkdir build
-cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -G "NMake Makefiles" ../3rdparty</Command>
+
+if not exist "$(ProjectDir)3rdparty\build" mkdir "$(ProjectDir)3rdparty\build"
+cd "$(ProjectDir)3rdparty\build" &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(ProjectDir)3rdparty\JSON .. &amp;&amp; cmake --build . -j --config $(Configuration) &amp;&amp; cmake --install . --config $(Configuration)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,7 +121,7 @@ cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -G "NMake Makefile
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)3rdparty\JSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\;$(ProjectDir)3rdparty\JSON\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,9 +142,9 @@ cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -G "NMake Makefile
     </Lib>
     <PreBuildEvent>
       <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
-cd $(ProjectDir)
-if not exist build mkdir build
-cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -G "NMake Makefiles" ../3rdparty</Command>
+
+if not exist "$(ProjectDir)3rdparty\build" mkdir "$(ProjectDir)3rdparty\build"
+cd "$(ProjectDir)3rdparty\build" &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(ProjectDir)3rdparty\JSON .. &amp;&amp; cmake --build . -j --config $(Configuration) &amp;&amp; cmake --install . --config $(Configuration)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ProductionRelease|x64'">
@@ -156,7 +156,7 @@ cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -G "NMake Makefile
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)3rdparty\JSON\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\;$(ProjectDir)3rdparty\JSON\include\</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -178,9 +178,9 @@ cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -G "NMake Makefile
     </Lib>
     <PreBuildEvent>
       <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
-cd $(ProjectDir)
-if not exist build mkdir build
-cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -G "NMake Makefiles" ../3rdparty</Command>
+
+if not exist "$(ProjectDir)3rdparty\build" mkdir "$(ProjectDir)3rdparty\build"
+cd "$(ProjectDir)3rdparty\build" &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(ProjectDir)3rdparty\JSON .. &amp;&amp; cmake --build . -j --config $(Configuration) &amp;&amp; cmake --install . --config $(Configuration)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -189,12 +189,12 @@ cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -G "NMake Makefile
     <None Include="localization_modules.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\BaseTextLocalization.h" />
-    <ClInclude Include="src\LocalizationConstants.h" />
-    <ClInclude Include="src\MultiLocalizationManager.h" />
-    <ClInclude Include="src\StringViewUtils.h" />
-    <ClInclude Include="src\TextLocalization.h" />
-    <ClInclude Include="src\WTextLocalization.h" />
+    <ClInclude Include="include\BaseTextLocalization.h" />
+    <ClInclude Include="include\LocalizationConstants.h" />
+    <ClInclude Include="include\MultiLocalizationManager.h" />
+    <ClInclude Include="include\StringViewUtils.h" />
+    <ClInclude Include="include\TextLocalization.h" />
+    <ClInclude Include="include\WTextLocalization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\MultiLocalizationManager.cpp" />
