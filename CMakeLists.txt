@@ -48,6 +48,5 @@ install(
 )
 
 install(DIRECTORY include DESTINATION .)
-install(DIRECTORY 3rdparty/JSON/ DESTINATION .)
 install(FILES localization_modules.json DESTINATION .)
 install(FILES ${LOCALIZATION_UTILS_PATH} DESTINATION assets)
