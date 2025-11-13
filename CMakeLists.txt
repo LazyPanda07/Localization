@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.27.0)
 set(CMAKE_CXX_STANDARD 20)
 set(LOCALIZATION_UTILS_PATH assets)
 
-project(Localization VERSION 1.4.2)
+project(Localization VERSION 1.4.3)
 
 if (UNIX)
 	add_definitions(-D__LINUX__)
