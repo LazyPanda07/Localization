@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.27.0)
 
 set(FETCHCONTENT_QUIET OFF CACHE BOOL "")
-set(JSON_VERSION 3.1.3)
+set(JSON_VERSION 3.1.5)
 
 project(3rdparty)
 
