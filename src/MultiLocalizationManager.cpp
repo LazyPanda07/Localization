@@ -64,7 +64,7 @@ namespace localization
 
 	std::string MultiLocalizationManager::getVersion()
 	{
-		std::string version = "1.4.5";
+		std::string version = "1.4.6";
 
 		return version;
 	}
